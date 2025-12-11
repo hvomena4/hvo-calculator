@@ -626,7 +626,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 const PRC={'1-2':45,'3-4':50,'5-6':55},TIERS=['1-2','3-4','5-6','7+'],
 LNGS=[['🇩🇪','German'],['🇮🇹','Italian'],['🇫🇷','French'],['🇯🇵','Japanese'],['🇰🇷','Korean'],['🇲🇽','Spanish'],['🇷🇺','Russian'],['🇹🇷','Turkish'],['🇧🇷','Portuguese'],['🇸🇦','Arabic'],['🇹🇭','Thai'],['🇻🇳','Vietnamese'],['🇮🇳','Hindi'],['🇮🇩','Indonesian'],['🇧🇩','Bangla'],['🇮🇳','Punjabi'],['🇵🇰','Urdu'],['🇵🇱','Polish'],['🇮🇳','Tamil'],['🇳🇱','Dutch']],
 FAQS=[["What's a casting?","Before moving forward we will prepare a few voice options for you to confirm in a short clip of your material."],["What languages do you offer?","Albanian, Arabic, Bengali, Chinese, Dutch, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Vietnamese + more"],["How does ongoing billing work?","We bill you at the end of each month based on your total minute usage per language."],["Will my voice actor stay the same?","Yes, we use the same voice actor(s) for all main recurring speakers."],["Does HVO collect a rev-share?","No"],["Who owns the rights to delivered dubs?","You do. We guarantee the transfer of all ownership rights indefinitely."],["How many studios?","60 locations"],["How many actors?","Around 200 per studio and 500 remote actors"],["How many translators?","600 on hand + 400 extra if needed"],["How many audio engineers?","30 in-house engineers"]];
-let S={tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],recent:[],sel:new Set(),langs:1,calc:{}};
+let S={tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],filteredBack:[],recent:[],sel:new Set(),langs:1,calc:{},timeFilter:'all'};
 
 // Tab switching - Calculator vs Info
 function showCalc() {
@@ -1034,6 +1034,13 @@ function createShadowModal() {
             <option value="newest">Newest</option>
             <option value="oldest">Oldest</option>
           </select>
+          <span class="toolbar-label">Time:</span>
+          <select class="sort-select" id="shadow-time">
+            <option value="all">All Time</option>
+            <option value="30">Last 30 Days</option>
+            <option value="90">Last 90 Days</option>
+            <option value="365">Last 1 Year</option>
+          </select>
           <button class="export-btn" id="shadow-export">Export CSV</button>
         </div>
         <div class="modal-body" id="shadow-mbody">
@@ -1056,6 +1063,7 @@ function createShadowModal() {
   shadowRoot.getElementById('shadow-confirm').addEventListener('click', confV);
   shadowRoot.getElementById('shadow-search').addEventListener('input', e => filterVideos(e.target.value));
   shadowRoot.getElementById('shadow-sort').addEventListener('change', e => sortVideos(e.target.value));
+  shadowRoot.getElementById('shadow-time').addEventListener('change', e => filterByTime(e.target.value));
   shadowRoot.getElementById('shadow-export').addEventListener('click', exportCSV);
   shadowModal.addEventListener('click', e => { if (e.target === shadowModal) closeVM(); });
 }
@@ -1188,6 +1196,8 @@ async function doFetch() {
     S.thumb = d.channelThumb || '';
     S.subs = d.subscriberCount || '';
     S.back = d.backlogVideos || [];
+    S.filteredBack = [...S.back];
+    S.timeFilter = 'all';
     S.recent = d.recentVideos || [];
     S.sel = new Set();
     
@@ -1281,16 +1291,36 @@ function fDurMin(s) { return Math.round(s / 60); }
 function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
 function sortVideos(sortBy) {
-  if (sortBy === 'views') S.back.sort((a, b) => b.viewCount - a.viewCount);
-  else if (sortBy === 'duration') S.back.sort((a, b) => b.duration - a.duration);
-  else if (sortBy === 'newest') S.back.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  else if (sortBy === 'oldest') S.back.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+  const arr = S.filteredBack.length ? S.filteredBack : S.back;
+  if (sortBy === 'views') arr.sort((a, b) => b.viewCount - a.viewCount);
+  else if (sortBy === 'duration') arr.sort((a, b) => b.duration - a.duration);
+  else if (sortBy === 'newest') arr.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  else if (sortBy === 'oldest') arr.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+  rVG();
+}
+
+function filterByTime(days) {
+  S.timeFilter = days;
+  if (days === 'all') {
+    S.filteredBack = [...S.back];
+  } else {
+    const now = new Date();
+    const cutoff = new Date(now.getTime() - parseInt(days) * 24 * 60 * 60 * 1000);
+    S.filteredBack = S.back.filter(v => new Date(v.publishedAt) >= cutoff);
+  }
+  // Re-apply current sort
+  const sortVal = shadowRoot.getElementById('shadow-sort').value;
+  if (sortVal === 'views') S.filteredBack.sort((a, b) => b.viewCount - a.viewCount);
+  else if (sortVal === 'duration') S.filteredBack.sort((a, b) => b.duration - a.duration);
+  else if (sortVal === 'newest') S.filteredBack.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  else if (sortVal === 'oldest') S.filteredBack.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
   rVG();
 }
 
 function rVG() {
   shadowVgrid.innerHTML = '';
-  S.back.forEach(v => {
+  const videos = S.filteredBack.length ? S.filteredBack : S.back;
+  videos.forEach(v => {
     const c = document.createElement('div');
     c.className = 'video-card' + (S.sel.has(v.id) ? ' selected' : '');
     c.dataset.id = v.id;
@@ -1309,7 +1339,8 @@ function togV(id) {
 }
 
 function selAll() {
-  S.sel = new Set(S.back.map(v => v.id));
+  const videos = S.filteredBack.length ? S.filteredBack : S.back;
+  videos.forEach(v => S.sel.add(v.id));
   shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.add('selected'));
   uMC();
 }
@@ -1330,10 +1361,14 @@ function uMC() {
 function openVM() {
   shadowModal.classList.add('open');
   shadowRoot.getElementById('shadow-search').value = '';
+  shadowRoot.getElementById('shadow-time').value = 'all';
+  S.timeFilter = 'all';
+  S.filteredBack = [...S.back];
   document.body.style.overflow = 'hidden';
   shadowMbody.scrollTop = 0;
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   shadowModal.setAttribute('data-theme', isDark ? 'dark' : '');
+  rVG();
 }
 
 function closeVM() {
