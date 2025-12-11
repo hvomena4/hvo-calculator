@@ -374,7 +374,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
 <div class="cs ch-card hid" id="s3">
   <div class="ch-r">
-    <div class="ch-i"><img id="chpfp" class="ch-pfp" src="" alt=""><div><h3 id="chname">Channel</h3><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0</span> videos · <span id="selmins">0</span> min</p></div></div>
+    <div class="ch-i"><img id="chpfp" class="ch-pfp" src="" alt=""><div><h3 id="chname">Channel</h3><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0 videos selected</span> · <span id="selmins">0</span> min</p></div></div>
     <button class="edit" onclick="openVM()">Select Videos</button>
   </div>
   <div class="sel-list" id="sellist"><div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div></div>
@@ -1008,7 +1008,7 @@ function uRes() {
   
   S.calc = { bcost, mcost, bmin, bdub, avgMonthlyMins, mdub, avgLen, monthsActive };
   
-  document.getElementById('selcnt').textContent = S.sel.size;
+  document.getElementById('selcnt').textContent = S.sel.size === 0 ? '0 videos selected' : S.sel.size === 1 ? '1 video' : S.sel.size + ' videos';
   document.getElementById('selmins').textContent = bmin.toLocaleString();
   document.getElementById('rv').textContent = S.sel.size;
   document.getElementById('rsm').textContent = bmin.toLocaleString();
