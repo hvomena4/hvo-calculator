@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HVO Information Deck</title>
+<title>HVO — Dubbing Cost Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -57,76 +57,162 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 /* Layout */
 .wrap{max-width:900px;margin:0 auto;padding:32px 24px 80px}
 
-/* Header */
-.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+/* Header - Redesigned */
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--bdr)}
 .hdr-l{display:flex;align-items:center;gap:14px}
-.logo-i{width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0}
+.logo-i{width:48px;height:48px;border-radius:12px;overflow:hidden;flex-shrink:0;background:var(--bg3)}
 .logo-i img{width:100%;height:100%;object-fit:contain}
-.logo-txt h1{font-size:18px;font-weight:700;line-height:1.2}
-.logo-txt p{font-size:13px;color:var(--txt3)}
+.logo-txt h1{font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-0.02em}
+
+.hdr-r{display:flex;align-items:center;gap:10px}
+
+/* Page Tabs - full width 2 column */
+.page-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+  margin-bottom:8px;
+  border-bottom:3px solid var(--bdr);
+}
+.page-tab{
+  padding:8px 0;
+  background:transparent;
+  border:0;
+  border-bottom:3px solid transparent;
+  margin-bottom:-3px;
+  color:var(--txt3);
+  font:800 28px 'Inter',sans-serif;
+  letter-spacing:-0.03em;
+  cursor:pointer;
+  transition:all .2s;
+  text-align:left;
+}
+.page-tab:hover{color:var(--txt)}
+.page-tab.on{
+  color:var(--txt);
+  border-bottom-color:var(--red);
+}
+.page-tab:last-child.on{
+  border-bottom-color:#3b82f6;
+}
 
 /* Theme Toggle */
-.theme-toggle{width:44px;height:44px;border-radius:10px;background:transparent;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;transition:all .2s}
+.theme-toggle{width:42px;height:42px;border-radius:10px;background:transparent;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s}
 .theme-toggle:hover{background:var(--bg3)}
 
-/* Accordions */
-.acc{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);margin-bottom:var(--gap);overflow:hidden;transition:all .3s}
-.acc-t{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:0;border:0;color:var(--txt);font:600 15px/1 'Inter',sans-serif;cursor:pointer;transition:background .2s}
-.acc-t:hover{background:var(--bg3)}
-.acc-t span:first-child{display:flex;align-items:center;gap:12px}
-.acc-arr{font-size:12px;color:var(--txt3);transition:transform .2s}
-.acc.open .acc-arr{transform:rotate(180deg)}
-.acc-b{display:none;padding:20px;border-top:1px solid var(--bdr)}
-.acc.open .acc-b{display:block}
+/* ==================== */
+/* INFO PANEL - Inline swap */
+/* ==================== */
+.info-panel{
+  display:none;
+  animation:fadeSlideIn .3s ease;
+}
+.info-panel.open{display:block}
 
-/* Steps */
-.step{display:flex;gap:16px}
+@keyframes fadeSlideIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Content hiding when info is open */
+.calc-content{animation:fadeSlideIn .3s ease}
+.calc-content.hidden{display:none}
+
+/* Info grid layout - single column */
+.info-grid{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* Info Panel Accordions - Larger, more spacious */
+.sh-acc{
+  background:var(--card-bg);
+  border:1px solid var(--card-bdr);
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:all .2s;
+}
+.sh-acc:hover{border-color:var(--bdr2)}
+.sh-acc-t{
+  width:100%;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px;
+  background:0;border:0;
+  color:var(--txt);
+  font:800 20px/1.4 'Inter',sans-serif;
+  cursor:pointer;
+  transition:background .2s;
+  text-align:left;
+}
+.sh-acc-t:hover{background:var(--bg3)}
+.sh-acc-t .ico{font-size:20px;margin-right:14px}
+.sh-acc-arr{
+  font-size:12px;color:var(--txt3);
+  transition:transform .25s ease;
+  flex-shrink:0;
+}
+.sh-acc.open .sh-acc-arr{transform:rotate(180deg)}
+.sh-acc-b{
+  display:grid;
+  grid-template-rows:0fr;
+  transition:grid-template-rows .3s ease;
+}
+.sh-acc.open .sh-acc-b{grid-template-rows:1fr}
+.sh-acc-inner{overflow:hidden}
+.sh-acc-content{padding:0 24px 24px;font-size:15px;color:var(--txt2);line-height:1.6}
+
+/* Steps in sheet */
+.step{display:flex;gap:14px;margin-bottom:4px}
 .step-l{display:flex;flex-direction:column;align-items:center}
-.step-d{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+.step-d{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
 .step-d.bl{background:var(--blue)}.step-d.gr{background:var(--green)}
-.step-c{width:2px;flex:1;background:var(--bdr2);margin:6px 0;min-height:16px}
-.step-x{padding-bottom:20px;flex:1}
-.step-x h4{font-size:15px;font-weight:600;margin-bottom:4px}
-.step-x p{font-size:14px;color:var(--txt2)}
-.step-x .qc{font-size:12px;color:var(--txt3);font-style:italic;margin-top:4px}
+.step-c{width:2px;flex:1;background:var(--bdr2);margin:4px 0;min-height:12px}
+.step-x{padding-bottom:14px;flex:1}
+.step-x h4{font-size:14px;font-weight:600;margin-bottom:2px;color:var(--txt)}
+.step-x p{font-size:13px;color:var(--txt2);line-height:1.5}
+.step-x .qc{font-size:11px;color:var(--txt3);font-style:italic;margin-top:2px}
 
-/* Grid */
-.gr2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:600px){.gr2{grid-template-columns:1fr}}
+/* Grid in sheet */
+.sh-gr2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.sh-gr2{grid-template-columns:1fr}}
 
-/* Cards */
-.card{background:var(--bg3);border-radius:var(--radius-sm);padding:18px;transition:background .3s}
-.card h4{font-size:14px;font-weight:600;margin-bottom:14px}
-.card ul{list-style:none;font-size:14px}
-.card li{margin-bottom:8px;color:var(--txt2)}
-.card .fn{font-size:12px;color:var(--txt3);margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr)}
+/* Cards in sheet */
+.sh-card{background:var(--bg3);border-radius:10px;padding:14px;transition:background .3s}
+.sh-card h4{font-size:13px;font-weight:600;margin-bottom:10px}
+.sh-card ul{list-style:none;font-size:13px}
+.sh-card li{margin-bottom:6px;color:var(--txt2)}
+.sh-card .fn{font-size:11px;color:var(--txt3);margin-top:10px;padding-top:10px;border-top:1px solid var(--bdr)}
 
-/* Tabs */
-.tabs{display:flex;border-bottom:1px solid var(--bdr2);margin-bottom:16px}
-.tab{padding:10px 18px;background:0;border:0;border-bottom:2px solid transparent;color:var(--txt3);font:500 14px 'Inter',sans-serif;cursor:pointer}
-.tab.on{color:var(--txt);border-color:var(--red)}
-.tp{display:none}.tp.on{display:block}
-.tr{margin-bottom:6px}.tr span:first-child{font-weight:600;margin-right:8px}
-.tr .bl{color:#3b82f6}.tr .rd{color:#ef4444}
+/* Tabs in sheet */
+.sh-tabs{display:flex;border-bottom:1px solid var(--bdr2);margin-bottom:12px;gap:4px}
+.sh-tab{padding:8px 14px;background:0;border:0;border-bottom:2px solid transparent;color:var(--txt3);font:500 13px 'Inter',sans-serif;cursor:pointer;transition:all .2s;border-radius:6px 6px 0 0}
+.sh-tab:hover{color:var(--txt);background:var(--bg3)}
+.sh-tab.on{color:var(--txt);border-color:var(--red);background:var(--bg3)}
+.sh-tp{display:none}.sh-tp.on{display:block}
+.sh-tr{margin-bottom:6px;font-size:13px}.sh-tr span:first-child{font-weight:600;margin-right:8px}
+.sh-tr .bl{color:#3b82f6}.sh-tr .rd{color:#ef4444}
 
-/* Table */
-table{width:100%;border-collapse:collapse;font-size:14px}
-th,td{padding:14px 12px;text-align:left;border-bottom:1px solid var(--bdr)}
-th{color:var(--txt3);font-weight:500;font-size:13px}
-.ctr{text-align:center}
+/* Table in sheet */
+.sh-table{width:100%;border-collapse:collapse;font-size:13px}
+.sh-table th,.sh-table td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--bdr)}
+.sh-table th{color:var(--txt3);font-weight:500;font-size:12px}
+.sh-table .ctr{text-align:center}
 
-/* FAQ */
-.faq{background:var(--bg3);border-radius:6px;margin-bottom:8px;overflow:hidden;transition:background .3s}
-.faq-q{width:100%;padding:14px 16px;background:0;border:0;color:var(--txt);font:500 14px 'Inter',sans-serif;text-align:left;cursor:pointer;transition:color .2s}
-.faq-q:hover{color:var(--red)}
-.faq-a{display:none;padding:0 16px 14px;font-size:14px;color:var(--txt2);white-space:pre-line}
-.faq.open .faq-a{display:block}
+/* FAQ in sheet */
+.sh-faq{background:var(--bg3);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.sh-faq-q{width:100%;padding:12px 14px;background:0;border:0;color:var(--txt);font:500 13px 'Inter',sans-serif;text-align:left;cursor:pointer;transition:color .2s}
+.sh-faq-q:hover{color:var(--red)}
+.sh-faq-a{display:none;padding:0 14px 12px;font-size:13px;color:var(--txt2);line-height:1.5}
+.sh-faq.open .sh-faq-a{display:block}
 
-/* Calculator Section */
-.calc{margin-top:18px}
-.calc-h{margin-bottom:32px}
-.calc-h h2{font-size:26px;font-weight:700;margin-bottom:8px}
-.calc-h p{font-size:15px;color:var(--txt2)}
+/* ==================== */
+/* HERO CALCULATOR */
+/* ==================== */
+.hero{margin-bottom:24px}
+.hero-h{margin-bottom:24px;text-align:left}
+.hero-h h2{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;background:linear-gradient(135deg,var(--txt) 0%,var(--txt2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-h p{font-size:15px;color:var(--txt2)}
 
 /* Calculator Steps */
 .cs{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:var(--pad);margin-bottom:var(--gap);transition:all .3s}
@@ -136,14 +222,14 @@ th{color:var(--txt3);font-weight:500;font-size:13px}
 .cs-n.pn{background:var(--red)}
 .cs-n.dn{background:transparent;margin-left:-5px}
 .cs-n img{width:24px;height:24px;object-fit:contain}
-.cs-h h3{font-size:15px;font-weight:600}
+.cs-h h3{font-size:20px;font-weight:800}
 
 /* Speaker Grid */
 .spk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 @media(max-width:500px){.spk-g{grid-template-columns:repeat(2,1fr)}}
-.spk{padding:18px 12px;background:var(--btn-bg);border:0;border-radius:var(--radius-sm);color:var(--txt);font:700 18px 'Inter',sans-serif;cursor:pointer;transition:all .2s}
-.spk:hover{background:var(--btn-hover)}
-.spk.on{background:var(--red);color:#fff}
+.spk{padding:18px 12px;background:var(--btn-bg);border:2px solid transparent;border-radius:var(--radius-sm);color:var(--txt);font:700 18px 'Inter',sans-serif;cursor:pointer;transition:all .2s}
+.spk:hover{background:var(--btn-hover);border-color:var(--bdr)}
+.spk.on{background:var(--red);color:#fff;border-color:var(--red)}
 
 /* Custom Pricing Notice */
 .cust{margin-top:20px;padding:16px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.3);border-radius:var(--radius-sm)}
@@ -164,6 +250,8 @@ th{color:var(--txt3);font-weight:500;font-size:13px}
 .fetch{padding:14px 28px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:600 15px 'Inter',sans-serif;cursor:pointer;white-space:nowrap;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
 .fetch:hover{background:var(--red2)}
 .fetch:disabled{background:var(--txt3);cursor:not-allowed}
+.fetch-hint{font-size:13px;color:var(--txt3);margin-top:12px;transition:opacity .2s}
+.fetch-hint.hid{opacity:0;height:0;margin:0;overflow:hidden}
 .fetch.done{background:var(--green);pointer-events:none;min-width:50px;padding:14px 16px}
 .err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:14px;color:#ef4444}
 
@@ -223,11 +311,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
 /* Languages Section */
 .lngs{margin-top:48px;background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:24px;transition:all .3s}
-.lngs h3{font-size:16px;font-weight:600;margin-bottom:18px}
+.lngs h3{font-size:20px;font-weight:800;margin-bottom:18px}
 .lngs-g{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:6px;font-size:13px;transition:background .3s}
 @media(max-width:700px){.lngs-g{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:450px){.lngs-g{grid-template-columns:repeat(2,1fr)}}
-.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:6px;font-size:13px;transition:background .3s}
 
 /* Email/Schedule Modal */
 .emodal{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:999998;display:none;align-items:center;justify-content:center;padding:20px}
@@ -295,109 +383,172 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 <!-- Toast Container -->
 <div class="toast-container" id="toasts"></div>
 
-<div class="wrap">
-<header class="hdr">
-  <div class="hdr-l">
-    <div class="logo-i"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/hvo-bordered-png.png?alt=media&token=4b18aef3-bb8f-473d-a6e6-5d18a37e1143" alt="HVO"></div>
-    <div class="logo-txt"><h1>Human Voice Over</h1><p>Information Deck</p></div>
-  </div>
-  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
-</header>
-
-<div class="acc" id="a1"><button class="acc-t" onclick="tgl('a1')"><span><span>▶️</span><span>How It Works</span></span><span class="acc-arr">▼</span></button>
-<div class="acc-b">
-<div class="step"><div class="step-l"><div class="step-d bl">1</div><div class="step-c"></div></div><div class="step-x"><h4>Submit</h4><p>Upload your video. A live dashboard tracks every language in real time.</p></div></div>
-<div class="step"><div class="step-l"><div class="step-d bl">2</div><div class="step-c"></div></div><div class="step-x"><h4>Transcribe</h4><p>Accurate English script with speaker labels + time codes.</p></div></div>
-<div class="step"><div class="step-l"><div class="step-d bl">3</div><div class="step-c"></div></div><div class="step-x"><h4>Translate</h4><p>Native translators adapt line-by-line to sync perfectly.</p><div class="qc">(QC check)</div></div></div>
-<div class="step"><div class="step-l"><div class="step-d bl">4</div><div class="step-c"></div></div><div class="step-x"><h4>Record</h4><p>Pro voice actors dub while watching the video to match energy + timing.</p><div class="qc">(QC check)</div></div></div>
-<div class="step"><div class="step-l"><div class="step-d bl">5</div><div class="step-c"></div></div><div class="step-x"><h4>Sound Engineer</h4><p>Mix + master so voices blend seamlessly with music + effects.</p><div class="qc">(QC check)</div></div></div>
-<div class="step"><div class="step-l"><div class="step-d gr">6</div></div><div class="step-x"><h4 style="color:#22c55e">We Deliver</h4><p>Final dubs, quality-checked and organized, ready to publish.</p><div class="qc">(3rd-party QC)</div></div></div>
-</div></div>
-
-<div class="acc" id="a2"><button class="acc-t" onclick="tgl('a2')"><span><span>🌐</span><span>Audio Tracks vs Separate Channels</span></span><span class="acc-arr">▼</span></button>
-<div class="acc-b"><div class="gr2">
-<div class="card"><h4 style="color:#22c55e">Audio Track Feature (Recommended)</h4><ul><li>✓ All languages in one place</li><li>✓ Upload all at once when video releases</li><li>✓ International views boost main channel</li><li>✓ Current viewers unaffected</li></ul><div class="fn">Requires 40-50 uploads with audio tracks</div></div>
-<div class="card"><h4 style="color:#dc2626">Separate Channels</h4><ul><li>✓ Faster monetization</li><li>✓ Easier algorithm discovery</li></ul><ul style="margin-top:12px;color:var(--txt3)"><li>✗ Manage each channel yourself</li><li>✗ No channel management from HVO</li></ul></div>
-</div></div></div>
-
-<div class="acc" id="a3"><button class="acc-t" onclick="tgl('a3')"><span><span>⏱️</span><span>Turnaround Speeds</span></span><span class="acc-arr">▼</span></button>
-<div class="acc-b">
-<p style="color:#22c55e;font-size:14px;margin-bottom:18px">✓ Flexible and can be adjusted to fit your upload schedule.</p>
-<h4 style="font-weight:600;margin-bottom:12px">Ongoing Videos</h4>
-<div class="card" style="margin-bottom:18px">
-<p style="font-size:12px;color:var(--txt3);margin-bottom:12px">Video Length</p>
-<div class="tabs"><button class="tab on" onclick="stab(event,'t1')">30 Min or less</button><button class="tab" onclick="stab(event,'t2')">60 Min or less</button><button class="tab" onclick="stab(event,'t3')">90 Min or less</button></div>
-<div id="t1" class="tp on"><div class="tr"><span class="bl">Standard</span><span>~7 Days</span></div><div class="tr"><span class="rd">Expedited</span><span>~5 Days</span></div></div>
-<div id="t2" class="tp"><div class="tr"><span class="bl">Standard</span><span>~10 Days</span></div><div class="tr"><span class="rd">Expedited</span><span>~7 Days</span></div></div>
-<div id="t3" class="tp"><div class="tr"><span class="bl">Standard</span><span>~14 Days</span></div><div class="tr"><span class="rd">Expedited</span><span>~10 Days</span></div></div>
-</div>
-<h4 style="font-weight:600;margin-bottom:12px">Back Catalog</h4>
-<div class="card" style="margin-bottom:18px"><p style="font-size:12px;color:var(--txt3);margin-bottom:12px">200-400 Minutes</p><div class="tr"><span class="bl">Standard</span><span>Monthly Delivery</span></div><div class="tr"><span class="rd">Expedited</span><span>Weekly Delivery</span></div></div>
-<h4 style="font-weight:600;margin-bottom:12px">YouTube Shorts</h4>
-<div class="card"><p style="font-size:14px;color:var(--txt2)">Our studios require a 10-15 minute minimum. Send 10-15 shorts together.</p></div>
-</div></div>
-
-<div class="acc" id="a4"><button class="acc-t" onclick="tgl('a4')"><span><span>💰</span><span>Pricing Structure</span></span><span class="acc-arr">▼</span></button>
-<div class="acc-b">
-<table><thead><tr><th>Recurring Speakers</th><th class="ctr">Per Minute</th></tr></thead>
-<tbody><tr><td>1-2 voices</td><td class="ctr" style="font-weight:600">$45/min</td></tr>
-<tr><td>3-4 voices</td><td class="ctr" style="font-weight:600">$50/min</td></tr>
-<tr><td>5-6 voices</td><td class="ctr" style="font-weight:600">$55/min</td></tr>
-<tr><td>7+ voices</td><td class="ctr" style="color:var(--txt3)">Custom - schedule a call</td></tr></tbody></table>
-<p style="font-size:13px;color:var(--txt3);margin-top:14px">Per minute, per language. Expedited +$5/min.</p>
-</div></div>
-
-<div class="acc" id="a5"><button class="acc-t" onclick="tgl('a5')"><span><span>📤</span><span>Submitting & Receiving Dubs</span></span><span class="acc-arr">▼</span></button>
-<div class="acc-b"><div class="gr2">
-<div><h4 style="font-weight:600;margin-bottom:12px">What's Needed:</h4><div class="card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2)"><li>Video Length</li><li>Release Date</li><li>Titles</li><li>Description</li><li>Video URL</li><li>Background Audio URL</li><li>Notes</li></ol></div></div>
-<div><h4 style="font-weight:600;margin-bottom:12px">What's Delivered:</h4><div class="card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2)"><li>Translated Titles (SEO)</li><li>Translated Description</li><li>Translated Thumbnail Text</li><li>Dubbed Mixed Audio (.WAV)</li><li>Dubbed Raw Audio (.WAV)</li><li>Translated Subtitles (.SRT)</li><li>English Transcript (.SRT)</li></ol></div></div>
-</div></div></div>
-
-<div class="acc" id="a6"><button class="acc-t" onclick="tgl('a6')"><span><span>❓</span><span>F.A.Q</span></span><span class="acc-arr">▼</span></button>
-<div class="acc-b" id="faq"></div></div>
-
-<section class="calc">
-<div class="calc-h"><h2>Dubbing Cost Calculator</h2><p>See your backlog cost + estimated ongoing monthly output</p></div>
-
-<div class="cs" id="s1">
-  <h3 style="font-size:15px;font-weight:600;margin-bottom:20px">How many main speakers appear in your videos?</h3>
-  <div class="spk-g" id="spkg"></div>
-  <div class="cust hid" id="cust"><p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p></div>
-  <div class="svc hid" id="svc"><div class="rate"><div class="lb">Your Rate</div><div class="vl">$<span id="rdisp">45</span>/min</div></div></div>
+<div class="wrap" style="padding-bottom:0">
+  <header class="hdr">
+    <div class="hdr-l">
+      <div class="logo-i"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/hvo-bordered-png.png?alt=media&token=4b18aef3-bb8f-473d-a6e6-5d18a37e1143" alt="HVO"></div>
+      <div class="logo-txt"><h1>Human Voice Over</h1></div>
+    </div>
+    <div class="hdr-r">
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    </div>
+  </header>
 </div>
 
-<div class="cs hid" id="s2">
-  <div class="cs-h"><div class="cs-n dn" id="n2"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></div><h3>Paste your YouTube Channel URL</h3></div>
-  <div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()">Fetch Videos</button></div>
-  <div class="err hid" id="errmsg"></div>
-</div>
+<!-- MAIN CONTENT -->
+<div class="wrap" style="padding-top:0">
 
-<div class="cs ch-card hid" id="s3">
-  <div class="ch-r">
-    <div class="ch-i"><img id="chpfp" class="ch-pfp" src="" alt=""><div><h3 id="chname">Channel</h3><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0 videos selected</span> · <span id="selmins">0</span> min</p></div></div>
-    <button class="edit" onclick="openVM()">Select Videos</button>
-  </div>
-  <div class="sel-list" id="sellist"><div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div></div>
-</div>
+  <!-- HERO CALCULATOR -->
+  <section class="hero">
+    <div class="hero-h">
+      <div class="page-tabs">
+        <button class="page-tab on" id="tabCalc" onclick="showCalc()">Dubbing Calculator</button>
+        <button class="page-tab" id="tabInfo" onclick="showInfo()">Info Deck</button>
+      </div>
+      <p id="heroSub">See your backlog cost + estimated ongoing monthly output</p>
+    </div>
 
-<div class="res hid" id="res">
-  <div class="res-g">
-    <div class="res-c"><h3 class="bl">📦 Backlog Cost</h3><div class="res-r"><div class="res-row"><span class="lb">Videos Selected</span><span id="rv">0</span></div><div class="res-row"><span class="lb">Source Minutes</span><span id="rsm">0</span></div><div class="res-row"><span class="lb">× <span id="rl1">1</span> Languages</span><span><span id="rdm">0</span> min dubbed</span></div><div class="res-row"><span class="lb">Rate</span><span>$<span id="rrt">45</span>/min</span></div></div><div class="res-t bl"><div class="sm">Total Backlog</div><div class="bg" id="rbc">$0</div></div></div>
-    <div class="res-c"><h3 class="gr">📈 Estimated Monthly Output</h3><div class="res-r"><div class="res-row"><span class="lb">Total Videos</span><span id="rrc">0</span></div><div class="res-row"><span class="lb">Avg Video Length</span><span><span id="ral">0</span> min</span></div><div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="rmm">0</span> min</span></div><div class="res-row"><span class="lb">× <span id="rl2">1</span> Languages</span><span><span id="rmd">0</span> min/mo</span></div></div><div class="res-t gr"><div class="sm">Est. Monthly</div><div class="bg" id="rmc">$0/mo</div></div></div>
-  </div>
-  <div class="lng-section">
-    <div class="lng-h"><div class="lng-v" id="ldisp">1</div><div class="lng-lbl" id="llbl">Language</div></div>
-    <input type="range" min="1" max="30" value="1" id="lslider" oninput="uLang(this.value)">
-    <div class="lng-lb"><span>1</span><span>30</span></div>
-  </div>
-  <div class="cta-row">
-    <button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
-    <button class="schedule-cta" onclick="scheduleCall()">📅 Schedule a Call</button>
-  </div>
-</div>
-</section>
+    <!-- Calculator Content -->
+    <div class="calc-content" id="calcContent">
+    <div class="cs" id="s1">
+      <h3 style="font-size:20px;font-weight:800;margin-bottom:20px">How many main speakers appear in your videos?</h3>
+      <div class="spk-g" id="spkg"></div>
+      <div class="cust hid" id="cust"><p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p></div>
+      <div class="svc hid" id="svc"><div class="rate"><div class="lb">Your Rate</div><div class="vl">$<span id="rdisp">45</span>/min</div></div></div>
+    </div>
 
-<section class="lngs"><h3>Top 20 Requested Languages</h3><div class="lngs-g" id="lngsg"></div><p style="font-size:13px;color:var(--txt3);margin-top:16px;text-align:center">We offer 30+ more languages — just ask!</p></section>
+    <div class="cs" id="s2">
+      <div class="cs-h"><div class="cs-n dn" id="n2"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></div><h3>Paste your YouTube Channel URL</h3></div>
+      <div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()" disabled>Fetch Videos</button></div>
+      <p class="fetch-hint" id="fetchHint">Select speaker count above to enable</p>
+      <div class="err hid" id="errmsg"></div>
+    </div>
+
+    <div class="cs ch-card hid" id="s3">
+      <div class="ch-r">
+        <div class="ch-i"><img id="chpfp" class="ch-pfp" src="" alt=""><div><h3 id="chname">Channel</h3><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0 videos selected</span> · <span id="selmins">0</span> min</p></div></div>
+        <button class="edit" onclick="openVM()">Select Videos</button>
+      </div>
+      <div class="sel-list" id="sellist"><div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div></div>
+    </div>
+
+    <div class="res hid" id="res">
+      <div class="res-g">
+        <div class="res-c"><h3 class="bl">📦 Backlog Cost</h3><div class="res-r"><div class="res-row"><span class="lb">Videos Selected</span><span id="rv">0</span></div><div class="res-row"><span class="lb">Source Minutes</span><span id="rsm">0</span></div><div class="res-row"><span class="lb">× <span id="rl1">1</span> Languages</span><span><span id="rdm">0</span> min dubbed</span></div><div class="res-row"><span class="lb">Rate</span><span>$<span id="rrt">45</span>/min</span></div></div><div class="res-t bl"><div class="sm">Total Backlog</div><div class="bg" id="rbc">$0</div></div></div>
+        <div class="res-c"><h3 class="gr">📈 Estimated Monthly Output</h3><div class="res-r"><div class="res-row"><span class="lb">Total Videos</span><span id="rrc">0</span></div><div class="res-row"><span class="lb">Avg Video Length</span><span><span id="ral">0</span> min</span></div><div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="rmm">0</span> min</span></div><div class="res-row"><span class="lb">× <span id="rl2">1</span> Languages</span><span><span id="rmd">0</span> min/mo</span></div></div><div class="res-t gr"><div class="sm">Est. Monthly</div><div class="bg" id="rmc">$0/mo</div></div></div>
+      </div>
+      <div class="lng-section">
+        <div class="lng-h"><div class="lng-v" id="ldisp">1</div><div class="lng-lbl" id="llbl">Language</div></div>
+        <input type="range" min="1" max="30" value="1" id="lslider" oninput="uLang(this.value)">
+        <div class="lng-lb"><span>1</span><span>30</span></div>
+      </div>
+      <div class="cta-row">
+        <button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
+        <button class="schedule-cta" onclick="scheduleCall()">📅 Schedule a Call</button>
+      </div>
+    </div>
+    </div>
+    <!-- End calc-content -->
+
+    <!-- Info Panel Content -->
+    <div class="info-panel" id="infoPanel">
+      <div class="info-grid">
+        <!-- How It Works -->
+        <div class="sh-acc open" id="sha1">
+          <button class="sh-acc-t" onclick="shTgl('sha1')">
+            <span><span class="ico">▶️</span>How It Works</span>
+            <span class="sh-acc-arr">▼</span>
+          </button>
+          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
+            <div class="step"><div class="step-l"><div class="step-d bl">1</div><div class="step-c"></div></div><div class="step-x"><h4>Submit</h4><p>Upload your video. A live dashboard tracks every language in real time.</p></div></div>
+            <div class="step"><div class="step-l"><div class="step-d bl">2</div><div class="step-c"></div></div><div class="step-x"><h4>Transcribe</h4><p>Accurate English script with speaker labels + time codes.</p></div></div>
+            <div class="step"><div class="step-l"><div class="step-d bl">3</div><div class="step-c"></div></div><div class="step-x"><h4>Translate</h4><p>Native translators adapt line-by-line to sync perfectly.</p><div class="qc">(QC check)</div></div></div>
+            <div class="step"><div class="step-l"><div class="step-d bl">4</div><div class="step-c"></div></div><div class="step-x"><h4>Record</h4><p>Pro voice actors dub while watching the video to match energy + timing.</p><div class="qc">(QC check)</div></div></div>
+            <div class="step"><div class="step-l"><div class="step-d bl">5</div><div class="step-c"></div></div><div class="step-x"><h4>Sound Engineer</h4><p>Mix + master so voices blend seamlessly with music + effects.</p><div class="qc">(QC check)</div></div></div>
+            <div class="step"><div class="step-l"><div class="step-d gr">6</div></div><div class="step-x"><h4 style="color:#22c55e">We Deliver</h4><p>Final dubs, quality-checked and organized, ready to publish.</p><div class="qc">(3rd-party QC)</div></div></div>
+          </div></div></div>
+        </div>
+
+        <!-- Audio Tracks vs Separate -->
+        <div class="sh-acc" id="sha2">
+          <button class="sh-acc-t" onclick="shTgl('sha2')">
+            <span><span class="ico">🌐</span>Audio Tracks vs Separate Channels</span>
+            <span class="sh-acc-arr">▼</span>
+          </button>
+          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
+            <div class="sh-gr2">
+              <div class="sh-card"><h4 style="color:#22c55e">Audio Track Feature (Recommended)</h4><ul><li>✓ All languages in one place</li><li>✓ Upload all at once when video releases</li><li>✓ International views boost main channel</li><li>✓ Current viewers unaffected</li></ul><div class="fn">Requires 40-50 uploads with audio tracks</div></div>
+              <div class="sh-card"><h4 style="color:#dc2626">Separate Channels</h4><ul><li>✓ Faster monetization</li><li>✓ Easier algorithm discovery</li></ul><ul style="margin-top:12px;color:var(--txt3)"><li>✗ Manage each channel yourself</li><li>✗ No channel management from HVO</li></ul></div>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- Turnaround Speeds -->
+        <div class="sh-acc" id="sha3">
+          <button class="sh-acc-t" onclick="shTgl('sha3')">
+            <span><span class="ico">⏱️</span>Turnaround Speeds</span>
+            <span class="sh-acc-arr">▼</span>
+          </button>
+          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
+            <p style="color:#22c55e;font-size:14px;margin-bottom:16px">✓ Flexible and can be adjusted to fit your upload schedule.</p>
+            <h4 style="font-weight:600;margin-bottom:12px">Ongoing Videos</h4>
+            <div class="sh-card" style="margin-bottom:16px">
+              <p style="font-size:12px;color:var(--txt3);margin-bottom:12px">Video Length</p>
+              <div class="sh-tabs"><button class="sh-tab on" onclick="shTab(event,'sht1')">≤30 Min</button><button class="sh-tab" onclick="shTab(event,'sht2')">≤60 Min</button><button class="sh-tab" onclick="shTab(event,'sht3')">≤90 Min</button></div>
+              <div id="sht1" class="sh-tp on"><div class="sh-tr"><span class="bl">Standard</span><span>~7 Days</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>~5 Days</span></div></div>
+              <div id="sht2" class="sh-tp"><div class="sh-tr"><span class="bl">Standard</span><span>~10 Days</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>~7 Days</span></div></div>
+              <div id="sht3" class="sh-tp"><div class="sh-tr"><span class="bl">Standard</span><span>~14 Days</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>~10 Days</span></div></div>
+            </div>
+            <h4 style="font-weight:600;margin-bottom:12px">Back Catalog</h4>
+            <div class="sh-card" style="margin-bottom:16px"><p style="font-size:12px;color:var(--txt3);margin-bottom:10px">200-400 Minutes</p><div class="sh-tr"><span class="bl">Standard</span><span>Monthly Delivery</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>Weekly Delivery</span></div></div>
+            <h4 style="font-weight:600;margin-bottom:12px">YouTube Shorts</h4>
+            <div class="sh-card"><p style="font-size:14px;color:var(--txt2)">Our studios require a 10-15 minute minimum. Send 10-15 shorts together.</p></div>
+          </div></div></div>
+        </div>
+
+        <!-- Pricing Structure -->
+        <div class="sh-acc" id="sha4">
+          <button class="sh-acc-t" onclick="shTgl('sha4')">
+            <span><span class="ico">💰</span>Pricing Structure</span>
+            <span class="sh-acc-arr">▼</span>
+          </button>
+          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
+            <table class="sh-table"><thead><tr><th>Recurring Speakers</th><th class="ctr">Per Minute</th></tr></thead>
+            <tbody><tr><td>1-2 voices</td><td class="ctr" style="font-weight:600">$45/min</td></tr>
+            <tr><td>3-4 voices</td><td class="ctr" style="font-weight:600">$50/min</td></tr>
+            <tr><td>5-6 voices</td><td class="ctr" style="font-weight:600">$55/min</td></tr>
+            <tr><td>7+ voices</td><td class="ctr" style="color:var(--txt3)">Custom</td></tr></tbody></table>
+            <p style="font-size:13px;color:var(--txt3);margin-top:14px">Per minute, per language. Expedited +$5/min.</p>
+          </div></div></div>
+        </div>
+
+        <!-- Submitting & Receiving -->
+        <div class="sh-acc" id="sha5">
+          <button class="sh-acc-t" onclick="shTgl('sha5')">
+            <span><span class="ico">📤</span>Submitting & Receiving Dubs</span>
+            <span class="sh-acc-arr">▼</span>
+          </button>
+          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
+            <div class="sh-gr2">
+              <div><h4 style="font-weight:600;margin-bottom:12px">What's Needed:</h4><div class="sh-card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2);line-height:1.8"><li>Video Length</li><li>Release Date</li><li>Titles</li><li>Description</li><li>Video URL</li><li>Background Audio URL</li><li>Notes</li></ol></div></div>
+              <div><h4 style="font-weight:600;margin-bottom:12px">What's Delivered:</h4><div class="sh-card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2);line-height:1.8"><li>Translated Titles (SEO)</li><li>Translated Description</li><li>Translated Thumbnail Text</li><li>Dubbed Mixed Audio (.WAV)</li><li>Dubbed Raw Audio (.WAV)</li><li>Translated Subtitles (.SRT)</li><li>English Transcript (.SRT)</li></ol></div></div>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="sh-acc" id="sha6">
+          <button class="sh-acc-t" onclick="shTgl('sha6')">
+            <span><span class="ico">❓</span>F.A.Q</span>
+            <span class="sh-acc-arr">▼</span>
+          </button>
+          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content" id="shfaq"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lngs"><h3>Top 20 Languages (Highest Ticket to Lowest)</h3><div class="lngs-g" id="lngsg"></div><p style="font-size:13px;color:var(--txt3);margin-top:16px;text-align:left">and 30+ more languages — just ask!</p></section>
 </div>
 
 <!-- VIDEO MODAL HOST -->
@@ -453,9 +604,48 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
 <script>
 const PRC={'1-2':45,'3-4':50,'5-6':55},TIERS=['1-2','3-4','5-6','7+'],
-LNGS=[['🇲🇽','Spanish (LATAM)'],['🇧🇷','Portuguese (BR)'],['🇷🇺','Russian'],['🇸🇦','Arabic'],['🇫🇷','French'],['🇻🇳','Vietnamese'],['🇮🇳','Hindi'],['🇮🇩','Indonesian'],['🇹🇷','Turkish'],['🇹🇭','Thai'],['🇧🇩','Bangla'],['🇩🇪','German'],['🇮🇳','Punjabi'],['🇮🇹','Italian'],['🇯🇵','Japanese'],['🇵🇰','Urdu'],['🇰🇷','Korean'],['🇵🇱','Polish'],['🇮🇳','Tamil'],['🇳🇱','Dutch']],
+LNGS=[['🇩🇪','German'],['🇮🇹','Italian'],['🇫🇷','French'],['🇯🇵','Japanese'],['🇰🇷','Korean'],['🇲🇽','Spanish'],['🇷🇺','Russian'],['🇹🇷','Turkish'],['🇧🇷','Portuguese'],['🇸🇦','Arabic'],['🇹🇭','Thai'],['🇻🇳','Vietnamese'],['🇮🇳','Hindi'],['🇮🇩','Indonesian'],['🇧🇩','Bangla'],['🇮🇳','Punjabi'],['🇵🇰','Urdu'],['🇵🇱','Polish'],['🇮🇳','Tamil'],['🇳🇱','Dutch']],
 FAQS=[["What's a casting?","Before moving forward we will prepare a few voice options for you to confirm in a short clip of your material."],["What languages do you offer?","Albanian, Arabic, Bengali, Chinese, Dutch, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Vietnamese + more"],["How does ongoing billing work?","We bill you at the end of each month based on your total minute usage per language."],["Will my voice actor stay the same?","Yes, we use the same voice actor(s) for all main recurring speakers."],["Does HVO collect a rev-share?","No"],["Who owns the rights to delivered dubs?","You do. We guarantee the transfer of all ownership rights indefinitely."],["How many studios?","60 locations"],["How many actors?","Around 200 per studio and 500 remote actors"],["How many translators?","600 on hand + 400 extra if needed"],["How many audio engineers?","30 in-house engineers"]];
 let S={tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],recent:[],sel:new Set(),langs:1,calc:{}};
+
+// Tab switching - Calculator vs Info
+function showCalc() {
+  document.getElementById('infoPanel').classList.remove('open');
+  document.getElementById('calcContent').classList.remove('hidden');
+  document.getElementById('tabCalc').classList.add('on');
+  document.getElementById('tabInfo').classList.remove('on');
+  document.getElementById('heroSub').textContent = 'See your backlog cost + estimated ongoing monthly output';
+}
+
+function showInfo() {
+  document.getElementById('infoPanel').classList.add('open');
+  document.getElementById('calcContent').classList.add('hidden');
+  document.getElementById('tabCalc').classList.remove('on');
+  document.getElementById('tabInfo').classList.add('on');
+  document.getElementById('heroSub').textContent = 'Learn about our dubbing process and pricing';
+}
+
+// Accordion - one at a time
+function shTgl(id) {
+  const allAccs = document.querySelectorAll('.sh-acc');
+  const clickedAcc = document.getElementById(id);
+  const isOpen = clickedAcc.classList.contains('open');
+  
+  // Close all
+  allAccs.forEach(acc => acc.classList.remove('open'));
+  
+  // Open clicked one if it wasn't already open
+  if (!isOpen) {
+    clickedAcc.classList.add('open');
+  }
+}
+
+function shTab(e, id) {
+  e.target.parentElement.querySelectorAll('.sh-tab').forEach(t => t.classList.remove('on'));
+  e.target.classList.add('on');
+  e.target.parentElement.parentElement.querySelectorAll('.sh-tp').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
 
 // Theme toggle
 function toggleTheme() {
@@ -857,11 +1047,12 @@ document.addEventListener('DOMContentLoaded', () => {
     b.onclick = () => sTier(t);
     sg.appendChild(b);
   });
-  const fq = document.getElementById('faq');
+  // FAQ in sheet
+  const fq = document.getElementById('shfaq');
   FAQS.forEach(f => {
     const d = document.createElement('div');
-    d.className = 'faq';
-    d.innerHTML = `<button class="faq-q" onclick="this.parentElement.classList.toggle('open')">${f[0]}</button><div class="faq-a">${f[1]}</div>`;
+    d.className = 'sh-faq';
+    d.innerHTML = `<button class="sh-faq-q" onclick="this.parentElement.classList.toggle('open')">${f[0]}</button><div class="sh-faq-a">${f[1]}</div>`;
     fq.appendChild(d);
   });
   const lg = document.getElementById('lngsg');
@@ -873,30 +1064,54 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function tgl(id) { document.getElementById(id).classList.toggle('open'); }
-function stab(e, id) {
-  e.target.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
-  e.target.classList.add('on');
-  e.target.parentElement.parentElement.querySelectorAll('.tp').forEach(p => p.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-}
+// Keyboard shortcut for switching tabs
+document.addEventListener('keydown', e => {
+  if (e.key === 'i' || e.key === 'I') {
+    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      const infoPanel = document.getElementById('infoPanel');
+      if (infoPanel.classList.contains('open')) {
+        showCalc();
+      } else {
+        showInfo();
+      }
+    }
+  }
+  if (e.key === 'Escape') {
+    const infoPanel = document.getElementById('infoPanel');
+    if (infoPanel.classList.contains('open')) {
+      showCalc();
+    }
+  }
+});
 
 function sTier(t) {
   S.tier = t;
   document.querySelectorAll('.spk').forEach((b, i) => b.classList.toggle('on', TIERS[i] === t));
   
+  const fbtn = document.getElementById('fbtn');
+  const hint = document.getElementById('fetchHint');
+  
   if (t === '7+') {
     document.getElementById('cust').classList.remove('hid');
     document.getElementById('svc').classList.add('hid');
-    document.getElementById('s2').classList.add('hid');
     document.getElementById('s3').classList.add('hid');
     document.getElementById('res').classList.add('hid');
+    // Disable fetch for 7+ but keep section visible with custom hint
+    fbtn.disabled = true;
+    hint.classList.remove('hid');
+    hint.textContent = 'Custom pricing requires a call';
     return;
   }
   
   document.getElementById('cust').classList.add('hid');
   document.getElementById('svc').classList.remove('hid');
-  document.getElementById('s2').classList.remove('hid');
+  
+  // Enable fetch for valid speaker counts
+  if (!fbtn.classList.contains('done')) {
+    fbtn.disabled = false;
+  }
+  hint.classList.add('hid');
   
   S.rate = PRC[t];
   document.getElementById('rdisp').textContent = S.rate;
@@ -911,10 +1126,19 @@ function sTier(t) {
 
 function resetFetch() {
   const btn = document.getElementById('fbtn');
+  const hint = document.getElementById('fetchHint');
   if (btn.classList.contains('done')) {
     btn.className = 'fetch';
     btn.innerHTML = 'Fetch Videos';
-    btn.disabled = false;
+    // Only enable if a valid tier is selected
+    if (S.tier && S.tier !== '7+') {
+      btn.disabled = false;
+      hint.classList.add('hid');
+    } else {
+      btn.disabled = true;
+      hint.classList.remove('hid');
+      hint.textContent = S.tier === '7+' ? 'Custom pricing requires a call' : 'Select speaker count above to enable';
+    }
   }
 }
 
@@ -941,7 +1165,7 @@ async function doFetch() {
     S.subs = d.subscriberCount || '';
     S.back = d.backlogVideos || [];
     S.recent = d.recentVideos || [];
-    S.sel = new Set(); // Start with no videos selected
+    S.sel = new Set();
     
     document.getElementById('chname').textContent = S.name;
     document.getElementById('chpfp').src = S.thumb;
@@ -949,6 +1173,7 @@ async function doFetch() {
     document.getElementById('fbtn').className = 'fetch done';
     document.getElementById('fbtn').innerHTML = '✓';
     document.getElementById('fbtn').disabled = true;
+    document.getElementById('fetchHint').classList.add('hid');
     
     const s3 = document.getElementById('s3');
     s3.classList.remove('hid');
@@ -1081,7 +1306,6 @@ function openVM() {
   shadowRoot.getElementById('shadow-search').value = '';
   document.body.style.overflow = 'hidden';
   shadowMbody.scrollTop = 0;
-  // Sync theme
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   shadowModal.setAttribute('data-theme', isDark ? 'dark' : '');
 }
@@ -1101,7 +1325,6 @@ function filterVideos(q) {
 
 function confV() { closeVM(); uRes(); uSelList(); }
 
-// Update selected videos list display
 function uSelList() {
   const list = document.getElementById('sellist');
   const selected = S.back.filter(v => S.sel.has(v.id));
