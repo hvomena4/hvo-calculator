@@ -3,28 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>HVO Dubbing Calculator</title>
+<title>HVO Information Deck</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0a0a;--bg2:#141414;--bg3:#1a1a1a;--bg4:#222;--bdr:#2a2a2a;--bdr2:#333;--txt:#fff;--txt2:#a0a0a0;--txt3:#666;--red:#dc2626;--red2:#b91c1c;--green:#22c55e;--blue:#3b82f6}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased}
-.wrap{max-width:880px;margin:0 auto;padding:24px 20px 60px}
-.hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:24px;margin-bottom:28px;border-bottom:1px solid var(--bdr)}
-.logo{display:flex;align-items:center;gap:14px}
-.logo-i{width:46px;height:46px;border-radius:10px;overflow:hidden;flex-shrink:0}
+
+/* Light Mode (default) */
+:root{
+  --bg:#ffffff;
+  --bg2:#f8f8f8;
+  --bg3:#f0f0f0;
+  --bg4:#e5e5e5;
+  --bdr:#e0e0e0;
+  --bdr2:#d0d0d0;
+  --txt:#111;
+  --txt2:#555;
+  --txt3:#888;
+  --red:#dc2626;
+  --red2:#b91c1c;
+  --green:#22c55e;
+  --blue:#2563eb;
+  --card-bg:#fff;
+  --card-bdr:#e0e0e0;
+  --input-bg:#f5f5f5;
+  --btn-bg:#e5e5e5;
+  --btn-hover:#d5d5d5;
+  --pad:22px;
+  --gap:14px;
+  --radius:14px;
+  --radius-sm:10px;
+}
+
+/* Dark Mode */
+[data-theme="dark"]{
+  --bg:#050505;
+  --bg2:#0c0c0c;
+  --bg3:#141414;
+  --bg4:#1c1c1c;
+  --bdr:#1a1a1a;
+  --bdr2:#252525;
+  --txt:#fff;
+  --txt2:#a0a0a0;
+  --txt3:#666;
+  --card-bg:#0c0c0c;
+  --card-bdr:#1a1a1a;
+  --input-bg:#1a1a1a;
+  --btn-bg:#1a1a1a;
+  --btn-hover:#252525;
+}
+
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+
+/* Layout */
+.wrap{max-width:900px;margin:0 auto;padding:32px 24px 80px}
+
+/* Header */
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.hdr-l{display:flex;align-items:center;gap:14px}
+.logo-i{width:44px;height:44px;border-radius:10px;overflow:hidden;flex-shrink:0}
 .logo-i img{width:100%;height:100%;object-fit:contain}
-.logo-txt{display:flex;flex-direction:column}
-.logo-txt h1{font-size:18px;font-weight:700;line-height:1.2;margin:0}
-.logo-txt p{font-size:13px;color:var(--txt3);margin:0}
-.acc{background:var(--bg2);border:1px solid var(--bdr);border-radius:14px;margin-bottom:12px;overflow:hidden}
-.acc-t{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:0;border:0;color:var(--txt);font:600 15px/1 'Inter',sans-serif;cursor:pointer}
+.logo-txt h1{font-size:18px;font-weight:700;line-height:1.2}
+.logo-txt p{font-size:13px;color:var(--txt3)}
+
+/* Theme Toggle */
+.theme-toggle{width:44px;height:44px;border-radius:10px;background:var(--bg3);border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;transition:all .2s}
+.theme-toggle:hover{background:var(--bg4)}
+
+/* Accordions */
+.acc{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);margin-bottom:var(--gap);overflow:hidden;transition:all .3s}
+.acc-t{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:0;border:0;color:var(--txt);font:600 15px/1 'Inter',sans-serif;cursor:pointer;transition:background .2s}
 .acc-t:hover{background:var(--bg3)}
 .acc-t span:first-child{display:flex;align-items:center;gap:12px}
 .acc-arr{font-size:12px;color:var(--txt3);transition:transform .2s}
 .acc.open .acc-arr{transform:rotate(180deg)}
 .acc-b{display:none;padding:20px;border-top:1px solid var(--bdr)}
 .acc.open .acc-b{display:block}
+
+/* Steps */
 .step{display:flex;gap:16px}
 .step-l{display:flex;flex-direction:column;align-items:center}
 .step-d{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
@@ -34,157 +89,218 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .step-x h4{font-size:15px;font-weight:600;margin-bottom:4px}
 .step-x p{font-size:14px;color:var(--txt2)}
 .step-x .qc{font-size:12px;color:var(--txt3);font-style:italic;margin-top:4px}
+
+/* Grid */
 .gr2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:600px){.gr2{grid-template-columns:1fr}}
-.card{background:var(--bg3);border-radius:10px;padding:18px}
+
+/* Cards */
+.card{background:var(--bg3);border-radius:var(--radius-sm);padding:18px;transition:background .3s}
 .card h4{font-size:14px;font-weight:600;margin-bottom:14px}
 .card ul{list-style:none;font-size:14px}
 .card li{margin-bottom:8px;color:var(--txt2)}
 .card .fn{font-size:12px;color:var(--txt3);margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr)}
+
+/* Tabs */
 .tabs{display:flex;border-bottom:1px solid var(--bdr2);margin-bottom:16px}
 .tab{padding:10px 18px;background:0;border:0;border-bottom:2px solid transparent;color:var(--txt3);font:500 14px 'Inter',sans-serif;cursor:pointer}
 .tab.on{color:var(--txt);border-color:var(--red)}
 .tp{display:none}.tp.on{display:block}
 .tr{margin-bottom:6px}.tr span:first-child{font-weight:600;margin-right:8px}
-.tr .bl{color:#60a5fa}.tr .rd{color:#fca5a5}
+.tr .bl{color:#3b82f6}.tr .rd{color:#ef4444}
+
+/* Table */
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{padding:14px 12px;text-align:left;border-bottom:1px solid var(--bdr)}
 th{color:var(--txt3);font-weight:500;font-size:13px}
 .ctr{text-align:center}
-.faq{background:var(--bg3);border-radius:6px;margin-bottom:8px;overflow:hidden}
-.faq-q{width:100%;padding:14px 16px;background:0;border:0;color:var(--txt);font:500 14px 'Inter',sans-serif;text-align:left;cursor:pointer}
-.faq-q:hover{color:#fca5a5}
+
+/* FAQ */
+.faq{background:var(--bg3);border-radius:6px;margin-bottom:8px;overflow:hidden;transition:background .3s}
+.faq-q{width:100%;padding:14px 16px;background:0;border:0;color:var(--txt);font:500 14px 'Inter',sans-serif;text-align:left;cursor:pointer;transition:color .2s}
+.faq-q:hover{color:var(--red)}
 .faq-a{display:none;padding:0 16px 14px;font-size:14px;color:var(--txt2);white-space:pre-line}
 .faq.open .faq-a{display:block}
-.calc{margin-top:40px;padding-top:40px;border-top:1px solid var(--bdr)}
-.calc-h{text-align:center;margin-bottom:36px}
+
+/* Calculator Section */
+.calc{margin-top:48px}
+.calc-h{margin-bottom:40px}
 .calc-h h2{font-size:26px;font-weight:700;margin-bottom:8px}
 .calc-h p{font-size:15px;color:var(--txt2)}
-.cs{background:var(--bg2);border:1px solid var(--bdr);border-radius:14px;padding:22px;margin-bottom:14px}
-.cs.on{border-color:var(--red)}
+
+/* Calculator Steps */
+.cs{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:var(--pad);margin-bottom:var(--gap);transition:all .3s}
 .cs.hid{display:none}
-.cs-h{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.cs-n{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff}
-.cs-n.pn{background:var(--red)}.cs-n.dn{background:var(--green)}
+.cs-h{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.cs-n{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;overflow:hidden;flex-shrink:0}
+.cs-n.pn{background:var(--red)}
+.cs-n.dn{background:transparent}
+.cs-n img{width:24px;height:24px;object-fit:contain}
 .cs-h h3{font-size:15px;font-weight:600}
+
+/* Speaker Grid */
 .spk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 @media(max-width:500px){.spk-g{grid-template-columns:repeat(2,1fr)}}
-.spk{padding:18px 12px;background:var(--bg4);border:2px solid transparent;border-radius:10px;color:var(--txt);font:700 18px 'Inter',sans-serif;cursor:pointer}
-.spk:hover{background:var(--bdr2)}
-.spk.on{background:var(--red);border-color:#fca5a5}
-.cust{margin-top:18px;padding:16px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px}
-.cust p{font-size:14px;color:#fbbf24}
-.cust a{color:#fbbf24}
-.svc{display:flex;align-items:center;justify-content:space-between;margin-top:20px;flex-wrap:wrap;gap:16px}
-.svc-b{display:flex;gap:10px}
-.svc-btn{padding:10px 18px;background:var(--bg4);border:0;border-radius:6px;color:var(--txt);font:600 14px 'Inter',sans-serif;cursor:pointer}
-.svc-btn:hover{background:var(--bdr2)}
-.svc-btn.on{background:var(--red)}
-.rate{text-align:right}
-.rate .lb{font-size:12px;color:var(--txt3)}
-.rate .vl{font-size:22px;font-weight:700;color:var(--red)}
+.spk{padding:18px 12px;background:var(--btn-bg);border:0;border-radius:var(--radius-sm);color:var(--txt);font:700 18px 'Inter',sans-serif;cursor:pointer;transition:all .2s}
+.spk:hover{background:var(--btn-hover)}
+.spk.on{background:var(--red);color:#fff}
+
+/* Custom Pricing Notice */
+.cust{margin-top:20px;padding:16px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.3);border-radius:var(--radius-sm)}
+.cust p{font-size:14px;color:#3b82f6}
+.cust a{color:#3b82f6}
+
+/* Rate Display */
+.svc{margin-top:20px}
+.rate .lb{font-size:13px;color:var(--txt2);margin-bottom:4px}
+.rate .vl{font-size:28px;font-weight:800;color:var(--txt)}
+
+/* URL Input */
 .url-r{display:flex;gap:12px}
 @media(max-width:500px){.url-r{flex-direction:column}}
-.url-i{flex:1;padding:14px 18px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:10px;color:var(--txt);font:14px 'Inter',sans-serif}
+.url-i{flex:1;padding:14px 18px;background:var(--input-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:14px 'Inter',sans-serif;transition:all .2s}
 .url-i::placeholder{color:var(--txt3)}
-.url-i:focus{outline:0;border-color:var(--red)}
-.fetch{padding:14px 28px;background:var(--red);border:0;border-radius:10px;color:#fff;font:600 14px 'Inter',sans-serif;cursor:pointer;white-space:nowrap;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px}
+.url-i:focus{outline:0;border-color:var(--blue)}
+.fetch{padding:14px 28px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:600 14px 'Inter',sans-serif;cursor:pointer;white-space:nowrap;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
 .fetch:hover{background:var(--red2)}
 .fetch:disabled{background:var(--txt3);cursor:not-allowed}
 .fetch.done{background:var(--green);pointer-events:none;min-width:50px;padding:14px 16px}
-.fetch.done:hover{background:var(--green)}
-.err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:14px;color:#fca5a5}
+.err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:14px;color:#ef4444}
+
+/* Channel Display */
+.cs.ch-card{background:var(--card-bg);border:1px solid var(--card-bdr);padding:20px}
 .ch-r{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
 .ch-i{display:flex;align-items:center;gap:14px}
 .ch-pfp{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0}
-.ch-i h3{font-size:16px;font-weight:600}
+.ch-i h3{font-size:16px;font-weight:600;color:var(--txt)}
 .ch-i p{font-size:13px;color:var(--txt3)}
 .ch-i .subs{color:var(--txt2);font-weight:500}
-.edit{padding:10px 18px;background:var(--bg4);border:1px solid var(--bdr2);border-radius:6px;color:var(--txt);font:600 13px 'Inter',sans-serif;cursor:pointer}
+.edit{padding:14px 24px;background:var(--blue);border:0;border-radius:8px;color:#fff;font:600 15px 'Inter',sans-serif;cursor:pointer;transition:background .2s}
+.edit:hover{background:#1d4ed8}
+
+/* Selected videos list */
+.sel-list{margin-top:16px;max-height:280px;overflow-y:auto;border-top:1px solid var(--bdr);padding-top:12px}
+.sel-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr)}
+.sel-item:last-child{border-bottom:0}
+.sel-thumb{width:80px;height:45px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--bg3)}
+.sel-info{flex:1;min-width:0}
+.sel-info h4{font-size:13px;font-weight:500;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sel-info p{font-size:12px;color:var(--txt3)}
+.sel-dur{font-size:13px;font-weight:600;color:var(--txt2);flex-shrink:0}
+.sel-empty{padding:20px;text-align:center;color:var(--txt3);font-size:14px}
+
+/* Languages Slider */
 .lng-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .lng-h h3{font-size:15px;font-weight:600}
 .lng-v{font-size:28px;font-weight:800;color:var(--red)}
-input[type=range]{width:100%;height:8px;background:var(--bg4);border-radius:4px;-webkit-appearance:none;cursor:pointer}
+input[type=range]{width:100%;height:8px;background:var(--bg3);border-radius:4px;-webkit-appearance:none;cursor:pointer}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:var(--red);border-radius:50%;border:3px solid var(--bg)}
 .lng-lb{display:flex;justify-content:space-between;font-size:12px;color:var(--txt3);margin-top:6px}
-.res{margin-top:8px}
+
+/* Results */
+.res{margin-top:var(--gap)}
 .res-g{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
 @media(max-width:600px){.res-g{grid-template-columns:1fr}}
-.res-c{background:linear-gradient(135deg,var(--bg2),var(--bg));border:1px solid var(--bdr);border-radius:14px;padding:22px}
+.res-c{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:var(--pad);transition:all .3s}
 .res-c h3{font-size:17px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.res-c h3.bl{color:#60a5fa}.res-c h3.gr{color:#4ade80}
+.res-c h3.bl{color:#3b82f6}.res-c h3.gr{color:#22c55e}
 .res-r{margin-bottom:18px}
 .res-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px}
 .res-row .lb{color:var(--txt2)}
-.res-t{text-align:center;padding:18px;border-radius:10px}
+.res-t{text-align:center;padding:18px;border-radius:var(--radius-sm)}
 .res-t.bl{background:#2563eb}.res-t.gr{background:#16a34a}
-.res-t .sm{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85;margin-bottom:4px}
-.res-t .bg{font-size:30px;font-weight:900}
+.res-t .sm{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85;margin-bottom:4px;color:#fff}
+.res-t .bg{font-size:30px;font-weight:900;color:#fff}
 
-/* CTA buttons row */
-.cta-row{display:flex;gap:12px;margin-bottom:12px}
+/* CTA Buttons */
+.cta-row{display:flex;gap:12px}
 @media(max-width:500px){.cta-row{flex-direction:column}}
-.email-cta{flex:1;padding:18px;background:#fff;border:0;border-radius:14px;color:var(--bg);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
-.email-cta:hover{background:#e5e5e5}
-.schedule-cta{flex:1;padding:18px;background:var(--bg4);border:1px solid var(--bdr2);border-radius:14px;color:var(--txt);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
-.schedule-cta:hover{background:var(--bdr2)}
-.csv-cta{width:100%;padding:14px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:10px;color:var(--txt2);font:600 14px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
-.csv-cta:hover{background:var(--bg4);color:var(--txt)}
+.email-cta{flex:1;padding:18px;background:var(--txt);border:0;border-radius:var(--radius);color:var(--bg);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
+.email-cta:hover{opacity:.9}
+.schedule-cta{flex:1;padding:18px;background:var(--btn-bg);border:0;border-radius:var(--radius);color:var(--txt);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
+.schedule-cta:hover{background:var(--btn-hover)}
 
-.lngs{margin-top:40px;background:var(--bg2);border:1px solid var(--bdr);border-radius:14px;padding:24px}
+/* Languages Section */
+.lngs{margin-top:48px;background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:24px;transition:all .3s}
 .lngs h3{font-size:16px;font-weight:600;margin-bottom:18px}
 .lngs-g{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 @media(max-width:700px){.lngs-g{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:450px){.lngs-g{grid-template-columns:repeat(2,1fr)}}
-.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:6px;font-size:13px}
+.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:6px;font-size:13px;transition:background .3s}
 
-/* Email Modal */
-.em-m{max-width:480px}
-.q-sum{background:var(--bg3);border-radius:10px;padding:18px;margin-bottom:20px}
+/* Email/Schedule Modal */
+.emodal{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:999998;display:none;align-items:center;justify-content:center;padding:20px}
+.emodal.open{display:flex}
+.em-box{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto;transition:all .3s}
+.em-h{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--bdr)}
+.em-h h3{font-size:18px;font-weight:700}
+.em-x{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:0;border:0;color:var(--txt2);font-size:24px;cursor:pointer;border-radius:6px;transition:all .2s}
+.em-x:hover{background:var(--bg3);color:var(--txt)}
+.em-body{padding:24px}
+.q-sum{background:var(--bg3);border-radius:var(--radius-sm);padding:18px;margin-bottom:20px}
 .q-sum h4{font-size:16px;font-weight:600;margin-bottom:14px}
 .q-nums{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .q-n .lb{font-size:12px;color:var(--txt3);margin-bottom:4px}
 .q-n .vl{font-size:22px;font-weight:700}
-.q-n .vl.bl{color:#60a5fa}.q-n .vl.gr{color:#4ade80}
+.q-n .vl.bl{color:#3b82f6}.q-n .vl.gr{color:#22c55e}
 .q-det{font-size:12px;color:var(--txt3);margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr)}
-.em-i{width:100%;padding:14px 18px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:10px;color:var(--txt);font:14px 'Inter',sans-serif;margin-bottom:16px}
+.em-i{width:100%;padding:14px 18px;background:var(--input-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:14px 'Inter',sans-serif;margin-bottom:16px;transition:all .2s}
 .em-i::placeholder{color:var(--txt3)}
-.em-i:focus{outline:0;border-color:var(--red)}
-.send{width:100%;padding:14px;background:var(--red);border:0;border-radius:10px;color:#fff;font:700 15px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.em-i:focus{outline:0;border-color:var(--blue)}
+.send{width:100%;padding:14px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:700 15px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
 .send:hover{background:var(--red2)}
 .em-note{font-size:12px;color:var(--txt3);text-align:center;margin-top:14px}
 .succ{text-align:center;padding:40px 20px}
-.succ-i{width:72px;height:72px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px}
+.succ-i{width:72px;height:72px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px;color:#fff}
 .succ h3{font-size:22px;font-weight:700;margin-bottom:8px}
 .succ p{color:var(--txt2)}
+
+/* Loading */
 .load{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center}
 .load.open{display:flex}
-.load-b{background:var(--bg2);border-radius:14px;padding:40px;text-align:center}
+.load-b{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:40px;text-align:center}
 .spin{width:48px;height:48px;border:4px solid var(--red);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .load-b p{font-weight:600;margin-bottom:6px}
 .load-b .sub{font-size:14px;color:var(--txt3)}
-.hid{display:none!important}
 
-/* Simple modal */
-.emodal{position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:999998;display:none;align-items:center;justify-content:center;padding:20px}
-.emodal.open{display:flex}
-.em-box{background:#141414;border:1px solid #2a2a2a;border-radius:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
-.em-h{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid #2a2a2a}
-.em-h h3{font-size:18px;font-weight:700;color:#fff}
-.em-x{width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:0;border:0;color:#a0a0a0;font-size:24px;cursor:pointer;border-radius:6px}
-.em-x:hover{background:#222;color:#fff}
-.em-body{padding:24px}
+/* Toast - Bottom Left */
+.toast-container{position:fixed;bottom:24px;left:24px;z-index:10000;display:flex;flex-direction:column-reverse;gap:10px}
+.toast{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:12px;padding:16px 20px;min-width:320px;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,.15);transform:translateX(-120%);opacity:0;transition:all .3s cubic-bezier(.22,.68,0,1.1);position:relative}
+[data-theme="dark"] .toast{box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.toast.show{transform:translateX(0);opacity:1}
+.toast.hide{transform:translateX(-120%);opacity:0}
+.toast-content{display:flex;align-items:center;gap:14px}
+.toast-icon{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0}
+.toast-icon img{width:100%;height:100%;object-fit:cover}
+.toast-text h4{font-size:14px;font-weight:600;margin-bottom:2px}
+.toast-text p{font-size:13px;color:var(--txt2)}
+.toast-close{position:absolute;top:8px;right:8px;width:24px;height:24px;background:0;border:0;color:var(--txt3);font-size:16px;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.toast-close:hover{background:var(--bg3);color:var(--txt)}
+
+/* Highlight Animation */
+@keyframes highlightPulse{
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}
+  70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
+}
+.cs.highlight{animation:highlightPulse .6s ease-out;border-color:var(--green)}
+
+.hid{display:none!important}
 </style>
 </head>
 <body>
 
+<!-- Toast Container -->
+<div class="toast-container" id="toasts"></div>
+
 <div class="wrap">
 <header class="hdr">
-<div class="logo">
-  <div class="logo-i"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/hvo-bordered-png.png?alt=media&token=4b18aef3-bb8f-473d-a6e6-5d18a37e1143" alt="HVO Logo"></div>
-  <div class="logo-txt"><h1>Human Voice Over</h1><p>Premium YouTube Dubbing</p></div>
-</div>
+  <div class="hdr-l">
+    <div class="logo-i"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/hvo-bordered-png.png?alt=media&token=4b18aef3-bb8f-473d-a6e6-5d18a37e1143" alt="HVO"></div>
+    <div class="logo-txt"><h1>Human Voice Over</h1><p>Information Deck</p></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
 </header>
 
 <div class="acc" id="a1"><button class="acc-t" onclick="tgl('a1')"><span><span>▶️</span><span>How It Works</span></span><span class="acc-arr">▼</span></button>
@@ -194,13 +310,13 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 <div class="step"><div class="step-l"><div class="step-d bl">3</div><div class="step-c"></div></div><div class="step-x"><h4>Translate</h4><p>Native translators adapt line-by-line to sync perfectly.</p><div class="qc">(QC check)</div></div></div>
 <div class="step"><div class="step-l"><div class="step-d bl">4</div><div class="step-c"></div></div><div class="step-x"><h4>Record</h4><p>Pro voice actors dub while watching the video to match energy + timing.</p><div class="qc">(QC check)</div></div></div>
 <div class="step"><div class="step-l"><div class="step-d bl">5</div><div class="step-c"></div></div><div class="step-x"><h4>Sound Engineer</h4><p>Mix + master so voices blend seamlessly with music + effects.</p><div class="qc">(QC check)</div></div></div>
-<div class="step"><div class="step-l"><div class="step-d gr">6</div></div><div class="step-x"><h4 style="font-style:italic;color:#4ade80">We Deliver</h4><p>Final dubs, quality-checked and organized, ready to publish.</p><div class="qc">(3rd-party QC)</div></div></div>
+<div class="step"><div class="step-l"><div class="step-d gr">6</div></div><div class="step-x"><h4 style="font-style:italic;color:#22c55e">We Deliver</h4><p>Final dubs, quality-checked and organized, ready to publish.</p><div class="qc">(3rd-party QC)</div></div></div>
 </div></div>
 
 <div class="acc" id="a2"><button class="acc-t" onclick="tgl('a2')"><span><span>🌐</span><span>Audio Track vs Separate Channels</span></span><span class="acc-arr">▼</span></button>
 <div class="acc-b"><div class="gr2">
 <div class="card"><h4 style="color:#22c55e">Audio Track Feature (Recommended)</h4><ul><li>✓ All languages in one place</li><li>✓ Upload all at once when video releases</li><li>✓ International views boost main channel</li><li>✓ Current viewers unaffected</li></ul><div class="fn">Requires 40-50 uploads with audio tracks</div></div>
-<div class="card"><h4 style="color:#f59e0b">Separate Channels</h4><ul><li>✓ Faster monetization</li><li>✓ Easier algorithm discovery</li></ul><ul style="margin-top:12px;color:#666"><li>✗ Manage each channel yourself</li><li>✗ No channel management from HVO</li></ul></div>
+<div class="card"><h4 style="color:#f59e0b">Separate Channels</h4><ul><li>✓ Faster monetization</li><li>✓ Easier algorithm discovery</li></ul><ul style="margin-top:12px;color:var(--txt3)"><li>✗ Manage each channel yourself</li><li>✗ No channel management from HVO</li></ul></div>
 </div></div></div>
 
 <div class="acc" id="a3"><button class="acc-t" onclick="tgl('a3')"><span><span>⏱️</span><span>Turnaround Speeds</span></span><span class="acc-arr">▼</span></button>
@@ -214,61 +330,82 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 <div id="t3" class="tp"><div class="tr"><span class="bl">Standard</span><span>~14 Days</span></div><div class="tr"><span class="rd">Expedited</span><span>~10 Days</span></div></div>
 </div>
 <h4 style="font-weight:600;margin-bottom:12px">Back Catalog</h4>
-<div class="card" style="margin-bottom:18px"><p style="font-size:12px;color:#666;margin-bottom:12px">200-400 Minutes</p><div class="tr"><span class="bl">Standard</span><span>Monthly Delivery</span></div><div class="tr"><span class="rd">Expedited</span><span>Weekly Delivery</span></div></div>
+<div class="card" style="margin-bottom:18px"><p style="font-size:12px;color:var(--txt3);margin-bottom:12px">200-400 Minutes</p><div class="tr"><span class="bl">Standard</span><span>Monthly Delivery</span></div><div class="tr"><span class="rd">Expedited</span><span>Weekly Delivery</span></div></div>
 <h4 style="font-weight:600;margin-bottom:12px">YouTube Shorts</h4>
-<div class="card"><p style="font-size:14px;color:#a0a0a0">Our studios require a 10-15 minute minimum. Send 10-15 shorts together.</p></div>
+<div class="card"><p style="font-size:14px;color:var(--txt2)">Our studios require a 10-15 minute minimum. Send 10-15 shorts together.</p></div>
 </div></div>
 
 <div class="acc" id="a4"><button class="acc-t" onclick="tgl('a4')"><span><span>💰</span><span>Pricing Structure</span></span><span class="acc-arr">▼</span></button>
 <div class="acc-b">
-<table><thead><tr><th>Recurring Speakers</th><th class="ctr">Standard</th><th class="ctr">LipSync</th></tr></thead>
-<tbody><tr><td>1-2 voices</td><td class="ctr" style="font-weight:600">$50/min</td><td class="ctr" style="font-weight:600">$80/min</td></tr>
-<tr><td>3-4 voices</td><td class="ctr" style="font-weight:600">$55/min</td><td class="ctr" style="font-weight:600">$90/min</td></tr>
-<tr><td>5-6 voices</td><td class="ctr" style="font-weight:600">$60/min</td><td class="ctr" style="font-weight:600">$100/min</td></tr>
-<tr><td>7+ voices</td><td class="ctr" colspan="2" style="color:#666">Custom - schedule a call</td></tr></tbody></table>
-<p style="font-size:13px;color:#666;margin-top:14px">Per minute, per language. Expedited +$5/min.</p>
+<table><thead><tr><th>Recurring Speakers</th><th class="ctr">Per Minute</th></tr></thead>
+<tbody><tr><td>1-2 voices</td><td class="ctr" style="font-weight:600">$50/min</td></tr>
+<tr><td>3-4 voices</td><td class="ctr" style="font-weight:600">$55/min</td></tr>
+<tr><td>5-6 voices</td><td class="ctr" style="font-weight:600">$60/min</td></tr>
+<tr><td>7+ voices</td><td class="ctr" style="color:var(--txt3)">Custom - schedule a call</td></tr></tbody></table>
+<p style="font-size:13px;color:var(--txt3);margin-top:14px">Per minute, per language. Expedited +$5/min.</p>
 </div></div>
 
 <div class="acc" id="a5"><button class="acc-t" onclick="tgl('a5')"><span><span>📤</span><span>Submitting & Receiving Dubs</span></span><span class="acc-arr">▼</span></button>
 <div class="acc-b"><div class="gr2">
-<div><h4 style="font-weight:600;margin-bottom:12px">What's Needed:</h4><div class="card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:#a0a0a0"><li>Video Length</li><li>Release Date</li><li>Titles</li><li>Description</li><li>Video URL</li><li>Background Audio URL</li><li>Notes</li></ol></div></div>
-<div><h4 style="font-weight:600;margin-bottom:12px">What's Delivered:</h4><div class="card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:#a0a0a0"><li>Translated Titles (SEO)</li><li>Translated Description</li><li>Translated Thumbnail Text</li><li>Dubbed Mixed Audio (.WAV)</li><li>Dubbed Raw Audio (.WAV)</li><li>Translated Subtitles (.SRT)</li><li>English Transcript (.SRT)</li></ol></div></div>
+<div><h4 style="font-weight:600;margin-bottom:12px">What's Needed:</h4><div class="card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2)"><li>Video Length</li><li>Release Date</li><li>Titles</li><li>Description</li><li>Video URL</li><li>Background Audio URL</li><li>Notes</li></ol></div></div>
+<div><h4 style="font-weight:600;margin-bottom:12px">What's Delivered:</h4><div class="card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2)"><li>Translated Titles (SEO)</li><li>Translated Description</li><li>Translated Thumbnail Text</li><li>Dubbed Mixed Audio (.WAV)</li><li>Dubbed Raw Audio (.WAV)</li><li>Translated Subtitles (.SRT)</li><li>English Transcript (.SRT)</li></ol></div></div>
 </div></div></div>
 
 <div class="acc" id="a6"><button class="acc-t" onclick="tgl('a6')"><span><span>❓</span><span>F.A.Q</span></span><span class="acc-arr">▼</span></button>
 <div class="acc-b" id="faq"></div></div>
 
 <section class="calc">
-<div class="calc-h"><h2>Get Your Custom Quote</h2><p>See your backlog cost + estimated ongoing monthly cost</p></div>
-<div class="cs on" id="s1"><div class="cs-h"><div class="cs-n pn" id="n1">1</div><h3>How many main speakers appear in your videos?</h3></div><div class="spk-g" id="spkg"></div><div class="cust hid" id="cust"><p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p></div><div class="svc hid" id="svc"><div class="svc-b"><button class="svc-btn on" id="bstd" onclick="sSvc('std')">Standard $<span id="pstd">50</span>/min</button><button class="svc-btn" id="blip" onclick="sSvc('lip')">LipSync $<span id="plip">80</span>/min</button></div><div class="rate"><div class="lb">Your Rate</div><div class="vl">$<span id="rdisp">50</span>/min</div></div></div></div>
-<div class="cs hid" id="s2"><div class="cs-h"><div class="cs-n pn" id="n2">2</div><h3>Paste your YouTube channel URL</h3></div><div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()">Fetch Videos</button></div><div class="err hid" id="errmsg"></div></div>
-<div class="cs hid" id="s3"><div class="ch-r"><div class="ch-i"><img id="chpfp" class="ch-pfp" src="" alt=""><div><h3 id="chname">Channel</h3><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0</span> videos · <span id="selmins">0</span> min</p></div></div><button class="edit" onclick="openVM()">Select Videos</button></div></div>
-<div class="cs hid" id="s4"><div class="lng-h"><h3>Languages</h3><div class="lng-v" id="ldisp">1</div></div><input type="range" min="1" max="30" value="1" id="lslider" oninput="uLang(this.value)"><div class="lng-lb"><span>1</span><span>30</span></div></div>
+<div class="calc-h"><h2>Dubbing Cost Calculator</h2><p>See your backlog cost + estimated ongoing monthly cost</p></div>
+
+<div class="cs" id="s1">
+  <h3 style="font-size:15px;font-weight:600;margin-bottom:20px">How many main speakers appear in your videos?</h3>
+  <div class="spk-g" id="spkg"></div>
+  <div class="cust hid" id="cust"><p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p></div>
+  <div class="svc hid" id="svc"><div class="rate"><div class="lb">Your Rate</div><div class="vl">$<span id="rdisp">50</span>/min</div></div></div>
+</div>
+
+<div class="cs hid" id="s2">
+  <div class="cs-h"><div class="cs-n dn" id="n2"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></div><h3>Paste your YouTube Channel URL</h3></div>
+  <div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()">Fetch Videos</button></div>
+  <div class="err hid" id="errmsg"></div>
+</div>
+
+<div class="cs ch-card hid" id="s3">
+  <div class="ch-r">
+    <div class="ch-i"><img id="chpfp" class="ch-pfp" src="" alt=""><div><h3 id="chname">Channel</h3><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0</span> videos · <span id="selmins">0</span> min</p></div></div>
+    <button class="edit" onclick="openVM()">Select Videos</button>
+  </div>
+  <div class="sel-list" id="sellist"><div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div></div>
+</div>
+
+<div class="cs hid" id="s4">
+  <div class="lng-h"><h3>Languages</h3><div class="lng-v" id="ldisp">1</div></div>
+  <input type="range" min="1" max="30" value="1" id="lslider" oninput="uLang(this.value)">
+  <div class="lng-lb"><span>1</span><span>30</span></div>
+</div>
+
 <div class="res hid" id="res">
-<div class="res-g">
-<div class="res-c"><h3 class="bl">📦 Backlog Cost</h3><div class="res-r"><div class="res-row"><span class="lb">Videos Selected</span><span id="rv">0</span></div><div class="res-row"><span class="lb">Source Minutes</span><span id="rsm">0</span></div><div class="res-row"><span class="lb">× <span id="rl1">1</span> Languages</span><span><span id="rdm">0</span> min dubbed</span></div><div class="res-row"><span class="lb">Rate</span><span>$<span id="rrt">50</span>/min</span></div></div><div class="res-t bl"><div class="sm">Total Backlog</div><div class="bg" id="rbc">$0</div></div></div>
-<div class="res-c"><h3 class="gr">📈 Est. Monthly Ongoing</h3><div class="res-r"><div class="res-row"><span class="lb">Total Videos</span><span id="rrc">0</span></div><div class="res-row"><span class="lb">Avg Video Length</span><span><span id="ral">0</span> min</span></div><div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="rmm">0</span> min</span></div><div class="res-row"><span class="lb">× <span id="rl2">1</span> Languages</span><span><span id="rmd">0</span> min/mo</span></div></div><div class="res-t gr"><div class="sm">Est. Monthly</div><div class="bg" id="rmc">$0/mo</div></div></div>
-</div>
-<div class="cta-row">
-  <button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
-  <button class="schedule-cta" onclick="scheduleCall()">📅 Schedule a Call</button>
-</div>
-<button class="csv-cta" onclick="exportCSV()">📥 Export Selected Videos (CSV)</button>
+  <div class="res-g">
+    <div class="res-c"><h3 class="bl">📦 Backlog Cost</h3><div class="res-r"><div class="res-row"><span class="lb">Videos Selected</span><span id="rv">0</span></div><div class="res-row"><span class="lb">Source Minutes</span><span id="rsm">0</span></div><div class="res-row"><span class="lb">× <span id="rl1">1</span> Languages</span><span><span id="rdm">0</span> min dubbed</span></div><div class="res-row"><span class="lb">Rate</span><span>$<span id="rrt">50</span>/min</span></div></div><div class="res-t bl"><div class="sm">Total Backlog</div><div class="bg" id="rbc">$0</div></div></div>
+    <div class="res-c"><h3 class="gr">📈 Est. Monthly Ongoing</h3><div class="res-r"><div class="res-row"><span class="lb">Total Videos</span><span id="rrc">0</span></div><div class="res-row"><span class="lb">Avg Video Length</span><span><span id="ral">0</span> min</span></div><div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="rmm">0</span> min</span></div><div class="res-row"><span class="lb">× <span id="rl2">1</span> Languages</span><span><span id="rmd">0</span> min/mo</span></div></div><div class="res-t gr"><div class="sm">Est. Monthly</div><div class="bg" id="rmc">$0/mo</div></div></div>
+  </div>
+  <div class="cta-row">
+    <button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
+    <button class="schedule-cta" onclick="scheduleCall()">📅 Schedule a Call</button>
+  </div>
 </div>
 </section>
+
 <section class="lngs"><h3>Top 20 Requested Languages</h3><div class="lngs-g" id="lngsg"></div></section>
 </div>
 
-<!-- VIDEO MODAL HOST - Shadow DOM will be attached here -->
+<!-- VIDEO MODAL HOST -->
 <div id="video-modal-host"></div>
 
 <!-- EMAIL MODAL -->
 <div class="emodal" id="emodal" onclick="closeEMOut(event)">
   <div class="em-box" onclick="event.stopPropagation()">
-    <div class="em-h">
-      <h3>Email Your Quote</h3>
-      <button class="em-x" onclick="closeEM()">×</button>
-    </div>
+    <div class="em-h"><h3>Email Your Quote</h3><button class="em-x" onclick="closeEM()">×</button></div>
     <div class="em-body" id="eform">
       <div class="q-sum">
         <h4 id="ech">Channel</h4>
@@ -283,11 +420,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
       <p class="em-note">We'll email you a summary to share with your team</p>
     </div>
     <div class="em-body hid" id="esucc">
-      <div class="succ">
-        <div class="succ-i">✓</div>
-        <h3>Quote Sent!</h3>
-        <p>Check your inbox for your personalized quote.</p>
-      </div>
+      <div class="succ"><div class="succ-i">✓</div><h3>Quote Sent!</h3><p>Check your inbox for your personalized quote.</p></div>
     </div>
   </div>
 </div>
@@ -295,10 +428,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 <!-- SCHEDULE MODAL -->
 <div class="emodal" id="smodal" onclick="closeSMOut(event)">
   <div class="em-box" onclick="event.stopPropagation()">
-    <div class="em-h">
-      <h3>Schedule a Call</h3>
-      <button class="em-x" onclick="closeSM()">×</button>
-    </div>
+    <div class="em-h"><h3>Schedule a Call</h3><button class="em-x" onclick="closeSM()">×</button></div>
     <div class="em-body" id="sform">
       <div class="q-sum">
         <h4 id="sch">Channel</h4>
@@ -313,11 +443,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
       <p class="em-note">We'll save your quote and open our calendar</p>
     </div>
     <div class="em-body hid" id="ssucc">
-      <div class="succ">
-        <div class="succ-i">✓</div>
-        <h3>Opening Calendar...</h3>
-        <p>Your quote has been saved.</p>
-      </div>
+      <div class="succ"><div class="succ-i">✓</div><h3>Opening Calendar...</h3><p>Your quote has been saved.</p></div>
     </div>
   </div>
 </div>
@@ -325,36 +451,118 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 <div class="load" id="load"><div class="load-b"><div class="spin"></div><p>Fetching channel videos...</p><p class="sub">This may take 10-30 seconds</p></div></div>
 
 <script>
-const PRC={'1-2':{s:50,l:80},'3-4':{s:55,l:90},'5-6':{s:60,l:100}},TIERS=['1-2','3-4','5-6','7+'],
+const PRC={'1-2':50,'3-4':55,'5-6':60},TIERS=['1-2','3-4','5-6','7+'],
 LNGS=[['🇲🇽','Spanish (LATAM)'],['🇧🇷','Portuguese (BR)'],['🇷🇺','Russian'],['🇸🇦','Arabic'],['🇫🇷','French'],['🇻🇳','Vietnamese'],['🇮🇳','Hindi'],['🇮🇩','Indonesian'],['🇹🇷','Turkish'],['🇹🇭','Thai'],['🇧🇩','Bangla'],['🇩🇪','German'],['🇮🇳','Punjabi'],['🇮🇹','Italian'],['🇯🇵','Japanese'],['🇵🇰','Urdu'],['🇰🇷','Korean'],['🇵🇱','Polish'],['🇮🇳','Tamil'],['🇳🇱','Dutch']],
 FAQS=[["What's a casting?","Before moving forward we will prepare a few voice options for you to confirm in a short clip of your material."],["What languages do you offer?","Albanian, Arabic, Bengali, Chinese, Dutch, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Vietnamese + more"],["How does ongoing billing work?","We bill you at the end of each month based on your total minute usage per language."],["Will my voice actor stay the same?","Yes, we use the same voice actor(s) for all main recurring speakers."],["Does HVO collect a rev-share?","No"],["Who owns the rights to delivered dubs?","You do. We guarantee the transfer of all ownership rights indefinitely."],["How many studios?","60 locations"],["How many actors?","Around 200 per studio and 500 remote actors"],["How many translators?","600 on hand + 400 extra if needed"],["How many audio engineers?","30 in-house engineers"]];
-let S={tier:'',lip:false,rate:0,url:'',name:'',thumb:'',subs:'',back:[],recent:[],sel:new Set(),langs:1,calc:{}};
+let S={tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],recent:[],sel:new Set(),langs:1,calc:{}};
 
-// Shadow DOM elements
-let shadowRoot = null;
-let shadowModal = null;
-let shadowMbox = null;
-let shadowMbody = null;
-let shadowVgrid = null;
+// Theme toggle
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  
+  if (isDark) {
+    html.removeAttribute('data-theme');
+    btn.textContent = '🌙';
+    localStorage.setItem('theme', 'light');
+    updateShadowTheme('light');
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    btn.textContent = '☀️';
+    localStorage.setItem('theme', 'dark');
+    updateShadowTheme('dark');
+  }
+}
 
-// Create Shadow DOM for modal (completely isolated from Webflow)
+function updateShadowTheme(theme) {
+  if (!shadowRoot) return;
+  const modal = shadowRoot.querySelector('.modal-overlay');
+  if (modal) {
+    modal.setAttribute('data-theme', theme);
+  }
+}
+
+// Initialize theme from localStorage
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const btn = document.getElementById('themeToggle');
+  if (saved === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    btn.textContent = '☀️';
+  }
+}
+
+// Toast system
+function showToast(opts) {
+  const c = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.style.position = 'relative';
+  t.innerHTML = `
+    <div class="toast-content">
+      <div class="toast-icon"><img src="${opts.image}" alt=""></div>
+      <div class="toast-text"><h4>${opts.title}</h4><p>${opts.description}</p></div>
+    </div>
+    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+  `;
+  c.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  setTimeout(() => {
+    t.classList.remove('show');
+    t.classList.add('hide');
+    setTimeout(() => t.remove(), 300);
+  }, opts.duration || 4000);
+}
+
+// Shadow DOM
+let shadowRoot, shadowModal, shadowMbody, shadowVgrid;
+
 function createShadowModal() {
   const host = document.getElementById('video-modal-host');
   shadowRoot = host.attachShadow({ mode: 'open' });
+  
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   
   shadowRoot.innerHTML = `
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
       
+      /* Light Mode */
+      :host {
+        --bg: #ffffff;
+        --bg2: #f8f8f8;
+        --bg3: #f0f0f0;
+        --bg4: #e5e5e5;
+        --bdr: #e0e0e0;
+        --txt: #111;
+        --txt2: #555;
+        --txt3: #888;
+        --card-bg: #fff;
+        --input-bg: #f5f5f5;
+        --btn-bg: #e5e5e5;
+      }
+      
+      /* Dark Mode */
+      .modal-overlay[data-theme="dark"] {
+        --bg: #050505;
+        --bg2: #0c0c0c;
+        --bg3: #141414;
+        --bg4: #1c1c1c;
+        --bdr: #1a1a1a;
+        --txt: #fff;
+        --txt2: #a0a0a0;
+        --txt3: #666;
+        --card-bg: #0c0c0c;
+        --input-bg: #1a1a1a;
+        --btn-bg: #1a1a1a;
+      }
+      
       .modal-overlay {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(0,0,0,0.8);
+        inset: 0;
+        background: rgba(0,0,0,0.5);
         backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
         z-index: 999999;
         display: none;
         align-items: center;
@@ -363,45 +571,43 @@ function createShadowModal() {
         font-family: 'Inter', system-ui, sans-serif;
       }
       
-      .modal-overlay.open {
-        display: flex;
-      }
+      .modal-overlay.open { display: flex; }
       
       .modal-box {
-        background: #141414;
-        border: 1px solid #2a2a2a;
+        background: var(--card-bg);
+        border: 1px solid var(--bdr);
         border-radius: 18px;
         width: 100%;
         max-width: 950px;
         height: 85vh;
-        max-height: 85vh;
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        position: relative;
+        transition: all .3s;
       }
       
       .modal-header {
-        flex: 0 0 70px;
+        flex: 0 0 auto;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 24px;
-        border-bottom: 1px solid #2a2a2a;
-        background: #141414;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--bdr);
       }
       
       .modal-header h3 {
-        font-size: 18px;
-        font-weight: 700;
-        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--txt);
       }
       
-      .modal-header p {
-        font-size: 13px;
-        color: #666;
-        margin-top: 2px;
+      .modal-stats {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--txt);
       }
+      
+      .modal-stats .num { color: #dc2626; }
       
       .header-actions {
         display: flex;
@@ -411,17 +617,16 @@ function createShadowModal() {
       
       .action-btn {
         padding: 8px 14px;
-        background: #222;
+        background: var(--btn-bg);
         border: 0;
         border-radius: 6px;
-        color: #fff;
+        color: var(--txt);
         font: 500 13px 'Inter', sans-serif;
         cursor: pointer;
+        transition: background .2s;
       }
       
-      .action-btn:hover {
-        background: #333;
-      }
+      .action-btn:hover { background: var(--bg4); }
       
       .close-btn {
         width: 36px;
@@ -431,78 +636,77 @@ function createShadowModal() {
         justify-content: center;
         background: 0;
         border: 0;
-        color: #a0a0a0;
+        color: var(--txt2);
         font-size: 24px;
         cursor: pointer;
         border-radius: 6px;
+        transition: all .2s;
       }
       
-      .close-btn:hover {
-        background: #222;
-        color: #fff;
-      }
+      .close-btn:hover { background: var(--bg3); color: var(--txt); }
       
       .modal-toolbar {
-        flex: 0 0 50px;
-        padding: 0 24px;
-        border-bottom: 1px solid #2a2a2a;
+        flex: 0 0 auto;
+        padding: 14px 24px;
+        border-bottom: 1px solid var(--bdr);
         display: flex;
         align-items: center;
         gap: 12px;
-        background: #141414;
       }
       
       .search-input {
         flex: 1;
         max-width: 280px;
         padding: 8px 12px;
-        background: #222;
-        border: 1px solid #333;
+        background: var(--input-bg);
+        border: 1px solid var(--bdr);
         border-radius: 6px;
-        color: #fff;
+        color: var(--txt);
         font: 14px 'Inter', sans-serif;
+        transition: all .2s;
       }
       
-      .search-input::placeholder {
-        color: #666;
-      }
+      .search-input::placeholder { color: var(--txt3); }
+      .search-input:focus { outline: 0; border-color: #3b82f6; }
       
-      .search-input:focus {
-        outline: 0;
-        border-color: #dc2626;
-      }
-      
-      .toolbar-label {
-        font-size: 13px;
-        color: #a0a0a0;
-      }
+      .toolbar-label { font-size: 13px; color: var(--txt2); }
       
       .sort-select {
         padding: 8px 12px;
-        background: #222;
-        border: 1px solid #333;
+        background: var(--input-bg);
+        border: 1px solid var(--bdr);
         border-radius: 6px;
-        color: #fff;
+        color: var(--txt);
         font: 500 13px 'Inter', sans-serif;
         cursor: pointer;
       }
       
+      .export-btn {
+        padding: 8px 14px;
+        background: var(--btn-bg);
+        border: 1px solid var(--bdr);
+        border-radius: 6px;
+        color: var(--txt2);
+        font: 500 13px 'Inter', sans-serif;
+        cursor: pointer;
+        margin-left: auto;
+        transition: all .2s;
+      }
+      
+      .export-btn:hover { background: var(--bg4); color: var(--txt); }
+      
       .modal-body {
         flex: 1;
         overflow-y: auto;
-        overflow-x: hidden;
-        -webkit-overflow-scrolling: touch;
         padding: 24px;
-        background: #141414;
+        background: var(--bg2);
       }
       
       .modal-footer {
-        flex: 0 0 70px;
-        padding: 0 24px;
-        display: flex;
-        align-items: center;
-        border-top: 1px solid #2a2a2a;
-        background: #141414;
+        flex: 0 0 auto;
+        padding: 16px 24px;
+        border-top: 1px solid var(--bdr);
+        background: var(--card-bg);
       }
       
       .confirm-btn {
@@ -514,11 +718,10 @@ function createShadowModal() {
         color: #fff;
         font: 700 15px 'Inter', sans-serif;
         cursor: pointer;
+        transition: background .2s;
       }
       
-      .confirm-btn:hover {
-        background: #b91c1c;
-      }
+      .confirm-btn:hover { background: #b91c1c; }
       
       .video-grid {
         display: grid;
@@ -526,58 +729,29 @@ function createShadowModal() {
         gap: 14px;
       }
       
-      @media (max-width: 800px) {
-        .video-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-      
-      @media (max-width: 550px) {
-        .video-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
+      @media (max-width: 800px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
+      @media (max-width: 550px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
       
       .video-card {
         border-radius: 10px;
         overflow: hidden;
         cursor: pointer;
         border: 2px solid transparent;
-        background: #1a1a1a;
+        background: var(--card-bg);
+        transition: all .2s;
       }
       
-      .video-card:hover {
-        background: #222;
-        border-color: #333;
-      }
-      
-      .video-card.selected {
-        border-color: #dc2626;
-        background: rgba(220,38,38,0.15);
-      }
+      .video-card:hover { background: var(--bg3); border-color: var(--bdr); }
+      .video-card.selected { border-color: #dc2626; background: rgba(220,38,38,0.1); }
       
       .video-thumb {
         position: relative;
         aspect-ratio: 16/9;
-        background: #1a1a1a;
+        background: var(--bg3);
         overflow: hidden;
       }
       
-      .video-thumb img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      
-      .video-thumb .placeholder {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, rgba(220,38,38,0.3), #1a1a1a);
-        font-size: 28px;
-      }
+      .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
       
       .video-thumb .duration {
         position: absolute;
@@ -606,13 +780,9 @@ function createShadowModal() {
         color: #fff;
       }
       
-      .video-card.selected .checkmark {
-        display: flex;
-      }
+      .video-card.selected .checkmark { display: flex; }
       
-      .video-info {
-        padding: 12px;
-      }
+      .video-info { padding: 12px; }
       
       .video-info h4 {
         font-size: 13px;
@@ -623,22 +793,17 @@ function createShadowModal() {
         -webkit-box-orient: vertical;
         overflow: hidden;
         margin-bottom: 6px;
-        color: #fff;
+        color: var(--txt);
       }
       
-      .video-info p {
-        font-size: 12px;
-        color: #666;
-      }
+      .video-info p { font-size: 12px; color: var(--txt3); }
     </style>
     
-    <div class="modal-overlay" id="shadow-modal">
-      <div class="modal-box" id="shadow-mbox">
+    <div class="modal-overlay" id="shadow-modal" data-theme="${isDark ? 'dark' : ''}">
+      <div class="modal-box">
         <div class="modal-header">
-          <div>
-            <h3>Select Backlog Videos</h3>
-            <p><span id="shadow-mcnt">0</span> selected · <span id="shadow-mmins">0</span> min</p>
-          </div>
+          <h3>Select Backlog Videos</h3>
+          <div class="modal-stats"><span class="num" id="shadow-mcnt">0</span> selected · <span class="num" id="shadow-mmins">0</span> min</div>
           <div class="header-actions">
             <button class="action-btn" id="shadow-selall">Select All</button>
             <button class="action-btn" id="shadow-clear">Clear</button>
@@ -647,13 +812,14 @@ function createShadowModal() {
         </div>
         <div class="modal-toolbar">
           <input type="text" class="search-input" id="shadow-search" placeholder="Search videos...">
-          <span class="toolbar-label">Sort by:</span>
+          <span class="toolbar-label">Sort:</span>
           <select class="sort-select" id="shadow-sort">
             <option value="views">Most Views</option>
-            <option value="duration">Longest First</option>
-            <option value="newest">Newest First</option>
-            <option value="oldest">Oldest First</option>
+            <option value="duration">Longest</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
           </select>
+          <button class="export-btn" id="shadow-export">Export CSV</button>
         </div>
         <div class="modal-body" id="shadow-mbody">
           <div class="video-grid" id="shadow-vgrid"></div>
@@ -666,7 +832,6 @@ function createShadowModal() {
   `;
   
   shadowModal = shadowRoot.getElementById('shadow-modal');
-  shadowMbox = shadowRoot.getElementById('shadow-mbox');
   shadowMbody = shadowRoot.getElementById('shadow-mbody');
   shadowVgrid = shadowRoot.getElementById('shadow-vgrid');
   
@@ -674,281 +839,366 @@ function createShadowModal() {
   shadowRoot.getElementById('shadow-selall').addEventListener('click', selAll);
   shadowRoot.getElementById('shadow-clear').addEventListener('click', clrAll);
   shadowRoot.getElementById('shadow-confirm').addEventListener('click', confV);
-  shadowRoot.getElementById('shadow-search').addEventListener('input', (e) => filterVideos(e.target.value));
-  shadowRoot.getElementById('shadow-sort').addEventListener('change', (e) => sortVideos(e.target.value));
-  shadowModal.addEventListener('click', (e) => {
-    if (e.target === shadowModal) closeVM();
-  });
+  shadowRoot.getElementById('shadow-search').addEventListener('input', e => filterVideos(e.target.value));
+  shadowRoot.getElementById('shadow-sort').addEventListener('change', e => sortVideos(e.target.value));
+  shadowRoot.getElementById('shadow-export').addEventListener('click', exportCSV);
+  shadowModal.addEventListener('click', e => { if (e.target === shadowModal) closeVM(); });
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
-createShadowModal();
-const sg=document.getElementById('spkg');TIERS.forEach(t=>{const b=document.createElement('button');b.className='spk';b.textContent=t;b.onclick=()=>sTier(t);sg.appendChild(b)});
-const fq=document.getElementById('faq');FAQS.forEach(f=>{const d=document.createElement('div');d.className='faq';d.innerHTML=`<button class="faq-q" onclick="this.parentElement.classList.toggle('open')">${f[0]}</button><div class="faq-a">${f[1]}</div>`;fq.appendChild(d)});
-const lg=document.getElementById('lngsg');LNGS.forEach(l=>{const d=document.createElement('div');d.className='lc';d.innerHTML=`<span>${l[0]}</span><span>${l[1]}</span>`;lg.appendChild(d)});
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  createShadowModal();
+  const sg = document.getElementById('spkg');
+  TIERS.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'spk';
+    b.textContent = t;
+    b.onclick = () => sTier(t);
+    sg.appendChild(b);
+  });
+  const fq = document.getElementById('faq');
+  FAQS.forEach(f => {
+    const d = document.createElement('div');
+    d.className = 'faq';
+    d.innerHTML = `<button class="faq-q" onclick="this.parentElement.classList.toggle('open')">${f[0]}</button><div class="faq-a">${f[1]}</div>`;
+    fq.appendChild(d);
+  });
+  const lg = document.getElementById('lngsg');
+  LNGS.forEach(l => {
+    const d = document.createElement('div');
+    d.className = 'lc';
+    d.innerHTML = `<span>${l[0]}</span><span>${l[1]}</span>`;
+    lg.appendChild(d);
+  });
 });
 
-function tgl(id){document.getElementById(id).classList.toggle('open')}
-function stab(e,id){e.target.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));e.target.classList.add('on');e.target.parentElement.parentElement.querySelectorAll('.tp').forEach(p=>p.classList.remove('on'));document.getElementById(id).classList.add('on')}
-function sTier(t){S.tier=t;document.querySelectorAll('.spk').forEach((b,i)=>b.classList.toggle('on',TIERS[i]===t));if(t==='7+'){document.getElementById('cust').classList.remove('hid');document.getElementById('svc').classList.add('hid');document.getElementById('s2').classList.add('hid');return}document.getElementById('cust').classList.add('hid');document.getElementById('svc').classList.remove('hid');document.getElementById('s2').classList.remove('hid');document.getElementById('s2').classList.add('on');const p=PRC[t];document.getElementById('pstd').textContent=p.s;document.getElementById('plip').textContent=p.l;S.rate=S.lip?p.l:p.s;document.getElementById('rdisp').textContent=S.rate;document.getElementById('n1').textContent='✓';document.getElementById('n1').className='cs-n dn';uRes()}
-function sSvc(t){S.lip=t==='lip';document.getElementById('bstd').classList.toggle('on',!S.lip);document.getElementById('blip').classList.toggle('on',S.lip);const p=PRC[S.tier];S.rate=S.lip?p.l:p.s;document.getElementById('rdisp').textContent=S.rate;uRes()}
-function resetFetch(){const btn=document.getElementById('fbtn');if(btn.classList.contains('done')){btn.className='fetch';btn.innerHTML='Fetch Videos';btn.disabled=false}}
+function tgl(id) { document.getElementById(id).classList.toggle('open'); }
+function stab(e, id) {
+  e.target.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  e.target.classList.add('on');
+  e.target.parentElement.parentElement.querySelectorAll('.tp').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
 
-async function doFetch(){
-  const url=document.getElementById('urli').value.trim();
-  if(!url)return;
+function sTier(t) {
+  S.tier = t;
+  document.querySelectorAll('.spk').forEach((b, i) => b.classList.toggle('on', TIERS[i] === t));
+  
+  if (t === '7+') {
+    document.getElementById('cust').classList.remove('hid');
+    document.getElementById('svc').classList.add('hid');
+    document.getElementById('s2').classList.add('hid');
+    document.getElementById('s3').classList.add('hid');
+    document.getElementById('s4').classList.add('hid');
+    document.getElementById('res').classList.add('hid');
+    return;
+  }
+  
+  document.getElementById('cust').classList.add('hid');
+  document.getElementById('svc').classList.remove('hid');
+  document.getElementById('s2').classList.remove('hid');
+  
+  S.rate = PRC[t];
+  document.getElementById('rdisp').textContent = S.rate;
+  
+  if (S.back.length > 0) {
+    document.getElementById('s3').classList.remove('hid');
+    document.getElementById('s4').classList.remove('hid');
+    document.getElementById('res').classList.remove('hid');
+  }
+  
+  uRes();
+}
+
+function resetFetch() {
+  const btn = document.getElementById('fbtn');
+  if (btn.classList.contains('done')) {
+    btn.className = 'fetch';
+    btn.innerHTML = 'Fetch Videos';
+    btn.disabled = false;
+  }
+}
+
+async function doFetch() {
+  const url = document.getElementById('urli').value.trim();
+  if (!url) return;
   document.getElementById('load').classList.add('open');
   document.getElementById('errmsg').classList.add('hid');
-  document.getElementById('fbtn').disabled=true;
+  document.getElementById('fbtn').disabled = true;
   
-  try{
-    const r=await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-youtube-fetch',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({channelUrl:url})
+  try {
+    const r = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-youtube-fetch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ channelUrl: url })
     });
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    const d=await r.json();
-    if(!d.backlogVideos||d.backlogVideos.length===0)throw new Error('No videos found');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    if (!d.backlogVideos || d.backlogVideos.length === 0) throw new Error('No videos found');
     
-    S.url=url;
-    S.name=d.channelName||'Channel';
-    S.thumb=d.channelThumb||'';
-    S.subs=d.subscriberCount||'';
-    S.back=d.backlogVideos||[];
-    S.recent=d.recentVideos||[];
-    S.sel=new Set(S.back.map(v=>v.id));
+    S.url = url;
+    S.name = d.channelName || 'Channel';
+    S.thumb = d.channelThumb || '';
+    S.subs = d.subscriberCount || '';
+    S.back = d.backlogVideos || [];
+    S.recent = d.recentVideos || [];
+    S.sel = new Set(); // Start with no videos selected
     
-    document.getElementById('chname').textContent=S.name;
-    document.getElementById('chpfp').src=S.thumb;
-    document.getElementById('chsubs').textContent=S.subs+' subscribers';
-    document.getElementById('fbtn').className='fetch done';
-    document.getElementById('fbtn').innerHTML='✓';
-    document.getElementById('fbtn').disabled=true;
-    document.getElementById('n2').textContent='✓';
-    document.getElementById('n2').className='cs-n dn';
-    document.getElementById('s3').classList.remove('hid');
+    document.getElementById('chname').textContent = S.name;
+    document.getElementById('chpfp').src = S.thumb;
+    document.getElementById('chsubs').textContent = S.subs + ' subscribers';
+    document.getElementById('fbtn').className = 'fetch done';
+    document.getElementById('fbtn').innerHTML = '✓';
+    document.getElementById('fbtn').disabled = true;
+    
+    const s3 = document.getElementById('s3');
+    s3.classList.remove('hid');
+    s3.classList.add('highlight');
+    setTimeout(() => s3.classList.remove('highlight'), 600);
+    
     document.getElementById('s4').classList.remove('hid');
     document.getElementById('res').classList.remove('hid');
     
     rVG();
     uRes();
-  }catch(e){
-    document.getElementById('errmsg').textContent=e.message;
+    uSelList();
+    
+    const totalMins = Math.round(S.back.reduce((s, v) => s + v.duration, 0) / 60);
+    showToast({
+      image: S.thumb,
+      title: S.name + ' loaded',
+      description: `${S.back.length} videos · ${totalMins.toLocaleString()} minutes`,
+      duration: 4000
+    });
+    
+  } catch (e) {
+    document.getElementById('errmsg').textContent = e.message;
     document.getElementById('errmsg').classList.remove('hid');
-  }finally{
+  } finally {
     document.getElementById('load').classList.remove('open');
-    document.getElementById('fbtn').disabled=false;
+    document.getElementById('fbtn').disabled = false;
   }
 }
 
-function uLang(v){S.langs=parseInt(v);document.getElementById('ldisp').textContent=v;uRes()}
-function uRes(){if(S.back.length===0)return;const sv=S.back.filter(v=>S.sel.has(v.id)),bsec=sv.reduce((s,v)=>s+v.duration,0),bmin=Math.round(bsec/60),bdub=bmin*S.langs,bcost=bdub*S.rate;
-const allDates=S.back.map(v=>new Date(v.publishedAt)).filter(d=>!isNaN(d));
-let monthsActive=1;
-if(allDates.length>1){
-  const oldest=new Date(Math.min(...allDates));
-  const newest=new Date(Math.max(...allDates));
-  monthsActive=Math.max(1,Math.round((newest-oldest)/(1000*60*60*24*30)));
+function uLang(v) { S.langs = parseInt(v); document.getElementById('ldisp').textContent = v; uRes(); }
+
+function uRes() {
+  if (S.back.length === 0 || S.rate === 0) return;
+  const sv = S.back.filter(v => S.sel.has(v.id));
+  const bsec = sv.reduce((s, v) => s + v.duration, 0);
+  const bmin = Math.round(bsec / 60);
+  const bdub = bmin * S.langs;
+  const bcost = bdub * S.rate;
+  
+  const allDates = S.back.map(v => new Date(v.publishedAt)).filter(d => !isNaN(d));
+  let monthsActive = 1;
+  if (allDates.length > 1) {
+    const oldest = new Date(Math.min(...allDates));
+    const newest = new Date(Math.max(...allDates));
+    monthsActive = Math.max(1, Math.round((newest - oldest) / (1000 * 60 * 60 * 24 * 30)));
+  }
+  const totalMins = Math.round(S.back.reduce((s, v) => s + v.duration, 0) / 60);
+  const avgMonthlyMins = Math.round(totalMins / monthsActive);
+  const avgLen = S.back.length > 0 ? Math.round(totalMins / S.back.length) : 0;
+  const mdub = avgMonthlyMins * S.langs;
+  const mcost = mdub * S.rate;
+  
+  S.calc = { bcost, mcost, bmin, bdub, avgMonthlyMins, mdub, avgLen, monthsActive };
+  
+  document.getElementById('selcnt').textContent = S.sel.size;
+  document.getElementById('selmins').textContent = bmin.toLocaleString();
+  document.getElementById('rv').textContent = S.sel.size;
+  document.getElementById('rsm').textContent = bmin.toLocaleString();
+  document.getElementById('rl1').textContent = S.langs;
+  document.getElementById('rdm').textContent = bdub.toLocaleString();
+  document.getElementById('rrt').textContent = S.rate;
+  document.getElementById('rbc').textContent = fCur(bcost);
+  document.getElementById('rrc').textContent = S.back.length + ' over ' + monthsActive + ' mo';
+  document.getElementById('ral').textContent = avgLen;
+  document.getElementById('rmm').textContent = avgMonthlyMins;
+  document.getElementById('rl2').textContent = S.langs;
+  document.getElementById('rmd').textContent = mdub.toLocaleString();
+  document.getElementById('rmc').textContent = fCur(mcost) + '/mo';
 }
-const totalMins=Math.round(S.back.reduce((s,v)=>s+v.duration,0)/60);
-const avgMonthlyMins=Math.round(totalMins/monthsActive);
-const avgLen=S.back.length>0?Math.round(totalMins/S.back.length):0;
-const mdub=avgMonthlyMins*S.langs;
-const mcost=mdub*S.rate;
-S.calc={bcost,mcost,bmin,bdub,avgMonthlyMins,mdub,avgLen,monthsActive};document.getElementById('selcnt').textContent=S.sel.size;document.getElementById('selmins').textContent=bmin.toLocaleString();document.getElementById('rv').textContent=S.sel.size;document.getElementById('rsm').textContent=bmin.toLocaleString();document.getElementById('rl1').textContent=S.langs;document.getElementById('rdm').textContent=bdub.toLocaleString();document.getElementById('rrt').textContent=S.rate;document.getElementById('rbc').textContent=fCur(bcost);document.getElementById('rrc').textContent=S.back.length+' over '+monthsActive+' mo';document.getElementById('ral').textContent=avgLen;document.getElementById('rmm').textContent=avgMonthlyMins;document.getElementById('rl2').textContent=S.langs;document.getElementById('rmd').textContent=mdub.toLocaleString();document.getElementById('rmc').textContent=fCur(mcost)+'/mo'}
-function fCur(n){return n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1e3?'$'+Math.round(n/1e3).toLocaleString()+'K':'$'+n.toLocaleString()}
-function fDur(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return h>0?`${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${m}:${String(sec).padStart(2,'0')}`}
-function fDurMin(s){return Math.round(s/60)}
-function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+function fCur(n) { return n >= 1e6 ? '$' + (n / 1e6).toFixed(2) + 'M' : n >= 1e3 ? '$' + Math.round(n / 1e3).toLocaleString() + 'K' : '$' + n.toLocaleString(); }
+function fDur(s) { const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60; return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}` : `${m}:${String(sec).padStart(2, '0')}`; }
+function fDurMin(s) { return Math.round(s / 60); }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
 function sortVideos(sortBy) {
-  if (sortBy === 'views') S.back.sort((a,b) => b.viewCount - a.viewCount);
-  else if (sortBy === 'duration') S.back.sort((a,b) => b.duration - a.duration);
-  else if (sortBy === 'newest') S.back.sort((a,b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  else if (sortBy === 'oldest') S.back.sort((a,b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+  if (sortBy === 'views') S.back.sort((a, b) => b.viewCount - a.viewCount);
+  else if (sortBy === 'duration') S.back.sort((a, b) => b.duration - a.duration);
+  else if (sortBy === 'newest') S.back.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  else if (sortBy === 'oldest') S.back.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
   rVG();
 }
 
-function rVG(){
-  shadowVgrid.innerHTML='';
-  S.back.forEach(v=>{
-    const c=document.createElement('div');
-    c.className='video-card'+(S.sel.has(v.id)?' selected':'');
-    c.dataset.id=v.id;
+function rVG() {
+  shadowVgrid.innerHTML = '';
+  S.back.forEach(v => {
+    const c = document.createElement('div');
+    c.className = 'video-card' + (S.sel.has(v.id) ? ' selected' : '');
+    c.dataset.id = v.id;
     c.addEventListener('click', () => togV(v.id));
-    c.innerHTML=`<div class="video-thumb">${v.thumbnail?`<img src="${v.thumbnail}" loading="lazy">`:'<div class="placeholder">▶</div>'}<div class="duration">${fDur(v.duration)}</div><div class="checkmark">✓</div></div><div class="video-info"><h4>${esc(v.title)}</h4><p>${v.views} · ${v.publishedAgo}</p></div>`;
-    shadowVgrid.appendChild(c)
+    c.innerHTML = `<div class="video-thumb">${v.thumbnail ? `<img src="${v.thumbnail}" loading="lazy">` : ''}<div class="duration">${fDur(v.duration)}</div><div class="checkmark">✓</div></div><div class="video-info"><h4>${esc(v.title)}</h4><p>${v.views} · ${v.publishedAgo}</p></div>`;
+    shadowVgrid.appendChild(c);
   });
   uMC();
 }
 
-function togV(id){
-  S.sel.has(id)?S.sel.delete(id):S.sel.add(id);
-  const c=shadowVgrid.querySelector(`.video-card[data-id="${id}"]`);
-  if(c)c.classList.toggle('selected',S.sel.has(id));
+function togV(id) {
+  S.sel.has(id) ? S.sel.delete(id) : S.sel.add(id);
+  const c = shadowVgrid.querySelector(`.video-card[data-id="${id}"]`);
+  if (c) c.classList.toggle('selected', S.sel.has(id));
   uMC();
 }
 
-function selAll(){
-  S.sel=new Set(S.back.map(v=>v.id));
-  shadowVgrid.querySelectorAll('.video-card').forEach(c=>c.classList.add('selected'));
+function selAll() {
+  S.sel = new Set(S.back.map(v => v.id));
+  shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.add('selected'));
   uMC();
 }
 
-function clrAll(){
+function clrAll() {
   S.sel.clear();
-  shadowVgrid.querySelectorAll('.video-card').forEach(c=>c.classList.remove('selected'));
+  shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
   uMC();
 }
 
-function uMC(){
-  const sv=S.back.filter(v=>S.sel.has(v.id));
-  const m=Math.round(sv.reduce((s,v)=>s+v.duration,0)/60);
-  shadowRoot.getElementById('shadow-mcnt').textContent=S.sel.size;
-  shadowRoot.getElementById('shadow-mmins').textContent=m.toLocaleString();
+function uMC() {
+  const sv = S.back.filter(v => S.sel.has(v.id));
+  const m = Math.round(sv.reduce((s, v) => s + v.duration, 0) / 60);
+  shadowRoot.getElementById('shadow-mcnt').textContent = S.sel.size;
+  shadowRoot.getElementById('shadow-mmins').textContent = m.toLocaleString();
 }
 
-function openVM(){
+function openVM() {
   shadowModal.classList.add('open');
-  shadowRoot.getElementById('shadow-search').value='';
-  document.body.style.overflow='hidden';
+  shadowRoot.getElementById('shadow-search').value = '';
+  document.body.style.overflow = 'hidden';
   shadowMbody.scrollTop = 0;
+  // Sync theme
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  shadowModal.setAttribute('data-theme', isDark ? 'dark' : '');
 }
 
-function closeVM(){
+function closeVM() {
   shadowModal.classList.remove('open');
-  document.body.style.overflow='';
+  document.body.style.overflow = '';
 }
 
-function filterVideos(q){
-  const lq=q.toLowerCase();
-  shadowVgrid.querySelectorAll('.video-card').forEach(c=>{
-    const t=c.querySelector('h4').textContent.toLowerCase();
-    c.style.display=t.includes(lq)?'':'none';
+function filterVideos(q) {
+  const lq = q.toLowerCase();
+  shadowVgrid.querySelectorAll('.video-card').forEach(c => {
+    const t = c.querySelector('h4').textContent.toLowerCase();
+    c.style.display = t.includes(lq) ? '' : 'none';
   });
 }
 
-function confV(){closeVM();uRes()}
+function confV() { closeVM(); uRes(); uSelList(); }
 
-// Email Modal
-function openEM(){
-  document.getElementById('ech').textContent=S.name;
-  document.getElementById('ebc').textContent=fCur(S.calc.bcost);
-  document.getElementById('emc').textContent=fCur(S.calc.mcost)+'/mo';
-  document.getElementById('edet').textContent=`${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · ${S.lip?'LipSync':'Standard'} @ $${S.rate}/min`;
+// Update selected videos list display
+function uSelList() {
+  const list = document.getElementById('sellist');
+  const selected = S.back.filter(v => S.sel.has(v.id));
+  
+  if (selected.length === 0) {
+    list.innerHTML = '<div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div>';
+    return;
+  }
+  
+  list.innerHTML = selected.map(v => `
+    <div class="sel-item">
+      <img class="sel-thumb" src="${v.thumbnail || ''}" alt="">
+      <div class="sel-info">
+        <h4>${esc(v.title)}</h4>
+        <p>${v.views} views</p>
+      </div>
+      <span class="sel-dur">${fDur(v.duration)}</span>
+    </div>
+  `).join('');
+}
+
+function openEM() {
+  document.getElementById('ech').textContent = S.name;
+  document.getElementById('ebc').textContent = fCur(S.calc.bcost);
+  document.getElementById('emc').textContent = fCur(S.calc.mcost) + '/mo';
+  document.getElementById('edet').textContent = `${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · $${S.rate}/min`;
   document.getElementById('eform').classList.remove('hid');
   document.getElementById('esucc').classList.add('hid');
   document.getElementById('emodal').classList.add('open');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
-function closeEM(){document.getElementById('emodal').classList.remove('open');document.body.style.overflow=''}
-function closeEMOut(e){if(e.target===document.getElementById('emodal'))closeEM()}
+function closeEM() { document.getElementById('emodal').classList.remove('open'); document.body.style.overflow = ''; }
+function closeEMOut(e) { if (e.target === document.getElementById('emodal')) closeEM(); }
 
-async function sendQ(){
-  const em=document.getElementById('emi').value.trim();
-  if(!em)return;
-  try{
-    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        channelName:S.name,
-        channelUrl:S.url,
-        email:em,
-        speakerTier:S.tier,
-        serviceType:S.lip?'LipSync':'Standard',
-        languages:S.langs,
-        rate:S.rate,
-        backlogVideos:S.sel.size,
-        backlogSourceMinutes:S.calc.bmin,
-        backlogDubbedMinutes:S.calc.bdub,
-        backlogCost:S.calc.bcost,
-        totalVideos:S.back.length,
-        avgVideoLength:S.calc.avgLen,
-        avgMonthlyMinutes:S.calc.avgMonthlyMins,
-        avgMonthlyDubbed:S.calc.mdub,
-        avgMonthlyRate:S.calc.mcost,
-        monthsActive:S.calc.monthsActive,
-        action:'email'
+async function sendQ() {
+  const em = document.getElementById('emi').value.trim();
+  if (!em) return;
+  try {
+    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        channelName: S.name, channelUrl: S.url, email: em, speakerTier: S.tier, serviceType: 'Standard',
+        languages: S.langs, rate: S.rate, backlogVideos: S.sel.size, backlogSourceMinutes: S.calc.bmin,
+        backlogDubbedMinutes: S.calc.bdub, backlogCost: S.calc.bcost, totalVideos: S.back.length,
+        avgVideoLength: S.calc.avgLen, avgMonthlyMinutes: S.calc.avgMonthlyMins, avgMonthlyDubbed: S.calc.mdub,
+        avgMonthlyRate: S.calc.mcost, monthsActive: S.calc.monthsActive, action: 'email'
       })
     });
-  }catch(e){console.error(e)}
+  } catch (e) { console.error(e); }
   document.getElementById('eform').classList.add('hid');
   document.getElementById('esucc').classList.remove('hid');
-  setTimeout(closeEM,3000);
+  setTimeout(closeEM, 3000);
 }
 
-// Schedule Modal
-function scheduleCall(){
-  document.getElementById('sch').textContent=S.name;
-  document.getElementById('sbc').textContent=fCur(S.calc.bcost);
-  document.getElementById('smc').textContent=fCur(S.calc.mcost)+'/mo';
-  document.getElementById('sdet').textContent=`${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · ${S.lip?'LipSync':'Standard'} @ $${S.rate}/min`;
+function scheduleCall() {
+  document.getElementById('sch').textContent = S.name;
+  document.getElementById('sbc').textContent = fCur(S.calc.bcost);
+  document.getElementById('smc').textContent = fCur(S.calc.mcost) + '/mo';
+  document.getElementById('sdet').textContent = `${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · $${S.rate}/min`;
   document.getElementById('sform').classList.remove('hid');
   document.getElementById('ssucc').classList.add('hid');
   document.getElementById('smodal').classList.add('open');
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 }
-function closeSM(){document.getElementById('smodal').classList.remove('open');document.body.style.overflow=''}
-function closeSMOut(e){if(e.target===document.getElementById('smodal'))closeSM()}
+function closeSM() { document.getElementById('smodal').classList.remove('open'); document.body.style.overflow = ''; }
+function closeSMOut(e) { if (e.target === document.getElementById('smodal')) closeSM(); }
 
-async function sendSchedule(){
-  const em=document.getElementById('semi').value.trim();
-  if(!em)return;
-  try{
-    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        channelName:S.name,
-        channelUrl:S.url,
-        email:em,
-        speakerTier:S.tier,
-        serviceType:S.lip?'LipSync':'Standard',
-        languages:S.langs,
-        rate:S.rate,
-        backlogVideos:S.sel.size,
-        backlogSourceMinutes:S.calc.bmin,
-        backlogDubbedMinutes:S.calc.bdub,
-        backlogCost:S.calc.bcost,
-        totalVideos:S.back.length,
-        avgVideoLength:S.calc.avgLen,
-        avgMonthlyMinutes:S.calc.avgMonthlyMins,
-        avgMonthlyDubbed:S.calc.mdub,
-        avgMonthlyRate:S.calc.mcost,
-        monthsActive:S.calc.monthsActive,
-        action:'schedule'
+async function sendSchedule() {
+  const em = document.getElementById('semi').value.trim();
+  if (!em) return;
+  try {
+    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        channelName: S.name, channelUrl: S.url, email: em, speakerTier: S.tier, serviceType: 'Standard',
+        languages: S.langs, rate: S.rate, backlogVideos: S.sel.size, backlogSourceMinutes: S.calc.bmin,
+        backlogDubbedMinutes: S.calc.bdub, backlogCost: S.calc.bcost, totalVideos: S.back.length,
+        avgVideoLength: S.calc.avgLen, avgMonthlyMinutes: S.calc.avgMonthlyMins, avgMonthlyDubbed: S.calc.mdub,
+        avgMonthlyRate: S.calc.mcost, monthsActive: S.calc.monthsActive, action: 'schedule'
       })
     });
-  }catch(e){console.error(e)}
+  } catch (e) { console.error(e); }
   document.getElementById('sform').classList.add('hid');
   document.getElementById('ssucc').classList.remove('hid');
-  setTimeout(()=>{
-    closeSM();
-    window.open('https://humanvoiceover.com/meetwithus','_blank');
-  },1500);
+  setTimeout(() => { closeSM(); window.open('https://humanvoiceover.com/meetwithus', '_blank'); }, 1500);
 }
 
-// CSV Export
-function exportCSV(){
-  if(S.sel.size===0)return alert('No videos selected');
-  
-  const selected = S.back.filter(v=>S.sel.has(v.id));
-  const headers = ['Video Title','Link','Length (min)','Views'];
-  const rows = selected.map(v=>[
-    `"${v.title.replace(/"/g,'""')}"`,
-    `https://youtube.com/watch?v=${v.id}`,
-    fDurMin(v.duration),
-    v.viewCount
-  ]);
-  
-  const csv = [headers.join(','), ...rows.map(r=>r.join(','))].join('\n');
-  const blob = new Blob([csv], {type:'text/csv'});
+function exportCSV() {
+  if (S.sel.size === 0) { alert('No videos selected'); return; }
+  const selected = S.back.filter(v => S.sel.has(v.id));
+  const headers = ['Video Title', 'Link', 'Length (min)', 'Views'];
+  const rows = selected.map(v => [`"${v.title.replace(/"/g, '""')}"`, `https://youtube.com/watch?v=${v.id}`, fDurMin(v.duration), v.viewCount]);
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `${S.name.replace(/[^a-z0-9]/gi,'_')}_backlog.csv`;
+  a.download = `${S.name.replace(/[^a-z0-9]/gi, '_')}_backlog.csv`;
   a.click();
   URL.revokeObjectURL(url);
 }
