@@ -231,9 +231,74 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .cs-h{display:flex;align-items:center;gap:14px;margin-bottom:20px}
 .cs-n{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;overflow:hidden;flex-shrink:0}
 .cs-n.pn{background:var(--red)}
-.cs-n.dn{background:transparent;margin-left:-5px}
+.cs-n.dn{background:transparent;margin-left:-5px;overflow:visible}
 .cs-n img{width:24px;height:24px;object-fit:contain}
 .cs-h h3{font-size:20px;font-weight:800}
+
+/* YouTube Logo Link with Custom Tooltip */
+.yt-logo-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:opacity .2s, transform .2s;
+  position:relative;
+}
+.yt-logo-link:hover{
+  opacity:0.8;
+  transform:scale(1.05);
+}
+.yt-logo-link::after{
+  content:'Open YouTube';
+  position:absolute;
+  bottom:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:#ffffff !important;
+  color:#111111 !important;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:500;
+  white-space:nowrap;
+  opacity:0;
+  visibility:hidden;
+  transition:all .2s ease;
+  pointer-events:none;
+  z-index:9999;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.yt-logo-link::before{
+  content:'';
+  position:absolute;
+  bottom:calc(100% + 2px);
+  left:50%;
+  transform:translateX(-50%) translateY(4px);
+  border:5px solid transparent;
+  border-top-color:#ffffff !important;
+  opacity:0;
+  visibility:hidden;
+  transition:all .2s ease;
+  pointer-events:none;
+  z-index:9999;
+}
+.yt-logo-link:hover::after{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+.yt-logo-link:hover::before{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+[data-theme="dark"] .yt-logo-link::after{
+  background:#ffffff !important;
+  color:#111111 !important;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);
+}
+[data-theme="dark"] .yt-logo-link::before{
+  border-top-color:#ffffff !important;
+}
 
 /* Speaker Grid */
 .spk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
@@ -260,7 +325,59 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .url-i:focus{outline:0;border-color:var(--blue)}
 .fetch{padding:14px 28px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:600 15px 'Inter',sans-serif;cursor:pointer;white-space:nowrap;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
 .fetch:hover{background:var(--red2)}
-.fetch:disabled{background:#d1d5db;cursor:not-allowed;color:#9ca3af}
+.fetch:disabled{background:#d1d5db;cursor:not-allowed;color:#9ca3af;position:relative}
+.fetch:disabled::after{
+  content:'Select Speaker Count';
+  position:absolute;
+  bottom:calc(100% + 8px);
+  left:50%;
+  transform:translateX(-50%) translateY(4px);
+  background:#ffffff !important;
+  color:#111111 !important;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:500;
+  white-space:nowrap;
+  opacity:0;
+  visibility:hidden;
+  transition:all .2s ease;
+  pointer-events:none;
+  z-index:9999;
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+.fetch:disabled::before{
+  content:'';
+  position:absolute;
+  bottom:calc(100% + 2px);
+  left:50%;
+  transform:translateX(-50%) translateY(4px);
+  border:5px solid transparent;
+  border-top-color:#ffffff !important;
+  opacity:0;
+  visibility:hidden;
+  transition:all .2s ease;
+  pointer-events:none;
+  z-index:9999;
+}
+.fetch:disabled:hover::after{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+.fetch:disabled:hover::before{
+  opacity:1;
+  visibility:visible;
+  transform:translateX(-50%) translateY(0);
+}
+[data-theme="dark"] .fetch:disabled::after{
+  background:#ffffff !important;
+  color:#111111 !important;
+  box-shadow:0 2px 12px rgba(0,0,0,.4);
+}
+[data-theme="dark"] .fetch:disabled::before{
+  border-top-color:#ffffff !important;
+}
 .fetch-hint{font-size:13px;color:var(--txt3);margin-top:12px;transition:opacity .2s}
 .fetch-hint.hid{opacity:0;height:0;margin:0;overflow:hidden}
 .fetch.done{background:var(--green);pointer-events:none;min-width:50px;padding:14px 16px}
@@ -291,15 +408,88 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .sel-dur{font-size:13px;font-weight:600;color:var(--txt2);flex-shrink:0}
 .sel-empty{padding:20px;text-align:center;color:var(--txt3);font-size:14px}
 
-/* Languages Slider */
-.lng-section{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:16px var(--pad);margin-bottom:20px;transition:all .3s}
+/* Languages Slider - Soundwave Style */
+.lng-section{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:20px var(--pad);margin-bottom:20px;transition:all .3s}
 .lng-section:hover{border-color:var(--card-bdr)}
-.lng-h{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px}
-.lng-v{font-size:32px;font-weight:800;color:var(--red);line-height:1}
-.lng-lbl{font-size:12px;color:var(--txt3);margin-top:4px}
-input[type=range]{width:100%;height:6px;background:var(--bg3);border-radius:3px;-webkit-appearance:none;cursor:pointer}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--red);border-radius:50%;border:2px solid var(--bg)}
-.lng-lb{display:flex;justify-content:space-between;font-size:12px;color:var(--txt3);margin-top:4px}
+.lng-h{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:18px}
+.lng-v{font-size:42px;font-weight:900;color:var(--red);line-height:1;transition:transform .15s}
+.lng-v.bump{transform:scale(1.1)}
+.lng-lbl{font-size:13px;color:var(--txt3);margin-top:6px;font-weight:500}
+
+/* Soundwave Slider Container */
+.soundwave-container{position:relative;width:100%;height:70px;cursor:pointer;user-select:none;-webkit-user-select:none}
+.soundwave-track{display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 4px;gap:3px}
+.soundwave-bar{
+  flex:1;
+  background:var(--bg4);
+  border-radius:4px;
+  transition:background .15s, height .2s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+  min-width:8px;
+  max-width:20px;
+}
+.soundwave-bar.active{background:var(--red)}
+.soundwave-bar.active.animating{animation:barPulse .4s ease-out}
+
+@keyframes barPulse{
+  0%{transform:scaleY(1)}
+  50%{transform:scaleY(1.15)}
+  100%{transform:scaleY(1)}
+}
+
+/* Bar height variations for wave effect */
+.soundwave-bar:nth-child(1){height:35%}
+.soundwave-bar:nth-child(2){height:50%}
+.soundwave-bar:nth-child(3){height:70%}
+.soundwave-bar:nth-child(4){height:55%}
+.soundwave-bar:nth-child(5){height:85%}
+.soundwave-bar:nth-child(6){height:65%}
+.soundwave-bar:nth-child(7){height:90%}
+.soundwave-bar:nth-child(8){height:75%}
+.soundwave-bar:nth-child(9){height:60%}
+.soundwave-bar:nth-child(10){height:95%}
+.soundwave-bar:nth-child(11){height:70%}
+.soundwave-bar:nth-child(12){height:85%}
+.soundwave-bar:nth-child(13){height:55%}
+.soundwave-bar:nth-child(14){height:100%}
+.soundwave-bar:nth-child(15){height:80%}
+.soundwave-bar:nth-child(16){height:65%}
+.soundwave-bar:nth-child(17){height:90%}
+.soundwave-bar:nth-child(18){height:50%}
+.soundwave-bar:nth-child(19){height:75%}
+.soundwave-bar:nth-child(20){height:85%}
+.soundwave-bar:nth-child(21){height:60%}
+.soundwave-bar:nth-child(22){height:95%}
+.soundwave-bar:nth-child(23){height:70%}
+.soundwave-bar:nth-child(24){height:55%}
+.soundwave-bar:nth-child(25){height:80%}
+.soundwave-bar:nth-child(26){height:90%}
+.soundwave-bar:nth-child(27){height:65%}
+.soundwave-bar:nth-child(28){height:75%}
+.soundwave-bar:nth-child(29){height:50%}
+.soundwave-bar:nth-child(30){height:40%}
+
+/* Idle animation for active bars */
+.soundwave-bar.active{
+  animation:idleWave 2s ease-in-out infinite;
+  animation-delay:calc(var(--i) * 0.07s);
+}
+@keyframes idleWave{
+  0%,100%{transform:scaleY(1)}
+  50%{transform:scaleY(0.85)}
+}
+
+/* Hover effect */
+.soundwave-container:hover .soundwave-bar.active{
+  animation:activeWave 0.8s ease-in-out infinite;
+}
+@keyframes activeWave{
+  0%,100%{transform:scaleY(1)}
+  50%{transform:scaleY(1.1)}
+}
+
+.lng-lb{display:flex;justify-content:space-between;font-size:12px;color:var(--txt3);margin-top:8px;font-weight:500}
+.lng-lb span{padding:0 4px}
 
 /* Results */
 .res{margin-top:var(--gap)}
@@ -430,18 +620,18 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
     <!-- Calculator Content -->
     <div class="calc-content" id="calcContent">
+    <div class="cs" id="s2">
+      <div class="cs-h"><div class="cs-n dn" id="n2"><a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="yt-logo-link"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></a></div><h3>Paste YouTube Channel Link</h3></div>
+      <div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()" disabled>Fetch Videos</button></div>
+      <p class="fetch-hint" id="fetchHint">Select speaker count below to enable</p>
+      <div class="err hid" id="errmsg"></div>
+    </div>
+
     <div class="cs" id="s1">
       <h3 style="font-size:20px;font-weight:800;margin-bottom:20px">How many main speakers appear in your videos?</h3>
       <div class="spk-g" id="spkg"></div>
       <div class="cust hid" id="cust"><p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p></div>
       <div class="svc hid" id="svc"><div class="rate"><div class="lb">Your Rate</div><div class="vl">$<span id="rdisp">45</span>/min</div></div></div>
-    </div>
-
-    <div class="cs" id="s2">
-      <div class="cs-h"><div class="cs-n dn" id="n2"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></div><h3>Paste YouTube Channel Link</h3></div>
-      <div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()" disabled>Fetch Videos</button></div>
-      <p class="fetch-hint" id="fetchHint">Select speaker count above to enable</p>
-      <div class="err hid" id="errmsg"></div>
     </div>
 
     <div class="cs ch-card hid" id="s3">
@@ -459,7 +649,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
       </div>
       <div class="lng-section">
         <div class="lng-h"><div class="lng-v" id="ldisp">1</div><div class="lng-lbl" id="llbl">Language</div></div>
-        <input type="range" min="1" max="30" value="1" id="lslider" oninput="uLang(this.value)">
+        <div class="soundwave-container" id="soundwave">
+          <div class="soundwave-track" id="swtrack"></div>
+        </div>
         <div class="lng-lb"><span>1</span><span>30</span></div>
       </div>
       <div class="cta-row">
@@ -1037,9 +1229,13 @@ function createShadowModal() {
           <span class="toolbar-label">Time:</span>
           <select class="sort-select" id="shadow-time">
             <option value="all">All Time</option>
-            <option value="30">Last 30 Days</option>
-            <option value="90">Last 90 Days</option>
-            <option value="365">Last 1 Year</option>
+            <option value="30">30 Days</option>
+            <option value="90">90 Days</option>
+            <option value="180">6 Months</option>
+            <option value="365">1 Year</option>
+            <option value="1095">3 Years</option>
+            <option value="1825">5 Years</option>
+            <option value="3650">10+ Years</option>
           </select>
           <button class="export-btn" id="shadow-export">Export CSV</button>
         </div>
@@ -1071,6 +1267,7 @@ function createShadowModal() {
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   createShadowModal();
+  initSoundwave();
   const sg = document.getElementById('spkg');
   TIERS.forEach(t => {
     const b = document.createElement('button');
@@ -1243,7 +1440,82 @@ function uLang(v) {
   S.langs = parseInt(v); 
   document.getElementById('ldisp').textContent = v; 
   document.getElementById('llbl').textContent = S.langs === 1 ? 'Language' : 'Languages';
+  
+  // Update soundwave bars
+  const bars = document.querySelectorAll('.soundwave-bar');
+  bars.forEach((bar, i) => {
+    const isActive = i < v;
+    const wasActive = bar.classList.contains('active');
+    bar.classList.toggle('active', isActive);
+    
+    // Add pulse animation on newly activated bars
+    if (isActive && !wasActive) {
+      bar.classList.add('animating');
+      setTimeout(() => bar.classList.remove('animating'), 400);
+    }
+  });
+  
+  // Bump animation on number
+  const disp = document.getElementById('ldisp');
+  disp.classList.add('bump');
+  setTimeout(() => disp.classList.remove('bump'), 150);
+  
   uRes(); 
+}
+
+// Soundwave slider setup
+function initSoundwave() {
+  const track = document.getElementById('swtrack');
+  const container = document.getElementById('soundwave');
+  if (!track || !container) return;
+  
+  // Create 30 bars
+  for (let i = 0; i < 30; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'soundwave-bar' + (i === 0 ? ' active' : '');
+    bar.style.setProperty('--i', i);
+    track.appendChild(bar);
+  }
+  
+  let isDragging = false;
+  
+  function updateFromPosition(clientX) {
+    const rect = container.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percent = Math.max(0, Math.min(1, x / rect.width));
+    const value = Math.max(1, Math.min(30, Math.round(percent * 30) || 1));
+    uLang(value);
+  }
+  
+  container.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    updateFromPosition(e.clientX);
+  });
+  
+  container.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    updateFromPosition(e.touches[0].clientX);
+  }, { passive: true });
+  
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) updateFromPosition(e.clientX);
+  });
+  
+  document.addEventListener('touchmove', (e) => {
+    if (isDragging) updateFromPosition(e.touches[0].clientX);
+  }, { passive: true });
+  
+  document.addEventListener('mouseup', () => isDragging = false);
+  document.addEventListener('touchend', () => isDragging = false);
+  
+  // Click on individual bars
+  track.addEventListener('click', (e) => {
+    if (e.target.classList.contains('soundwave-bar')) {
+      const bars = [...track.children];
+      const index = bars.indexOf(e.target) + 1;
+      uLang(index);
+    }
+  });
 }
 
 function uRes() {
