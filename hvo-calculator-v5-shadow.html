@@ -1705,16 +1705,44 @@ function closeEMOut(e) { if (e.target === document.getElementById('emodal')) clo
 async function sendQ() {
   const em = document.getElementById('emi').value.trim();
   if (!em) return;
+  
+  // Get selected videos data for CSV
+  const selectedVideos = S.back.filter(v => S.sel.has(v.id)).map(v => ({
+    title: v.title,
+    id: v.id,
+    duration: v.duration,
+    durationMin: Math.round(v.duration / 60),
+    views: v.views,
+    viewCount: v.viewCount,
+    publishedAt: v.publishedAt,
+    thumbnail: v.thumbnail
+  }));
+  
   try {
     await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        channelName: S.name, channelUrl: S.url, email: em, speakerTier: S.tier, serviceType: 'Standard',
-        languages: S.langs, rate: S.rate, backlogVideos: S.sel.size, backlogSourceMinutes: S.calc.bmin,
-        backlogDubbedMinutes: S.calc.bdub, backlogCost: S.calc.bcost, totalVideos: S.back.length,
-        avgVideoLength: S.calc.avgLen, avgMonthlyMinutes: S.calc.avgMonthlyMins, avgMonthlyDubbed: S.calc.mdub,
-        avgMonthlyRate: S.calc.mcost, monthsActive: S.calc.monthsActive, action: 'email'
+        channelName: S.name, 
+        channelUrl: S.url, 
+        channelThumb: S.thumb,
+        email: em, 
+        speakerTier: S.tier, 
+        serviceType: 'Standard',
+        languages: S.langs, 
+        rate: S.rate, 
+        backlogVideos: S.sel.size, 
+        backlogSourceMinutes: S.calc.bmin,
+        backlogDubbedMinutes: S.calc.bdub, 
+        backlogCost: S.calc.bcost, 
+        totalVideos: S.back.length,
+        avgVideoLength: S.calc.avgLen, 
+        avgMonthlyMinutes: S.calc.avgMonthlyMins, 
+        avgMonthlyDubbed: S.calc.mdub,
+        avgMonthlyRate: S.calc.mcost, 
+        monthsActive: S.calc.monthsActive, 
+        selectedVideos: selectedVideos,
+        action: 'email'
       })
     });
   } catch (e) { console.error(e); }
@@ -1739,16 +1767,44 @@ function closeSMOut(e) { if (e.target === document.getElementById('smodal')) clo
 async function sendSchedule() {
   const em = document.getElementById('semi').value.trim();
   if (!em) return;
+  
+  // Get selected videos data for CSV
+  const selectedVideos = S.back.filter(v => S.sel.has(v.id)).map(v => ({
+    title: v.title,
+    id: v.id,
+    duration: v.duration,
+    durationMin: Math.round(v.duration / 60),
+    views: v.views,
+    viewCount: v.viewCount,
+    publishedAt: v.publishedAt,
+    thumbnail: v.thumbnail
+  }));
+  
   try {
     await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        channelName: S.name, channelUrl: S.url, email: em, speakerTier: S.tier, serviceType: 'Standard',
-        languages: S.langs, rate: S.rate, backlogVideos: S.sel.size, backlogSourceMinutes: S.calc.bmin,
-        backlogDubbedMinutes: S.calc.bdub, backlogCost: S.calc.bcost, totalVideos: S.back.length,
-        avgVideoLength: S.calc.avgLen, avgMonthlyMinutes: S.calc.avgMonthlyMins, avgMonthlyDubbed: S.calc.mdub,
-        avgMonthlyRate: S.calc.mcost, monthsActive: S.calc.monthsActive, action: 'schedule'
+        channelName: S.name, 
+        channelUrl: S.url, 
+        channelThumb: S.thumb,
+        email: em, 
+        speakerTier: S.tier, 
+        serviceType: 'Standard',
+        languages: S.langs, 
+        rate: S.rate, 
+        backlogVideos: S.sel.size, 
+        backlogSourceMinutes: S.calc.bmin,
+        backlogDubbedMinutes: S.calc.bdub, 
+        backlogCost: S.calc.bcost, 
+        totalVideos: S.back.length,
+        avgVideoLength: S.calc.avgLen, 
+        avgMonthlyMinutes: S.calc.avgMonthlyMins, 
+        avgMonthlyDubbed: S.calc.mdub,
+        avgMonthlyRate: S.calc.mcost, 
+        monthsActive: S.calc.monthsActive, 
+        selectedVideos: selectedVideos,
+        action: 'schedule'
       })
     });
   } catch (e) { console.error(e); }
@@ -1760,8 +1816,11 @@ async function sendSchedule() {
 function exportCSV() {
   if (S.sel.size === 0) { alert('No videos selected'); return; }
   const selected = S.back.filter(v => S.sel.has(v.id));
-  const headers = ['Video Title', 'Link', 'Length (min)', 'Views'];
-  const rows = selected.map(v => [`"${v.title.replace(/"/g, '""')}"`, `https://youtube.com/watch?v=${v.id}`, fDurMin(v.duration), v.viewCount]);
+  const headers = ['Video Title', 'Link', 'Length (min)', 'Views', 'Published Date'];
+  const rows = selected.map(v => {
+    const pubDate = v.publishedAt ? new Date(v.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+    return [`"${v.title.replace(/"/g, '""')}"`, `https://youtube.com/watch?v=${v.id}`, fDurMin(v.duration), v.viewCount, pubDate];
+  });
   const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
   const blob = new Blob([csv], { type: 'text/csv' });
   const url = URL.createObjectURL(blob);
