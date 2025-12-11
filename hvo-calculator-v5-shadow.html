@@ -75,7 +75,8 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 
 /* Header - Redesigned */
 .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--bdr)}
-.hdr-l{display:flex;align-items:center;gap:14px}
+.hdr-l{display:flex;align-items:center;gap:14px;transition:opacity .2s}
+.hdr-l:hover{opacity:0.8}
 .logo-i{width:48px;height:48px;overflow:hidden;flex-shrink:0}
 .logo-i img{width:100%;height:100%;object-fit:contain}
 .logo-txt h1{font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-0.02em}
@@ -417,7 +418,8 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .lng-lbl{font-size:13px;color:var(--txt3);margin-top:6px;font-weight:500}
 
 /* Soundwave Slider Container */
-.soundwave-container{position:relative;width:100%;height:70px;cursor:pointer;user-select:none;-webkit-user-select:none}
+.soundwave-container{position:relative;width:100%;height:70px;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none}
+@media(max-width:600px){.soundwave-container{height:80px;padding:10px 0}}
 .soundwave-track{display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 4px;gap:3px}
 .soundwave-bar{
   flex:1;
@@ -595,10 +597,10 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 
 <div class="wrap" style="padding-bottom:0">
   <header class="hdr">
-    <div class="hdr-l">
+    <a href="https://humanvoiceover.com" target="_blank" rel="noopener noreferrer" class="hdr-l" style="text-decoration:none;color:inherit">
       <div class="logo-i"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/hvo-bordered-png.png?alt=media&token=4b18aef3-bb8f-473d-a6e6-5d18a37e1143" alt="HVO"></div>
       <div class="logo-txt"><h1>Human Voice Over</h1></div>
-    </div>
+    </a>
     <div class="hdr-r">
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
     </div>
@@ -1487,26 +1489,34 @@ function initSoundwave() {
     uLang(value);
   }
   
+  // Mouse events
   container.addEventListener('mousedown', (e) => {
     isDragging = true;
     updateFromPosition(e.clientX);
   });
   
-  container.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    updateFromPosition(e.touches[0].clientX);
-  }, { passive: true });
-  
   document.addEventListener('mousemove', (e) => {
     if (isDragging) updateFromPosition(e.clientX);
   });
   
-  document.addEventListener('touchmove', (e) => {
-    if (isDragging) updateFromPosition(e.touches[0].clientX);
-  }, { passive: true });
-  
   document.addEventListener('mouseup', () => isDragging = false);
-  document.addEventListener('touchend', () => isDragging = false);
+  
+  // Touch events - improved for mobile
+  container.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    e.preventDefault(); // Prevent scrolling when touching slider
+    updateFromPosition(e.touches[0].clientX);
+  }, { passive: false });
+  
+  container.addEventListener('touchmove', (e) => {
+    if (isDragging) {
+      e.preventDefault(); // Prevent scrolling while dragging
+      updateFromPosition(e.touches[0].clientX);
+    }
+  }, { passive: false });
+  
+  container.addEventListener('touchend', () => isDragging = false);
+  container.addEventListener('touchcancel', () => isDragging = false);
   
   // Click on individual bars
   track.addEventListener('click', (e) => {
