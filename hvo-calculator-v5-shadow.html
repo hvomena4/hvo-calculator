@@ -3,6 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff" id="metaThemeColor">
+<script>
+(function(){
+  var t = localStorage.getItem('theme');
+  if(t==='dark'){
+    document.documentElement.setAttribute('data-theme','dark');
+    document.documentElement.style.backgroundColor='#000000';
+    document.getElementById('metaThemeColor').content='#000000';
+  }
+})();
+</script>
 <title>HVO — Dubbing Cost Calculator</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -29,38 +40,43 @@
   --btn-bg:#e5e5e5;
   --btn-hover:#d5d5d5;
   --pad:22px;
-  --gap:14px;
+  --gap:24px;
   --radius:14px;
   --radius-sm:10px;
 }
 
 /* Dark Mode */
 [data-theme="dark"]{
-  --bg:#050505;
-  --bg2:#0c0c0c;
-  --bg3:#141414;
-  --bg4:#1c1c1c;
+  --bg:#000000;
+  --bg2:#0a0a0a;
+  --bg3:#111111;
+  --bg4:#1a1a1a;
   --bdr:#1a1a1a;
   --bdr2:#252525;
   --txt:#fff;
   --txt2:#a0a0a0;
   --txt3:#666;
-  --card-bg:#0c0c0c;
+  --card-bg:#0a0a0a;
   --card-bdr:#1a1a1a;
   --input-bg:#1a1a1a;
   --btn-bg:#1a1a1a;
   --btn-hover:#252525;
 }
 
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;min-height:100vh}
+:root{background-color:#ffffff}
+[data-theme="dark"]{background-color:#000000}
+[data-theme="dark"] html{background-color:#000000}
+html,body{margin:0;padding:0;overscroll-behavior:none}
+html{min-height:100%;background-color:var(--bg)}
+body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s}
 
 /* Layout */
-.wrap{max-width:900px;margin:0 auto;padding:32px 24px 80px}
+.wrap{max-width:900px;margin:0 auto;padding:32px 24px 120px}
 
 /* Header - Redesigned */
 .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--bdr)}
 .hdr-l{display:flex;align-items:center;gap:14px}
-.logo-i{width:48px;height:48px;border-radius:12px;overflow:hidden;flex-shrink:0;background:var(--bg3)}
+.logo-i{width:48px;height:48px;overflow:hidden;flex-shrink:0}
 .logo-i img{width:100%;height:100%;object-fit:contain}
 .logo-txt h1{font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-0.02em}
 
@@ -71,7 +87,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:0;
-  margin-bottom:8px;
+  margin-bottom:12px;
   border-bottom:3px solid var(--bdr);
 }
 .page-tab{
@@ -116,18 +132,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .info-grid{
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:24px;
 }
 
 /* Info Panel Accordions - Larger, more spacious */
 .sh-acc{
-  background:var(--card-bg);
-  border:1px solid var(--card-bdr);
+  background:var(--bg3);
+  border:1px solid transparent;
   border-radius:var(--radius);
   overflow:hidden;
   transition:all .2s;
 }
-.sh-acc:hover{border-color:var(--bdr2)}
+.sh-acc:hover{border-color:var(--card-bdr)}
 .sh-acc-t{
   width:100%;
   display:flex;align-items:center;justify-content:space-between;
@@ -209,7 +225,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .hero-h p{font-size:15px;color:var(--txt2)}
 
 /* Calculator Steps */
-.cs{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:var(--pad);margin-bottom:var(--gap);transition:all .3s}
+.cs{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:var(--pad);margin-bottom:var(--gap);transition:all .3s}
+.cs:hover{border-color:var(--card-bdr)}
 .cs.hid{display:none}
 .cs-h{display:flex;align-items:center;gap:14px;margin-bottom:20px}
 .cs-n{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;overflow:hidden;flex-shrink:0}
@@ -221,9 +238,9 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 /* Speaker Grid */
 .spk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 @media(max-width:500px){.spk-g{grid-template-columns:repeat(2,1fr)}}
-.spk{padding:18px 12px;background:var(--btn-bg);border:2px solid transparent;border-radius:var(--radius-sm);color:var(--txt);font:700 18px 'Inter',sans-serif;cursor:pointer;transition:all .2s}
-.spk:hover{background:var(--btn-hover);border-color:var(--bdr)}
-.spk.on{background:var(--red);color:#fff;border-color:var(--red)}
+.spk{padding:18px 12px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:700 18px 'Inter',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.spk:hover{background:var(--card-bg);border-color:var(--txt3);box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.spk.on{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 2px 6px rgba(220,38,38,.3)}
 
 /* Custom Pricing Notice */
 .cust{margin-top:20px;padding:16px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.3);border-radius:var(--radius-sm)}
@@ -238,23 +255,26 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 /* URL Input */
 .url-r{display:flex;gap:12px}
 @media(max-width:500px){.url-r{flex-direction:column}}
-.url-i{flex:1;padding:14px 18px;background:var(--input-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:14px 'Inter',sans-serif;transition:all .2s}
+.url-i{flex:1;padding:14px 18px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:14px 'Inter',sans-serif;transition:all .2s}
 .url-i::placeholder{color:var(--txt3)}
 .url-i:focus{outline:0;border-color:var(--blue)}
 .fetch{padding:14px 28px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:600 15px 'Inter',sans-serif;cursor:pointer;white-space:nowrap;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
 .fetch:hover{background:var(--red2)}
-.fetch:disabled{background:var(--txt3);cursor:not-allowed}
+.fetch:disabled{background:#d1d5db;cursor:not-allowed;color:#9ca3af}
 .fetch-hint{font-size:13px;color:var(--txt3);margin-top:12px;transition:opacity .2s}
 .fetch-hint.hid{opacity:0;height:0;margin:0;overflow:hidden}
 .fetch.done{background:var(--green);pointer-events:none;min-width:50px;padding:14px 16px}
 .err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:14px;color:#ef4444}
 
 /* Channel Display */
-.cs.ch-card{background:var(--card-bg);border:1px solid var(--card-bdr);padding:20px}
+.cs.ch-card{background:var(--bg3);border:1px solid transparent;padding:20px}
+.cs.ch-card:hover{border-color:var(--card-bdr)}
 .ch-r{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
 .ch-i{display:flex;align-items:center;gap:14px}
-.ch-pfp{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.ch-pfp{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;transition:opacity .2s}
+.ch-pfp:hover{opacity:0.8}
 .ch-i h3{font-size:16px;font-weight:600;color:var(--txt)}
+.ch-i a:hover h3{text-decoration:underline}
 .ch-i p{font-size:13px;color:var(--txt3)}
 .ch-i .subs{color:var(--txt2);font-weight:500}
 .edit{padding:14px 24px;background:var(--blue);border:0;border-radius:8px;color:#fff;font:600 15px 'Inter',sans-serif;cursor:pointer;transition:background .2s}
@@ -272,7 +292,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .sel-empty{padding:20px;text-align:center;color:var(--txt3);font-size:14px}
 
 /* Languages Slider */
-.lng-section{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:16px var(--pad);margin-bottom:20px;transition:all .3s}
+.lng-section{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:16px var(--pad);margin-bottom:20px;transition:all .3s}
+.lng-section:hover{border-color:var(--card-bdr)}
 .lng-h{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px}
 .lng-v{font-size:32px;font-weight:800;color:var(--red);line-height:1}
 .lng-lbl{font-size:12px;color:var(--txt3);margin-top:4px}
@@ -284,7 +305,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .res{margin-top:var(--gap)}
 .res-g{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
 @media(max-width:600px){.res-g{grid-template-columns:1fr}}
-.res-c{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:var(--pad);transition:all .3s}
+.res-c{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:var(--pad);transition:all .3s}
+.res-c:hover{border-color:var(--card-bdr)}
 .res-c h3{font-size:17px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .res-c h3.bl{color:#3b82f6}.res-c h3.gr{color:#22c55e}
 .res-r{margin-bottom:18px}
@@ -304,10 +326,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .schedule-cta:hover{background:var(--btn-hover)}
 
 /* Languages Section */
-.lngs{margin-top:48px;background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:24px;transition:all .3s}
-.lngs h3{font-size:20px;font-weight:800;margin-bottom:18px}
+.lngs{margin-top:24px;background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:24px;transition:all .3s}
+.lngs:hover{border-color:var(--card-bdr)}
+.lngs h3{font-size:20px;font-weight:800;margin-bottom:4px}
 .lngs-g{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:6px;font-size:13px;transition:background .3s}
+.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:6px;font-size:13px;transition:all .2s}
 @media(max-width:700px){.lngs-g{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:450px){.lngs-g{grid-template-columns:repeat(2,1fr)}}
 
@@ -351,6 +374,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .toast-container{position:fixed;bottom:24px;left:24px;z-index:10000;display:flex;flex-direction:column-reverse;gap:10px}
 .toast{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:12px;padding:16px 20px;min-width:320px;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,.15);transform:translateX(-120%);opacity:0;transition:all .3s cubic-bezier(.22,.68,0,1.1);position:relative}
 [data-theme="dark"] .toast{box-shadow:0 10px 40px rgba(0,0,0,.5)}
+[data-theme="dark"] .fetch:disabled{background:#374151;color:#6b7280}
+[data-theme="dark"] .spk{box-shadow:0 1px 3px rgba(0,0,0,.2)}
+[data-theme="dark"] .spk:hover{box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .toast.show{transform:translateX(0);opacity:1}
 .toast.hide{transform:translateX(-120%);opacity:0}
 .toast-content{display:flex;align-items:center;gap:14px}
@@ -399,7 +425,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
         <button class="page-tab on" id="tabCalc" onclick="showCalc()">Dubbing Calculator</button>
         <button class="page-tab" id="tabInfo" onclick="showInfo()">Info Deck</button>
       </div>
-      <p id="heroSub">See your backlog cost + estimated ongoing monthly output</p>
+      <p id="heroSub">Get your channel's total length and average monthly output.</p>
     </div>
 
     <!-- Calculator Content -->
@@ -412,7 +438,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
     </div>
 
     <div class="cs" id="s2">
-      <div class="cs-h"><div class="cs-n dn" id="n2"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></div><h3>Paste your YouTube Channel URL</h3></div>
+      <div class="cs-h"><div class="cs-n dn" id="n2"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></div><h3>Paste YouTube Channel Link</h3></div>
       <div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()" disabled>Fetch Videos</button></div>
       <p class="fetch-hint" id="fetchHint">Select speaker count above to enable</p>
       <div class="err hid" id="errmsg"></div>
@@ -420,7 +446,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
     <div class="cs ch-card hid" id="s3">
       <div class="ch-r">
-        <div class="ch-i"><img id="chpfp" class="ch-pfp" src="" alt=""><div><h3 id="chname">Channel</h3><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0 videos selected</span> · <span id="selmins">0</span> min</p></div></div>
+        <div class="ch-i"><a id="chlink" href="#" target="_blank" style="flex-shrink:0"><img id="chpfp" class="ch-pfp" src="" alt=""></a><div><a id="chlink2" href="#" target="_blank" style="text-decoration:none;color:inherit"><h3 id="chname">Channel</h3></a><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0 videos selected</span> · <span id="selmins">0</span> min</p></div></div>
         <button class="edit" onclick="openVM()">Select Videos</button>
       </div>
       <div class="sel-list" id="sellist"><div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div></div>
@@ -448,7 +474,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
     <div class="info-panel" id="infoPanel">
       <div class="info-grid">
         <!-- How It Works -->
-        <div class="sh-acc open" id="sha1">
+        <div class="sh-acc" id="sha1">
           <button class="sh-acc-t" onclick="shTgl('sha1')">
             <span><span class="ico">▶️</span>How It Works</span>
             <span class="sh-acc-arr">▼</span>
@@ -463,17 +489,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
           </div></div></div>
         </div>
 
-        <!-- Audio Tracks vs Separate -->
+        <!-- Multi-Language Audio -->
         <div class="sh-acc" id="sha2">
           <button class="sh-acc-t" onclick="shTgl('sha2')">
-            <span><span class="ico">🌐</span>Audio Tracks vs Separate Channels</span>
+            <span><span class="ico">🌐</span>Multi-Language Audio (MLA)</span>
             <span class="sh-acc-arr">▼</span>
           </button>
           <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
-            <div class="sh-gr2">
-              <div class="sh-card"><h4 style="color:#22c55e">Audio Track Feature (Recommended)</h4><ul><li>✓ All languages in one place</li><li>✓ Upload all at once when video releases</li><li>✓ International views boost main channel</li><li>✓ Current viewers unaffected</li></ul><div class="fn">Requires 40-50 uploads with audio tracks</div></div>
-              <div class="sh-card"><h4 style="color:#dc2626">Separate Channels</h4><ul><li>✓ Faster monetization</li><li>✓ Easier algorithm discovery</li></ul><ul style="margin-top:12px;color:var(--txt3)"><li>✗ Manage each channel yourself</li><li>✗ No channel management from HVO</li></ul></div>
-            </div>
+            <p style="font-size:14px;color:var(--txt2);margin-bottom:16px">HVO exclusively works with creators using YouTube's Multi-Language Audio feature instead of separate language channels.</p>
+            <h4 style="font-weight:600;margin-bottom:12px">Why MLA Only?</h4>
+            <div style="font-size:14px;color:var(--txt2);line-height:2">✓ All languages consolidated on your main channel<br>✓ International views boost your primary channel's growth<br>✓ Single upload workflow — publish all languages at once<br>✓ Existing subscribers unaffected by new audio tracks<br>✓ No channel management overhead for you or us<br>✓ YouTube's algorithm favors MLA-enabled content</div>
+            <div class="fn" style="margin-top:16px">Requires 40-50 uploads with audio tracks to unlock the MLA feature on YouTube.</div>
           </div></div></div>
         </div>
 
@@ -542,7 +568,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
     </div>
   </section>
 
-  <section class="lngs"><h3>Top 20 Languages (Highest Ticket to Lowest)</h3><div class="lngs-g" id="lngsg"></div><p style="font-size:13px;color:var(--txt3);margin-top:16px;text-align:left">and 30+ more languages — just ask!</p></section>
+  <section class="lngs"><h3>Top 20 Languages</h3><p style="font-size:13px;color:var(--txt3);margin-bottom:18px">(Highest Ticket to Lowest)</p><div class="lngs-g" id="lngsg"></div><p style="font-size:13px;color:var(--txt3);margin-top:16px;text-align:left">and 30+ more languages — just ask!</p></section>
 </div>
 
 <!-- VIDEO MODAL HOST -->
@@ -608,7 +634,7 @@ function showCalc() {
   document.getElementById('calcContent').classList.remove('hidden');
   document.getElementById('tabCalc').classList.add('on');
   document.getElementById('tabInfo').classList.remove('on');
-  document.getElementById('heroSub').textContent = 'See your backlog cost + estimated ongoing monthly output';
+  document.getElementById('heroSub').textContent = 'Get your channel\'s total length and average monthly output.';
 }
 
 function showInfo() {
@@ -645,18 +671,23 @@ function shTab(e, id) {
 function toggleTheme() {
   const html = document.documentElement;
   const btn = document.getElementById('themeToggle');
+  const metaTheme = document.getElementById('metaThemeColor');
   const isDark = html.getAttribute('data-theme') === 'dark';
   
   if (isDark) {
     html.removeAttribute('data-theme');
+    html.style.backgroundColor = '';
     btn.textContent = '🌙';
     localStorage.setItem('theme', 'light');
     updateShadowTheme('light');
+    if(metaTheme) metaTheme.content = '#ffffff';
   } else {
     html.setAttribute('data-theme', 'dark');
+    html.style.backgroundColor = '#000000';
     btn.textContent = '☀️';
     localStorage.setItem('theme', 'dark');
     updateShadowTheme('dark');
+    if(metaTheme) metaTheme.content = '#000000';
   }
 }
 
@@ -673,7 +704,6 @@ function initTheme() {
   const saved = localStorage.getItem('theme');
   const btn = document.getElementById('themeToggle');
   if (saved === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
     btn.textContent = '☀️';
   }
 }
@@ -1163,6 +1193,8 @@ async function doFetch() {
     
     document.getElementById('chname').textContent = S.name;
     document.getElementById('chpfp').src = S.thumb;
+    document.getElementById('chlink').href = S.url;
+    document.getElementById('chlink2').href = S.url;
     document.getElementById('chsubs').textContent = S.subs + ' subscribers';
     document.getElementById('fbtn').className = 'fetch done';
     document.getElementById('fbtn').innerHTML = '✓';
