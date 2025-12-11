@@ -12,12 +12,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .wrap{max-width:880px;margin:0 auto;padding:24px 20px 60px}
 .hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:24px;margin-bottom:28px;border-bottom:1px solid var(--bdr)}
 .logo{display:flex;align-items:center;gap:14px}
-.logo-i{width:46px;height:46px;background:var(--red);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;flex-shrink:0}
+.logo-i{width:46px;height:46px;border-radius:10px;overflow:hidden;flex-shrink:0}
+.logo-i img{width:100%;height:100%;object-fit:contain}
 .logo-txt{display:flex;flex-direction:column}
 .logo-txt h1{font-size:18px;font-weight:700;line-height:1.2;margin:0}
 .logo-txt p{font-size:13px;color:var(--txt3);margin:0}
-.hdr-cta{display:flex;align-items:center;gap:8px;padding:10px 18px;background:var(--bg4);border:1px solid var(--bdr2);border-radius:10px;color:var(--txt);font-size:14px;font-weight:600;text-decoration:none}
-.hdr-cta:hover{background:var(--bdr2)}
 .acc{background:var(--bg2);border:1px solid var(--bdr);border-radius:14px;margin-bottom:12px;overflow:hidden}
 .acc-t{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:0;border:0;color:var(--txt);font:600 15px/1 'Inter',sans-serif;cursor:pointer}
 .acc-t:hover{background:var(--bg3)}
@@ -121,8 +120,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .res-t.bl{background:#2563eb}.res-t.gr{background:#16a34a}
 .res-t .sm{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85;margin-bottom:4px}
 .res-t .bg{font-size:30px;font-weight:900}
-.email-cta{width:100%;padding:18px;background:#fff;border:0;border-radius:14px;color:var(--bg);font:700 17px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+
+/* CTA buttons row */
+.cta-row{display:flex;gap:12px;margin-bottom:12px}
+@media(max-width:500px){.cta-row{flex-direction:column}}
+.email-cta{flex:1;padding:18px;background:#fff;border:0;border-radius:14px;color:var(--bg);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
 .email-cta:hover{background:#e5e5e5}
+.schedule-cta{flex:1;padding:18px;background:var(--bg4);border:1px solid var(--bdr2);border-radius:14px;color:var(--txt);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+.schedule-cta:hover{background:var(--bdr2)}
+.csv-cta{width:100%;padding:14px;background:var(--bg3);border:1px solid var(--bdr2);border-radius:10px;color:var(--txt2);font:600 14px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.csv-cta:hover{background:var(--bg4);color:var(--txt)}
+
 .lngs{margin-top:40px;background:var(--bg2);border:1px solid var(--bdr);border-radius:14px;padding:24px}
 .lngs h3{font-size:16px;font-weight:600;margin-bottom:18px}
 .lngs-g{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
@@ -130,7 +138,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 @media(max-width:450px){.lngs-g{grid-template-columns:repeat(2,1fr)}}
 .lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg3);border-radius:6px;font-size:13px}
 
-/* Email Modal - stays in main DOM */
+/* Email Modal */
 .em-m{max-width:480px}
 .q-sum{background:var(--bg3);border-radius:10px;padding:18px;margin-bottom:20px}
 .q-sum h4{font-size:16px;font-weight:600;margin-bottom:14px}
@@ -158,7 +166,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 .load-b .sub{font-size:14px;color:var(--txt3)}
 .hid{display:none!important}
 
-/* Simple email modal */
+/* Simple modal */
 .emodal{position:fixed;top:0;left:0;right:0;bottom:0;width:100vw;height:100vh;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:999998;display:none;align-items:center;justify-content:center;padding:20px}
 .emodal.open{display:flex}
 .em-box{background:#141414;border:1px solid #2a2a2a;border-radius:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto}
@@ -173,8 +181,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 
 <div class="wrap">
 <header class="hdr">
-<div class="logo"><div class="logo-i">H</div><div class="logo-txt"><h1>Human Voice Over</h1><p>Premium YouTube Dubbing</p></div></div>
-<a href="https://humanvoiceover.com/meetwithus" target="_blank" class="hdr-cta"><span>📅</span> Schedule Call</a>
+<div class="logo">
+  <div class="logo-i"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/hvo-bordered-png.png?alt=media&token=4b18aef3-bb8f-473d-a6e6-5d18a37e1143" alt="HVO Logo"></div>
+  <div class="logo-txt"><h1>Human Voice Over</h1><p>Premium YouTube Dubbing</p></div>
+</div>
 </header>
 
 <div class="acc" id="a1"><button class="acc-t" onclick="tgl('a1')"><span><span>▶️</span><span>How It Works</span></span><span class="acc-arr">▼</span></button>
@@ -239,7 +249,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
 <div class="res-c"><h3 class="bl">📦 Backlog Cost</h3><div class="res-r"><div class="res-row"><span class="lb">Videos Selected</span><span id="rv">0</span></div><div class="res-row"><span class="lb">Source Minutes</span><span id="rsm">0</span></div><div class="res-row"><span class="lb">× <span id="rl1">1</span> Languages</span><span><span id="rdm">0</span> min dubbed</span></div><div class="res-row"><span class="lb">Rate</span><span>$<span id="rrt">50</span>/min</span></div></div><div class="res-t bl"><div class="sm">Total Backlog</div><div class="bg" id="rbc">$0</div></div></div>
 <div class="res-c"><h3 class="gr">📈 Est. Monthly Ongoing</h3><div class="res-r"><div class="res-row"><span class="lb">Total Videos</span><span id="rrc">0</span></div><div class="res-row"><span class="lb">Avg Video Length</span><span><span id="ral">0</span> min</span></div><div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="rmm">0</span> min</span></div><div class="res-row"><span class="lb">× <span id="rl2">1</span> Languages</span><span><span id="rmd">0</span> min/mo</span></div></div><div class="res-t gr"><div class="sm">Est. Monthly</div><div class="bg" id="rmc">$0/mo</div></div></div>
 </div>
-<button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
+<div class="cta-row">
+  <button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
+  <button class="schedule-cta" onclick="scheduleCall()">📅 Schedule a Call</button>
+</div>
+<button class="csv-cta" onclick="exportCSV()">📥 Export Selected Videos (CSV)</button>
 </div>
 </section>
 <section class="lngs"><h3>Top 20 Requested Languages</h3><div class="lngs-g" id="lngsg"></div></section>
@@ -278,6 +292,36 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;heigh
   </div>
 </div>
 
+<!-- SCHEDULE MODAL -->
+<div class="emodal" id="smodal" onclick="closeSMOut(event)">
+  <div class="em-box" onclick="event.stopPropagation()">
+    <div class="em-h">
+      <h3>Schedule a Call</h3>
+      <button class="em-x" onclick="closeSM()">×</button>
+    </div>
+    <div class="em-body" id="sform">
+      <div class="q-sum">
+        <h4 id="sch">Channel</h4>
+        <div class="q-nums">
+          <div class="q-n"><div class="lb">Backlog</div><div class="vl bl" id="sbc">$0</div></div>
+          <div class="q-n"><div class="lb">Monthly Ongoing</div><div class="vl gr" id="smc">$0/mo</div></div>
+        </div>
+        <div class="q-det" id="sdet"></div>
+      </div>
+      <input type="email" class="em-i" id="semi" placeholder="you@company.com">
+      <button class="send" onclick="sendSchedule()">📅 Continue to Scheduling</button>
+      <p class="em-note">We'll save your quote and open our calendar</p>
+    </div>
+    <div class="em-body hid" id="ssucc">
+      <div class="succ">
+        <div class="succ-i">✓</div>
+        <h3>Opening Calendar...</h3>
+        <p>Your quote has been saved.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="load" id="load"><div class="load-b"><div class="spin"></div><p>Fetching channel videos...</p><p class="sub">This may take 10-30 seconds</p></div></div>
 
 <script>
@@ -298,7 +342,6 @@ function createShadowModal() {
   const host = document.getElementById('video-modal-host');
   shadowRoot = host.attachShadow({ mode: 'open' });
   
-  // All styles are INSIDE the shadow DOM - Webflow can't touch them
   shadowRoot.innerHTML = `
     <style>
       * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -622,13 +665,11 @@ function createShadowModal() {
     </div>
   `;
   
-  // Get shadow DOM elements
   shadowModal = shadowRoot.getElementById('shadow-modal');
   shadowMbox = shadowRoot.getElementById('shadow-mbox');
   shadowMbody = shadowRoot.getElementById('shadow-mbody');
   shadowVgrid = shadowRoot.getElementById('shadow-vgrid');
   
-  // Attach event listeners
   shadowRoot.getElementById('shadow-close').addEventListener('click', closeVM);
   shadowRoot.getElementById('shadow-selall').addEventListener('click', selAll);
   shadowRoot.getElementById('shadow-clear').addEventListener('click', clrAll);
@@ -718,6 +759,7 @@ const mcost=mdub*S.rate;
 S.calc={bcost,mcost,bmin,bdub,avgMonthlyMins,mdub,avgLen,monthsActive};document.getElementById('selcnt').textContent=S.sel.size;document.getElementById('selmins').textContent=bmin.toLocaleString();document.getElementById('rv').textContent=S.sel.size;document.getElementById('rsm').textContent=bmin.toLocaleString();document.getElementById('rl1').textContent=S.langs;document.getElementById('rdm').textContent=bdub.toLocaleString();document.getElementById('rrt').textContent=S.rate;document.getElementById('rbc').textContent=fCur(bcost);document.getElementById('rrc').textContent=S.back.length+' over '+monthsActive+' mo';document.getElementById('ral').textContent=avgLen;document.getElementById('rmm').textContent=avgMonthlyMins;document.getElementById('rl2').textContent=S.langs;document.getElementById('rmd').textContent=mdub.toLocaleString();document.getElementById('rmc').textContent=fCur(mcost)+'/mo'}
 function fCur(n){return n>=1e6?'$'+(n/1e6).toFixed(2)+'M':n>=1e3?'$'+Math.round(n/1e3).toLocaleString()+'K':'$'+n.toLocaleString()}
 function fDur(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),sec=s%60;return h>0?`${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${m}:${String(sec).padStart(2,'0')}`}
+function fDurMin(s){return Math.round(s/60)}
 function esc(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
 function sortVideos(sortBy) {
@@ -789,10 +831,127 @@ function filterVideos(q){
 
 function confV(){closeVM();uRes()}
 
-function openEM(){document.getElementById('ech').textContent=S.name;document.getElementById('ebc').textContent=fCur(S.calc.bcost);document.getElementById('emc').textContent=fCur(S.calc.mcost)+'/mo';document.getElementById('edet').textContent=`${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · ${S.lip?'LipSync':'Standard'} @ ${S.rate}/min · ${S.calc.avgMonthlyMins} min/mo avg`;document.getElementById('eform').classList.remove('hid');document.getElementById('esucc').classList.add('hid');document.getElementById('emodal').classList.add('open');document.body.style.overflow='hidden'}
+// Email Modal
+function openEM(){
+  document.getElementById('ech').textContent=S.name;
+  document.getElementById('ebc').textContent=fCur(S.calc.bcost);
+  document.getElementById('emc').textContent=fCur(S.calc.mcost)+'/mo';
+  document.getElementById('edet').textContent=`${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · ${S.lip?'LipSync':'Standard'} @ $${S.rate}/min`;
+  document.getElementById('eform').classList.remove('hid');
+  document.getElementById('esucc').classList.add('hid');
+  document.getElementById('emodal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
 function closeEM(){document.getElementById('emodal').classList.remove('open');document.body.style.overflow=''}
 function closeEMOut(e){if(e.target===document.getElementById('emodal'))closeEM()}
-async function sendQ(){const em=document.getElementById('emi').value.trim();if(!em)return;try{await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({channelName:S.name,channelUrl:S.url,email:em,speakerTier:S.tier,serviceType:S.lip?'LipSync':'Standard',languages:S.langs,rate:S.rate,backlogVideos:S.sel.size,backlogSourceMinutes:S.calc.bmin,backlogDubbedMinutes:S.calc.bdub,backlogCost:S.calc.bcost,totalVideos:S.back.length,avgVideoLength:S.calc.avgLen,avgMonthlyMinutes:S.calc.avgMonthlyMins,avgMonthlyDubbed:S.calc.mdub,avgMonthlyRate:S.calc.mcost,monthsActive:S.calc.monthsActive})})}catch(e){console.error(e)}document.getElementById('eform').classList.add('hid');document.getElementById('esucc').classList.remove('hid');setTimeout(closeEM,3000)}
+
+async function sendQ(){
+  const em=document.getElementById('emi').value.trim();
+  if(!em)return;
+  try{
+    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        channelName:S.name,
+        channelUrl:S.url,
+        email:em,
+        speakerTier:S.tier,
+        serviceType:S.lip?'LipSync':'Standard',
+        languages:S.langs,
+        rate:S.rate,
+        backlogVideos:S.sel.size,
+        backlogSourceMinutes:S.calc.bmin,
+        backlogDubbedMinutes:S.calc.bdub,
+        backlogCost:S.calc.bcost,
+        totalVideos:S.back.length,
+        avgVideoLength:S.calc.avgLen,
+        avgMonthlyMinutes:S.calc.avgMonthlyMins,
+        avgMonthlyDubbed:S.calc.mdub,
+        avgMonthlyRate:S.calc.mcost,
+        monthsActive:S.calc.monthsActive,
+        action:'email'
+      })
+    });
+  }catch(e){console.error(e)}
+  document.getElementById('eform').classList.add('hid');
+  document.getElementById('esucc').classList.remove('hid');
+  setTimeout(closeEM,3000);
+}
+
+// Schedule Modal
+function scheduleCall(){
+  document.getElementById('sch').textContent=S.name;
+  document.getElementById('sbc').textContent=fCur(S.calc.bcost);
+  document.getElementById('smc').textContent=fCur(S.calc.mcost)+'/mo';
+  document.getElementById('sdet').textContent=`${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · ${S.lip?'LipSync':'Standard'} @ $${S.rate}/min`;
+  document.getElementById('sform').classList.remove('hid');
+  document.getElementById('ssucc').classList.add('hid');
+  document.getElementById('smodal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSM(){document.getElementById('smodal').classList.remove('open');document.body.style.overflow=''}
+function closeSMOut(e){if(e.target===document.getElementById('smodal'))closeSM()}
+
+async function sendSchedule(){
+  const em=document.getElementById('semi').value.trim();
+  if(!em)return;
+  try{
+    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        channelName:S.name,
+        channelUrl:S.url,
+        email:em,
+        speakerTier:S.tier,
+        serviceType:S.lip?'LipSync':'Standard',
+        languages:S.langs,
+        rate:S.rate,
+        backlogVideos:S.sel.size,
+        backlogSourceMinutes:S.calc.bmin,
+        backlogDubbedMinutes:S.calc.bdub,
+        backlogCost:S.calc.bcost,
+        totalVideos:S.back.length,
+        avgVideoLength:S.calc.avgLen,
+        avgMonthlyMinutes:S.calc.avgMonthlyMins,
+        avgMonthlyDubbed:S.calc.mdub,
+        avgMonthlyRate:S.calc.mcost,
+        monthsActive:S.calc.monthsActive,
+        action:'schedule'
+      })
+    });
+  }catch(e){console.error(e)}
+  document.getElementById('sform').classList.add('hid');
+  document.getElementById('ssucc').classList.remove('hid');
+  setTimeout(()=>{
+    closeSM();
+    window.open('https://humanvoiceover.com/meetwithus','_blank');
+  },1500);
+}
+
+// CSV Export
+function exportCSV(){
+  if(S.sel.size===0)return alert('No videos selected');
+  
+  const selected = S.back.filter(v=>S.sel.has(v.id));
+  const headers = ['Video Title','Link','Length (min)','Views'];
+  const rows = selected.map(v=>[
+    `"${v.title.replace(/"/g,'""')}"`,
+    `https://youtube.com/watch?v=${v.id}`,
+    fDurMin(v.duration),
+    v.viewCount
+  ]);
+  
+  const csv = [headers.join(','), ...rows.map(r=>r.join(','))].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${S.name.replace(/[^a-z0-9]/gi,'_')}_backlog.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
