@@ -15,7 +15,9 @@
 })();
 </script>
 <title>HVO — Dubbing Cost Calculator</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER.svg?alt=media&token=394d9498-5f0e-4e25-8ee3-9e2a3b627520" as="image">
+<link rel="preload" href="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER.svg?alt=media&token=fe5271b9-275b-4e10-aad8-6888b197abc9" as="image">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -39,7 +41,7 @@
   --input-bg:#f5f5f5;
   --btn-bg:#e5e5e5;
   --btn-hover:#d5d5d5;
-  --pad:22px;
+  --pad:24px;
   --gap:24px;
   --radius:14px;
   --radius-sm:10px;
@@ -68,18 +70,124 @@
 [data-theme="dark"] html{background-color:#000000}
 html,body{margin:0;padding:0;overscroll-behavior:none}
 html{min-height:100%;background-color:var(--bg)}
-body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s}
+body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-color:var(--bg);color:var(--txt);line-height:1.6;-webkit-font-smoothing:antialiased;transition:background-color .3s,color .3s}
 
 /* Layout */
 .wrap{max-width:900px;margin:0 auto;padding:32px 24px 120px}
 
 /* Header - Redesigned */
 .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--bdr)}
-.hdr-l{display:flex;align-items:center;gap:14px;transition:opacity .2s}
+.hdr-l{display:flex;align-items:center;gap:14px;transition:opacity .2s;text-decoration:none;color:inherit}
 .hdr-l:hover{opacity:0.8}
-.logo-i{width:48px;height:48px;overflow:hidden;flex-shrink:0}
-.logo-i img{width:100%;height:100%;object-fit:contain}
-.logo-txt h1{font-size:20px;font-weight:800;line-height:1.2;letter-spacing:-0.02em}
+.logo-i{width:48px;height:48px;position:relative;flex-shrink:0}
+.logo-i img{position:absolute;top:0;left:0;width:100%;height:100%}
+.logo-i .logo-dark{display:none}
+.logo-outer{animation:logoSpin 21s linear infinite}
+@keyframes logoSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ====================== */
+/* ANIMATED TEXT ROTATOR */
+/* ====================== */
+.text-rotator {
+  position: relative;
+  height: 48px;
+  min-width: 200px;
+}
+
+/* Main title - fades in/out */
+.text-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: var(--txt);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.text-main.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Trusted by section - fades in/out */
+.text-trusted {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.text-trusted.active {
+  opacity: 1;
+}
+
+.trusted-prefix {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--txt2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Creator rotator - scrolls infinitely */
+.creator-rotator {
+  position: relative;
+  height: 48px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+}
+
+.creator-rotator-inner {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.creator-row {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Creator profile photo - same size as HVO logo */
+.creator-photo {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+[data-theme="dark"] .creator-photo {
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+/* Creator name - matches Dubbing Calculator size */
+.creator-name {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: var(--txt);
+  line-height: 1;
+}
 
 .hdr-r{display:flex;align-items:center;gap:10px}
 
@@ -98,7 +206,7 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
   border-bottom:3px solid transparent;
   margin-bottom:-3px;
   color:var(--txt3);
-  font:800 28px 'Inter',sans-serif;
+  font:800 28px 'Switzer',sans-serif;
   letter-spacing:-0.03em;
   cursor:pointer;
   transition:all .2s;
@@ -114,8 +222,8 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 }
 
 /* Theme Toggle */
-.theme-toggle{width:42px;height:42px;border-radius:10px;background:transparent;border:1px solid var(--bdr);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s}
-.theme-toggle:hover{background:var(--bg3)}
+.theme-toggle{width:42px;height:42px;border-radius:10px;background:transparent;border:1px solid transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s}
+.theme-toggle:hover{background:var(--bg3);border-color:var(--bdr)}
 
 /* ==================== */
 /* INFO PANEL - Inline swap */
@@ -133,37 +241,60 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .info-grid{
   display:flex;
   flex-direction:column;
-  gap:24px;
+  gap:12px;
 }
 
-/* Info Panel Accordions - Larger, more spacious */
+/* Info Panel Accordions - Clean, minimal */
 .sh-acc{
-  background:var(--bg3);
-  border:1px solid transparent;
+  background:var(--card-bg);
+  border:1px solid var(--bdr);
   border-radius:var(--radius);
   overflow:hidden;
   transition:all .2s;
 }
-.sh-acc:hover{border-color:var(--card-bdr)}
+.sh-acc:hover{border-color:var(--bdr2)}
 .sh-acc-t{
   width:100%;
   display:flex;align-items:center;justify-content:space-between;
   padding:20px 24px;
   background:0;border:0;
   color:var(--txt);
-  font:800 20px/1.4 'Inter',sans-serif;
+  font:800 23px/1.4 'Switzer',sans-serif;
+  letter-spacing:-0.02em;
   cursor:pointer;
-  transition:background .2s;
+  transition:background .15s;
   text-align:left;
 }
-.sh-acc-t:hover{background:var(--bg3)}
-.sh-acc-t .ico{font-size:20px;margin-right:14px}
+.sh-acc-t:hover{background:transparent}
+.sh-acc-t > span:first-child{
+  display:flex;
+  align-items:center;
+}
+.sh-acc-t .ico{
+  width:22px;
+  height:22px;
+  margin-right:14px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  color:var(--txt2);
+}
+.sh-acc-t .ico svg{
+  width:22px;
+  height:22px;
+  stroke-width:2.5;
+}
 .sh-acc-arr{
-  font-size:12px;color:var(--txt3);
+  width:8px;
+  height:8px;
+  border-right:2px solid var(--txt3);
+  border-bottom:2px solid var(--txt3);
+  transform:rotate(-45deg);
   transition:transform .25s ease;
   flex-shrink:0;
 }
-.sh-acc.open .sh-acc-arr{transform:rotate(180deg)}
+.sh-acc.open .sh-acc-arr{transform:rotate(45deg)}
 .sh-acc-b{
   display:grid;
   grid-template-rows:0fr;
@@ -171,50 +302,90 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 }
 .sh-acc.open .sh-acc-b{grid-template-rows:1fr}
 .sh-acc-inner{overflow:hidden}
-.sh-acc-content{padding:0 24px 24px;font-size:15px;color:var(--txt2);line-height:1.6}
+.sh-acc-content{padding:4px 24px 28px;font-size:15px;color:var(--txt2);line-height:1.7}
 
-/* Steps in sheet */
-.step{display:flex;gap:14px;margin-bottom:4px}
+/* Steps in sheet - Clean timeline */
+.step{display:flex;gap:14px;margin-bottom:0}
 .step-l{display:flex;flex-direction:column;align-items:center}
-.step-d{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
-.step-d.bl{background:var(--blue)}.step-d.gr{background:var(--green)}
-.step-c{width:2px;flex:1;background:var(--bdr2);margin:4px 0;min-height:12px}
-.step-x{padding-bottom:14px;flex:1}
-.step-x h4{font-size:14px;font-weight:600;margin-bottom:2px;color:var(--txt)}
-.step-x p{font-size:13px;color:var(--txt2);line-height:1.5}
-.step-x .qc{font-size:11px;color:var(--txt3);font-style:italic;margin-top:2px}
+.step-d{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#fff;flex-shrink:0}
+.step-d.bl{background:#3b82f6}.step-d.gr{background:#22c55e}
+.step-c{width:1.5px;flex:1;background:var(--bdr);margin:6px 0;min-height:12px}
+.step-x{padding:2px 0 20px;flex:1}
+.step-x h4{font-size:15px;font-weight:600;margin-bottom:2px;color:var(--txt)}
+.step-x p{font-size:15px;color:var(--txt2);line-height:1.5}
+.step-x .qc{font-size:15px;color:var(--txt2);margin-top:2px}
 
 /* Grid in sheet */
-.sh-gr2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:500px){.sh-gr2{grid-template-columns:1fr}}
+.sh-gr2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+@media(max-width:500px){.sh-gr2{grid-template-columns:1fr;gap:24px}}
 
-/* Cards in sheet */
-.sh-card{background:var(--bg3);border-radius:10px;padding:14px;transition:background .3s}
-.sh-card h4{font-size:13px;font-weight:600;margin-bottom:10px}
-.sh-card ul{list-style:none;font-size:13px}
+/* Cards in sheet - Minimal */
+.sh-card{background:transparent;border-radius:0;padding:0;transition:background .3s}
+.sh-card h4{font-size:15px;font-weight:600;margin-bottom:12px}
+.sh-card ul{list-style:none;font-size:15px}
 .sh-card li{margin-bottom:6px;color:var(--txt2)}
-.sh-card .fn{font-size:11px;color:var(--txt3);margin-top:10px;padding-top:10px;border-top:1px solid var(--bdr)}
+.sh-card .fn{font-size:15px;color:var(--txt2);margin-top:16px;padding-top:16px;border-top:1px solid var(--bdr)}
 
-/* Tabs in sheet */
-.sh-tabs{display:flex;border-bottom:1px solid var(--bdr2);margin-bottom:12px;gap:4px}
-.sh-tab{padding:8px 14px;background:0;border:0;border-bottom:2px solid transparent;color:var(--txt3);font:500 13px 'Inter',sans-serif;cursor:pointer;transition:all .2s;border-radius:6px 6px 0 0}
-.sh-tab:hover{color:var(--txt);background:var(--bg3)}
-.sh-tab.on{color:var(--txt);border-color:var(--red);background:var(--bg3)}
+/* Tabs - Clean segmented control */
+.sh-tabs{display:inline-flex;background:var(--bdr);border-radius:8px;padding:3px;margin-bottom:20px;gap:2px}
+.sh-tab{padding:8px 16px;background:transparent;border:0;border-radius:6px;color:var(--txt3);font:500 13px 'Switzer',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
+.sh-tab:hover{color:var(--txt)}
+.sh-tab.on{color:var(--txt);background:var(--card-bg);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.08)}
 .sh-tp{display:none}.sh-tp.on{display:block}
-.sh-tr{margin-bottom:6px;font-size:13px}.sh-tr span:first-child{font-weight:600;margin-right:8px}
+.sh-tr{margin-bottom:0;font-size:15px;display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--bdr)}
+.sh-tr:last-child{border-bottom:none}
+.sh-tr span:first-child{font-weight:600}
 .sh-tr .bl{color:#3b82f6}.sh-tr .rd{color:#ef4444}
 
-/* Table in sheet */
-.sh-table{width:100%;border-collapse:collapse;font-size:13px}
-.sh-table th,.sh-table td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--bdr)}
-.sh-table th{color:var(--txt3);font-weight:500;font-size:12px}
-.sh-table .ctr{text-align:center}
+/* Table in sheet - Clean */
+.sh-table{width:100%;border-collapse:collapse;font-size:15px}
+.sh-table th,.sh-table td{padding:12px 0;text-align:left;border-bottom:1px solid var(--bdr)}
+.sh-table th{color:var(--txt3);font-weight:500;font-size:15px;text-transform:uppercase;letter-spacing:0.5px}
+.sh-table tbody tr:last-child td{border-bottom:none}
+.sh-table .ctr{text-align:right}
 
-/* FAQ in sheet */
-.sh-faq{background:var(--bg3);border-radius:8px;margin-bottom:8px;overflow:hidden}
-.sh-faq-q{width:100%;padding:12px 14px;background:0;border:0;color:var(--txt);font:500 13px 'Inter',sans-serif;text-align:left;cursor:pointer;transition:color .2s}
-.sh-faq-q:hover{color:var(--red)}
-.sh-faq-a{display:none;padding:0 14px 12px;font-size:13px;color:var(--txt2);line-height:1.5}
+/* FAQ - Clean list */
+.faq-list{display:flex;flex-direction:column;gap:0}
+.sh-faq{
+  border-bottom:1px solid var(--bdr);
+}
+.sh-faq:last-child{border-bottom:none}
+.sh-faq-q{
+  width:100%;
+  padding:14px 0;
+  background:0;
+  border:0;
+  color:var(--txt);
+  font:500 15px 'Switzer',sans-serif;
+  text-align:left;
+  cursor:pointer;
+  transition:color .15s;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.sh-faq-q:hover{color:#3b82f6}
+.sh-faq-q::after{
+  content:'';
+  width:8px;
+  height:8px;
+  border-right:1.5px solid var(--txt3);
+  border-bottom:1.5px solid var(--txt3);
+  transform:rotate(-45deg);
+  transition:transform .2s;
+  flex-shrink:0;
+}
+.sh-faq.open .sh-faq-q::after{
+  transform:rotate(45deg);
+}
+.sh-faq-a{
+  display:none;
+  padding:0 0 14px 0;
+  font-size:15px;
+  color:var(--txt2);
+  line-height:1.6;
+}
 .sh-faq.open .sh-faq-a{display:block}
 
 /* ==================== */
@@ -226,15 +397,15 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .hero-h p{font-size:15px;color:var(--txt2)}
 
 /* Calculator Steps */
-.cs{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:var(--pad);margin-bottom:var(--gap);transition:all .3s}
-.cs:hover{border-color:var(--card-bdr)}
+.cs{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:var(--pad);margin-bottom:var(--gap);transition:all .2s}
+.cs:hover{border-color:var(--bdr2)}
 .cs.hid{display:none}
-.cs-h{display:flex;align-items:center;gap:14px;margin-bottom:20px}
-.cs-n{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;overflow:hidden;flex-shrink:0}
+.cs-h{display:flex;align-items:center;gap:6px;margin-bottom:20px;margin-left:2px}
+.cs-n{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;overflow:hidden;flex-shrink:0}
 .cs-n.pn{background:var(--red)}
 .cs-n.dn{background:transparent;margin-left:-5px;overflow:visible}
 .cs-n img{width:24px;height:24px;object-fit:contain}
-.cs-h h3{font-size:20px;font-weight:800}
+.cs-h h3{font-size:23px;font-weight:800;letter-spacing:-0.02em}
 
 /* YouTube Logo Link with Custom Tooltip */
 .yt-logo-link{
@@ -302,101 +473,44 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 }
 
 /* Speaker Grid */
-.spk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.spk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:4px}
 @media(max-width:500px){.spk-g{grid-template-columns:repeat(2,1fr)}}
-.spk{padding:18px 12px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:700 18px 'Inter',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.spk{padding:12px 10px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:600 15px 'Switzer',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .spk:hover{background:var(--card-bg);border-color:var(--txt3);box-shadow:0 2px 6px rgba(0,0,0,.1)}
-.spk.on{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 2px 6px rgba(220,38,38,.3)}
+.spk.on{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 2px 6px rgba(37,99,235,.3)}
+.spk-hint{font-size:14px;color:var(--txt2);margin-top:10px}
 
 /* Custom Pricing Notice */
 .cust{margin-top:20px;padding:16px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.3);border-radius:var(--radius-sm)}
-.cust p{font-size:14px;color:#3b82f6}
+.cust p{font-size:15px;color:#3b82f6}
 .cust a{color:#3b82f6}
-
-/* Rate Display */
-.svc{margin-top:20px}
-.rate .lb{font-size:13px;color:var(--txt2);margin-bottom:4px}
-.rate .vl{font-size:28px;font-weight:800;color:var(--txt)}
 
 /* URL Input */
 .url-r{display:flex;gap:12px}
 @media(max-width:500px){.url-r{flex-direction:column}}
-.url-i{flex:1;padding:14px 18px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:14px 'Inter',sans-serif;transition:all .2s}
+.url-i{flex:1;padding:14px 18px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:15px 'Switzer',sans-serif;transition:all .2s}
 .url-i::placeholder{color:var(--txt3)}
 .url-i:focus{outline:0;border-color:var(--blue)}
-.fetch{padding:14px 28px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:600 15px 'Inter',sans-serif;cursor:pointer;white-space:nowrap;min-width:140px;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
-.fetch:hover{background:var(--red2)}
-.fetch:disabled{background:#d1d5db;cursor:not-allowed;color:#9ca3af;position:relative}
-.fetch:disabled::after{
-  content:'Select Speaker Count';
-  position:absolute;
-  bottom:calc(100% + 8px);
-  left:50%;
-  transform:translateX(-50%) translateY(4px);
-  background:#ffffff !important;
-  color:#111111 !important;
-  padding:6px 10px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:500;
-  white-space:nowrap;
-  opacity:0;
-  visibility:hidden;
-  transition:all .2s ease;
-  pointer-events:none;
-  z-index:9999;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
-}
-.fetch:disabled::before{
-  content:'';
-  position:absolute;
-  bottom:calc(100% + 2px);
-  left:50%;
-  transform:translateX(-50%) translateY(4px);
-  border:5px solid transparent;
-  border-top-color:#ffffff !important;
-  opacity:0;
-  visibility:hidden;
-  transition:all .2s ease;
-  pointer-events:none;
-  z-index:9999;
-}
-.fetch:disabled:hover::after{
-  opacity:1;
-  visibility:visible;
-  transform:translateX(-50%) translateY(0);
-}
-.fetch:disabled:hover::before{
-  opacity:1;
-  visibility:visible;
-  transform:translateX(-50%) translateY(0);
-}
-[data-theme="dark"] .fetch:disabled::after{
-  background:#ffffff !important;
-  color:#111111 !important;
-  box-shadow:0 2px 12px rgba(0,0,0,.4);
-}
-[data-theme="dark"] .fetch:disabled::before{
-  border-top-color:#ffffff !important;
-}
-.fetch-hint{font-size:13px;color:var(--txt3);margin-top:12px;transition:opacity .2s}
-.fetch-hint.hid{opacity:0;height:0;margin:0;overflow:hidden}
+.fetch{padding:16px 32px;background:var(--red);border:1px solid var(--red);border-radius:var(--radius-sm);color:#fff;font:700 16px 'Switzer',sans-serif;cursor:pointer;white-space:nowrap;min-width:160px;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+.fetch:hover{background:#b91c1c;border-color:#b91c1c}
+.fetch:disabled{background:transparent;cursor:not-allowed;color:var(--txt3);border:1px solid var(--bdr)}
+.fetch-hint{font-size:15px;color:var(--txt2);margin-top:12px;transition:opacity .2s}
 .fetch.done{background:var(--green);pointer-events:none;min-width:50px;padding:14px 16px}
-.err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:14px;color:#ef4444}
+.err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:15px;color:#ef4444}
 
 /* Channel Display */
-.cs.ch-card{background:var(--bg3);border:1px solid transparent;padding:20px}
-.cs.ch-card:hover{border-color:var(--card-bdr)}
+.cs.ch-card{background:var(--card-bg);border:1px solid var(--bdr);padding:20px}
+.cs.ch-card:hover{border-color:var(--bdr2)}
 .ch-r{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
 .ch-i{display:flex;align-items:center;gap:14px}
 .ch-pfp{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;transition:opacity .2s}
 .ch-pfp:hover{opacity:0.8}
 .ch-i h3{font-size:16px;font-weight:600;color:var(--txt)}
 .ch-i a:hover h3{text-decoration:underline}
-.ch-i p{font-size:13px;color:var(--txt3)}
+.ch-i p{font-size:15px;color:var(--txt2)}
 .ch-i .subs{color:var(--txt2);font-weight:500}
-.edit{padding:14px 24px;background:var(--blue);border:0;border-radius:8px;color:#fff;font:600 15px 'Inter',sans-serif;cursor:pointer;transition:background .2s}
-.edit:hover{background:#1d4ed8}
+.edit{padding:14px 24px;background:var(--red);border:0;border-radius:8px;color:#fff;font:600 15px 'Switzer',sans-serif;cursor:pointer;transition:background .2s}
+.edit:hover{background:#b91c1c}
 
 /* Selected videos list */
 .sel-list{margin-top:16px;max-height:280px;overflow-y:auto;border-top:1px solid var(--bdr);padding-top:12px}
@@ -404,105 +518,41 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .sel-item:last-child{border-bottom:0}
 .sel-thumb{width:80px;height:45px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--bg3)}
 .sel-info{flex:1;min-width:0}
-.sel-info h4{font-size:13px;font-weight:500;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sel-info p{font-size:12px;color:var(--txt3)}
-.sel-dur{font-size:13px;font-weight:600;color:var(--txt2);flex-shrink:0}
-.sel-empty{padding:20px;text-align:center;color:var(--txt3);font-size:14px}
+.sel-info h4{font-size:15px;font-weight:500;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sel-info p{font-size:15px;color:var(--txt2)}
+.sel-dur{font-size:15px;font-weight:600;color:var(--txt2);flex-shrink:0}
+.sel-empty{padding:20px;text-align:center;color:var(--txt2);font-size:15px}
 
 /* Languages Slider - Soundwave Style */
-.lng-section{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:20px var(--pad);margin-bottom:20px;transition:all .3s}
-.lng-section:hover{border-color:var(--card-bdr)}
-.lng-h{display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:18px}
-.lng-v{font-size:42px;font-weight:900;color:var(--red);line-height:1;transition:transform .15s}
+.lng-section{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:16px var(--pad);margin-bottom:16px;transition:all .2s}
+.lng-section:hover{border-color:var(--bdr2)}
+.lng-h{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.lng-v{font-size:32px;font-weight:900;color:var(--blue);line-height:1;transition:transform .15s}
 .lng-v.bump{transform:scale(1.1)}
-.lng-lbl{font-size:13px;color:var(--txt3);margin-top:6px;font-weight:500}
+.lng-lbl{font-size:15px;color:var(--txt2);font-weight:500}
 
-/* Soundwave Slider Container */
-.soundwave-container{position:relative;width:100%;height:70px;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:none}
-@media(max-width:600px){.soundwave-container{height:80px;padding:10px 0}}
-.soundwave-track{display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 4px;gap:3px}
-.soundwave-bar{
-  flex:1;
-  background:var(--bg4);
-  border-radius:4px;
-  transition:background .15s, height .2s cubic-bezier(.34,1.56,.64,1);
-  position:relative;
-  min-width:8px;
-  max-width:20px;
-}
-.soundwave-bar.active{background:var(--red)}
-.soundwave-bar.active.animating{animation:barPulse .4s ease-out}
+/* Simple Slider */
+.slider-container{position:relative;width:100%;padding:8px 0}
+.slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--bdr);border-radius:2px;outline:none;cursor:pointer}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;background:var(--blue);border-radius:50%;cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,0.2);transition:transform 0.15s}
+.slider::-webkit-slider-thumb:hover{transform:scale(1.1)}
+.slider::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.15)}
+.slider::-moz-range-thumb{width:18px;height:18px;background:var(--blue);border:none;border-radius:50%;cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+[data-theme="dark"] .slider::-webkit-slider-thumb{background:#fff}
+[data-theme="dark"] .slider::-moz-range-thumb{background:#fff}
 
-@keyframes barPulse{
-  0%{transform:scaleY(1)}
-  50%{transform:scaleY(1.15)}
-  100%{transform:scaleY(1)}
-}
-
-/* Bar height variations for wave effect */
-.soundwave-bar:nth-child(1){height:35%}
-.soundwave-bar:nth-child(2){height:50%}
-.soundwave-bar:nth-child(3){height:70%}
-.soundwave-bar:nth-child(4){height:55%}
-.soundwave-bar:nth-child(5){height:85%}
-.soundwave-bar:nth-child(6){height:65%}
-.soundwave-bar:nth-child(7){height:90%}
-.soundwave-bar:nth-child(8){height:75%}
-.soundwave-bar:nth-child(9){height:60%}
-.soundwave-bar:nth-child(10){height:95%}
-.soundwave-bar:nth-child(11){height:70%}
-.soundwave-bar:nth-child(12){height:85%}
-.soundwave-bar:nth-child(13){height:55%}
-.soundwave-bar:nth-child(14){height:100%}
-.soundwave-bar:nth-child(15){height:80%}
-.soundwave-bar:nth-child(16){height:65%}
-.soundwave-bar:nth-child(17){height:90%}
-.soundwave-bar:nth-child(18){height:50%}
-.soundwave-bar:nth-child(19){height:75%}
-.soundwave-bar:nth-child(20){height:85%}
-.soundwave-bar:nth-child(21){height:60%}
-.soundwave-bar:nth-child(22){height:95%}
-.soundwave-bar:nth-child(23){height:70%}
-.soundwave-bar:nth-child(24){height:55%}
-.soundwave-bar:nth-child(25){height:80%}
-.soundwave-bar:nth-child(26){height:90%}
-.soundwave-bar:nth-child(27){height:65%}
-.soundwave-bar:nth-child(28){height:75%}
-.soundwave-bar:nth-child(29){height:50%}
-.soundwave-bar:nth-child(30){height:40%}
-
-/* Idle animation for active bars */
-.soundwave-bar.active{
-  animation:idleWave 2s ease-in-out infinite;
-  animation-delay:calc(var(--i) * 0.07s);
-}
-@keyframes idleWave{
-  0%,100%{transform:scaleY(1)}
-  50%{transform:scaleY(0.85)}
-}
-
-/* Hover effect */
-.soundwave-container:hover .soundwave-bar.active{
-  animation:activeWave 0.8s ease-in-out infinite;
-}
-@keyframes activeWave{
-  0%,100%{transform:scaleY(1)}
-  50%{transform:scaleY(1.1)}
-}
-
-.lng-lb{display:flex;justify-content:space-between;font-size:12px;color:var(--txt3);margin-top:8px;font-weight:500}
-.lng-lb span{padding:0 4px}
+.lng-lb{display:flex;justify-content:space-between;font-size:13px;color:var(--txt3);margin-top:4px;font-weight:500}
 
 /* Results */
 .res{margin-top:var(--gap)}
-.res-g{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.res-g{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:600px){.res-g{grid-template-columns:1fr}}
-.res-c{background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:var(--pad);transition:all .3s}
-.res-c:hover{border-color:var(--card-bdr)}
-.res-c h3{font-size:17px;font-weight:700;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.res-c{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:var(--pad);transition:all .2s}
+.res-c:hover{border-color:var(--bdr2)}
+.res-c h3{font-size:23px;font-weight:800;letter-spacing:-0.02em;margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .res-c h3.bl{color:#3b82f6}.res-c h3.gr{color:#22c55e}
 .res-r{margin-bottom:18px}
-.res-row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px}
+.res-row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:10px}
 .res-row .lb{color:var(--txt2)}
 .res-t{text-align:center;padding:18px;border-radius:var(--radius-sm)}
 .res-t.bl{background:#2563eb}.res-t.gr{background:#16a34a}
@@ -510,19 +560,58 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .res-t .bg{font-size:30px;font-weight:900;color:#fff}
 
 /* CTA Buttons */
-.cta-row{display:flex;gap:12px}
+.cta-row{display:flex;gap:12px;margin-top:20px}
 @media(max-width:500px){.cta-row{flex-direction:column}}
-.email-cta{flex:1;padding:18px;background:var(--txt);border:0;border-radius:var(--radius);color:var(--bg);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
+.email-cta{flex:1;padding:18px;background:var(--txt);border:0;border-radius:var(--radius);color:var(--bg);font:700 16px 'Switzer',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
 .email-cta:hover{opacity:.9}
-.schedule-cta{flex:1;padding:18px;background:var(--btn-bg);border:0;border-radius:var(--radius);color:var(--txt);font:700 16px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
+.schedule-cta{flex:1;padding:18px;background:var(--btn-bg);border:0;border-radius:var(--radius);color:var(--txt);font:700 16px 'Switzer',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
 .schedule-cta:hover{background:var(--btn-hover)}
 
+/* Restart Button */
+.restart-section {
+  display: none;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--bdr);
+}
+
+.restart-section.show {
+  display: block;
+}
+
+.restart-btn {
+  width: 100%;
+  padding: 16px;
+  background: transparent;
+  border: 1px solid var(--bdr);
+  border-radius: var(--radius);
+  color: var(--txt2);
+  font: 600 15px 'Switzer', sans-serif;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.restart-btn:hover {
+  background: var(--bg3);
+  border-color: var(--bdr2);
+  color: var(--txt);
+}
+
+.restart-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* Languages Section */
-.lngs{margin-top:24px;background:var(--bg3);border:1px solid transparent;border-radius:var(--radius);padding:24px;transition:all .3s}
-.lngs:hover{border-color:var(--card-bdr)}
-.lngs h3{font-size:20px;font-weight:800;margin-bottom:4px}
+.lngs{margin-top:24px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:24px;transition:all .2s}
+.lngs:hover{border-color:var(--bdr2)}
+.lngs h3{font-size:23px;font-weight:800;letter-spacing:-0.02em;margin-bottom:4px}
 .lngs-g{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:6px;font-size:13px;transition:all .2s}
+.lc{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:6px;font-size:15px;transition:all .2s}
 @media(max-width:700px){.lngs-g{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:450px){.lngs-g{grid-template-columns:repeat(2,1fr)}}
 
@@ -538,35 +627,42 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .q-sum{background:var(--bg3);border-radius:var(--radius-sm);padding:18px;margin-bottom:20px}
 .q-sum h4{font-size:16px;font-weight:600;margin-bottom:14px}
 .q-nums{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.q-n .lb{font-size:12px;color:var(--txt3);margin-bottom:4px}
+.q-n .lb{font-size:15px;color:var(--txt2);margin-bottom:4px}
 .q-n .vl{font-size:22px;font-weight:700}
 .q-n .vl.bl{color:#3b82f6}.q-n .vl.gr{color:#22c55e}
-.q-det{font-size:12px;color:var(--txt3);margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr)}
-.em-i{width:100%;padding:14px 18px;background:var(--input-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:14px 'Inter',sans-serif;margin-bottom:16px;transition:all .2s}
+.q-det{font-size:15px;color:var(--txt2);margin-top:14px;padding-top:14px;border-top:1px solid var(--bdr)}
+.em-i{width:100%;padding:14px 18px;background:var(--input-bg);border:1px solid var(--bdr);border-radius:var(--radius-sm);color:var(--txt);font:14px 'Switzer',sans-serif;margin-bottom:16px;transition:all .2s}
 .em-i::placeholder{color:var(--txt3)}
 .em-i:focus{outline:0;border-color:var(--blue)}
-.send{width:100%;padding:14px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:700 15px 'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
+.send{width:100%;padding:14px;background:var(--red);border:0;border-radius:var(--radius-sm);color:#fff;font:700 15px 'Switzer',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s}
 .send:hover{background:var(--red2)}
-.em-note{font-size:12px;color:var(--txt3);text-align:center;margin-top:14px}
+.em-note{font-size:15px;color:var(--txt2);text-align:center;margin-top:14px}
 .succ{text-align:center;padding:40px 20px}
 .succ-i{width:72px;height:72px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px;color:#fff}
 .succ h3{font-size:22px;font-weight:700;margin-bottom:8px}
 .succ p{color:var(--txt2)}
 
 /* Loading */
-.load{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;display:none;align-items:center;justify-content:center}
+.load{position:fixed;inset:0;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);z-index:2000;display:none;align-items:center;justify-content:center;flex-direction:column}
+[data-theme="dark"] .load{background:rgba(0,0,0,.95)}
 .load.open{display:flex}
-.load-b{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:var(--radius);padding:40px;text-align:center}
-.spin{width:48px;height:48px;border:4px solid var(--red);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.load-b p{font-weight:600;margin-bottom:6px}
-.load-b .sub{font-size:14px;color:var(--txt3)}
+.load-logo{width:72px;height:72px;position:relative;margin-bottom:24px}
+.load-logo img{position:absolute;top:0;left:0;width:100%;height:100%}
+.load-logo .logo-dark{display:none}
+[data-theme="dark"] .load-logo img:not(.logo-dark){display:none}
+[data-theme="dark"] .load-logo .logo-dark{display:block}
+.load-logo .load-outer{animation:logoSpin 4s linear infinite}
+.load-b{text-align:center}
+.load-b p{font-weight:600;font-size:15px;color:var(--txt);margin-bottom:6px}
+.load-b .sub{font-size:15px;color:var(--txt2);font-weight:400}
+.load-progress{width:200px;height:3px;background:var(--bdr);border-radius:2px;margin-top:20px;overflow:hidden}
+.load-progress-bar{height:100%;width:0;background:var(--red);border-radius:2px;transition:width 0.3s ease}
 
 /* Toast - Bottom Left */
 .toast-container{position:fixed;bottom:24px;left:24px;z-index:10000;display:flex;flex-direction:column-reverse;gap:10px}
 .toast{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:12px;padding:16px 20px;min-width:320px;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,.15);transform:translateX(-120%);opacity:0;transition:all .3s cubic-bezier(.22,.68,0,1.1);position:relative}
 [data-theme="dark"] .toast{box-shadow:0 10px 40px rgba(0,0,0,.5)}
-[data-theme="dark"] .fetch:disabled{background:#374151;color:#6b7280}
+[data-theme="dark"] .fetch:disabled{background:transparent;color:var(--txt3);border:1px solid var(--bdr)}
 [data-theme="dark"] .spk{box-shadow:0 1px 3px rgba(0,0,0,.2)}
 [data-theme="dark"] .spk:hover{box-shadow:0 2px 6px rgba(0,0,0,.3)}
 .toast.show{transform:translateX(0);opacity:1}
@@ -574,8 +670,8 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .toast-content{display:flex;align-items:center;gap:14px}
 .toast-icon{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0}
 .toast-icon img{width:100%;height:100%;object-fit:cover}
-.toast-text h4{font-size:14px;font-weight:600;margin-bottom:2px}
-.toast-text p{font-size:13px;color:var(--txt2)}
+.toast-text h4{font-size:15px;font-weight:600;margin-bottom:2px}
+.toast-text p{font-size:15px;color:var(--txt2)}
 .toast-close{position:absolute;top:8px;right:8px;width:24px;height:24px;background:0;border:0;color:var(--txt3);font-size:16px;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:all .2s}
 .toast-close:hover{background:var(--bg3);color:var(--txt)}
 
@@ -588,18 +684,95 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
 .cs.highlight{animation:highlightPulse .6s ease-out;border-color:var(--green)}
 
 .hid{display:none!important}
+
+/* Icon colors for dark mode */
+[data-theme="dark"] .sh-acc-t .ico svg{
+  stroke:var(--txt2);
+}
+
+/* Dark mode logo */
+[data-theme="dark"] .logo-i .logo-outer:not(.logo-dark),
+[data-theme="dark"] .logo-i .logo-inner:not(.logo-dark){display:none}
+[data-theme="dark"] .logo-i .logo-dark{display:block}
+
+/* Page Loader */
+.page-loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;transition:opacity .4s ease,visibility .4s ease}
+.page-loader.fade-out{opacity:0;visibility:hidden}
+.page-loader .load-logo{opacity:0;animation:logoFadeIn 0.3s ease 0.1s forwards}
+@keyframes logoFadeIn{to{opacity:1}}
 </style>
 </head>
 <body>
+
+<!-- Page Loader -->
+<div class="page-loader" id="pageLoader">
+  <div class="load-logo">
+    <img class="load-outer" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER.svg?alt=media&token=394d9498-5f0e-4e25-8ee3-9e2a3b627520" alt="">
+    <img class="load-outer logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER%20WHITE.svg?alt=media&token=9900ca7a-36ae-4e67-88e7-d7d776f12513" alt="">
+    <img class="load-inner" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER.svg?alt=media&token=fe5271b9-275b-4e10-aad8-6888b197abc9" alt="">
+    <img class="load-inner logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER%20WHITE.svg?alt=media&token=a7f525a7-034e-4477-90c4-5e0c71cf6044" alt="">
+  </div>
+</div>
 
 <!-- Toast Container -->
 <div class="toast-container" id="toasts"></div>
 
 <div class="wrap" style="padding-bottom:0">
   <header class="hdr">
-    <a href="https://humanvoiceover.com" target="_blank" rel="noopener noreferrer" class="hdr-l" style="text-decoration:none;color:inherit">
-      <div class="logo-i"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/hvo-bordered-png.png?alt=media&token=4b18aef3-bb8f-473d-a6e6-5d18a37e1143" alt="HVO"></div>
-      <div class="logo-txt"><h1>Human Voice Over</h1></div>
+    <a href="https://humanvoiceover.com" target="_blank" rel="noopener noreferrer" class="hdr-l">
+      <div class="logo-i">
+        <img class="logo-outer" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER.svg?alt=media&token=394d9498-5f0e-4e25-8ee3-9e2a3b627520" alt="">
+        <img class="logo-outer logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER%20WHITE.svg?alt=media&token=9900ca7a-36ae-4e67-88e7-d7d776f12513" alt="">
+        <img class="logo-inner" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER.svg?alt=media&token=fe5271b9-275b-4e10-aad8-6888b197abc9" alt="">
+        <img class="logo-inner logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER%20WHITE.svg?alt=media&token=a7f525a7-034e-4477-90c4-5e0c71cf6044" alt="">
+      </div>
+      <!-- Animated Text Rotator -->
+      <div class="text-rotator" id="textRotator">
+        <div class="text-main" id="textMain">Human Voice Over</div>
+        <div class="text-trusted" id="textTrusted">
+          <span class="trusted-prefix">Trusted by</span>
+          <div class="creator-rotator">
+            <div class="creator-rotator-inner" id="creatorInner">
+              <div class="creator-row">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67a9e562fe1fc193869f924b_Dude%20Perfect.jpg" alt="Dude Perfect">
+                <span class="creator-name">Dude Perfect</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67d43ffca9488a013264e984_Preston_-_Icon_-_Profile.webp" alt="Preston">
+                <span class="creator-name">Preston</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67c5c8d909ad3c2abe261949_Jesser.webp" alt="Jesser">
+                <span class="creator-name">Jesser</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/691e1bc29b29d61546bb6169_channels4_profile%20(2).jpg" alt="Nick DiGiovanni">
+                <span class="creator-name">Nick DiGiovanni</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/d7beddc4-d977-450f-bc62-2fcd4f2d28f4_86d13fc0-8261-4cd9-bb8b-9fb6fbb4ccf0.png?alt=media&token=1e59250e-e3d3-4ba5-ba85-4d085d85cb59" alt="Brianna">
+                <span class="creator-name">Brianna</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67c048949dc9061cc7b92b92_RyTr.webp" alt="Ryan Trahan">
+                <span class="creator-name">Ryan Trahan</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67d04128ae9dc46c81201d7e_Airrack.jpg" alt="Airrack">
+                <span class="creator-name">Airrack</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://yt3.googleusercontent.com/HFfZisaVh7x0A_ZxfEObPrpAyDPqsuIJD0P4zE23jNL65Pdn58ixh7GsDaJcGw5797VChzybXQ=s160-c-k-c0x00ffffff-no-rj" alt="First We Feast">
+                <span class="creator-name">First We Feast</span>
+              </div>
+              <div class="creator-row">
+                <img class="creator-photo" src="https://yt3.googleusercontent.com/RdjombbmvvGQGTokXHgVRF7qijHDLcnXs7h4S6N0oOua-veEap9RO7htFE30v7xnWDM1GUlCmI4=s160-c-k-c0x00ffffff-no-rj" alt="Cleo Abram">
+                <span class="creator-name">Cleo Abram</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </a>
     <div class="hdr-r">
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
@@ -624,16 +797,16 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
     <div class="calc-content" id="calcContent">
     <div class="cs" id="s2">
       <div class="cs-h"><div class="cs-n dn" id="n2"><a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="yt-logo-link"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></a></div><h3>Paste YouTube Channel Link</h3></div>
-      <div class="url-r"><input type="text" class="url-i" id="urli" placeholder="https://youtube.com/@YourChannel" oninput="resetFetch()"><button class="fetch" id="fbtn" onclick="doFetch()" disabled>Fetch Videos</button></div>
+      <div class="url-r"><input type="text" class="url-i" id="urli" value="https://youtube.com/@" placeholder="YourChannel" oninput="resetFetch()" onpaste="handlePaste(event)"><button class="fetch" id="fbtn" onclick="doFetch()" disabled>Fetch Videos</button></div>
       <p class="fetch-hint" id="fetchHint">Select speaker count below to enable</p>
       <div class="err hid" id="errmsg"></div>
     </div>
 
     <div class="cs" id="s1">
-      <h3 style="font-size:20px;font-weight:800;margin-bottom:20px">How many main speakers appear in your videos?</h3>
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:14px">How many main speakers appear in your videos?</h3>
       <div class="spk-g" id="spkg"></div>
+      <p class="spk-hint">Just the regulars. Guests get matched on the fly.</p>
       <div class="cust hid" id="cust"><p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p></div>
-      <div class="svc hid" id="svc"><div class="rate"><div class="lb">Your Rate</div><div class="vl">$<span id="rdisp">45</span>/min</div></div></div>
     </div>
 
     <div class="cs ch-card hid" id="s3">
@@ -645,21 +818,29 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
     </div>
 
     <div class="res hid" id="res">
+      <div class="lng-section">
+        <div class="lng-h"><div class="lng-v" id="ldisp">1</div><div class="lng-lbl" id="llbl">Language</div></div>
+        <div class="slider-container" id="soundwave">
+          <input type="range" class="slider" id="lngSlider" min="1" max="20" value="1" oninput="uLang(this.value)">
+        </div>
+        <div class="lng-lb"><span>1</span><span>20</span></div>
+      </div>
       <div class="res-g">
         <div class="res-c"><h3 class="bl">📦 Backlog Cost</h3><div class="res-r"><div class="res-row"><span class="lb">Videos Selected</span><span id="rv">0</span></div><div class="res-row"><span class="lb">Source Minutes</span><span id="rsm">0</span></div><div class="res-row"><span class="lb">× <span id="rl1">1</span> Languages</span><span><span id="rdm">0</span> min dubbed</span></div><div class="res-row"><span class="lb">Rate</span><span>$<span id="rrt">45</span>/min</span></div></div><div class="res-t bl"><div class="sm">Total Backlog</div><div class="bg" id="rbc">$0</div></div></div>
         <div class="res-c"><h3 class="gr">📈 Estimated Monthly Output</h3><div class="res-r"><div class="res-row"><span class="lb">Total Videos</span><span id="rrc">0</span></div><div class="res-row"><span class="lb">Avg Video Length</span><span><span id="ral">0</span> min</span></div><div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="rmm">0</span> min</span></div><div class="res-row"><span class="lb">× <span id="rl2">1</span> Languages</span><span><span id="rmd">0</span> min/mo</span></div></div><div class="res-t gr"><div class="sm">Est. Monthly</div><div class="bg" id="rmc">$0/mo</div></div></div>
-      </div>
-      <div class="lng-section">
-        <div class="lng-h"><div class="lng-v" id="ldisp">1</div><div class="lng-lbl" id="llbl">Language</div></div>
-        <div class="soundwave-container" id="soundwave">
-          <div class="soundwave-track" id="swtrack"></div>
-        </div>
-        <div class="lng-lb"><span>1</span><span>30</span></div>
       </div>
       <div class="cta-row">
         <button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
         <button class="schedule-cta" onclick="scheduleCall()">📅 Schedule a Call</button>
       </div>
+    </div>
+    
+    <!-- Restart Section -->
+    <div class="restart-section" id="restartSection">
+      <button class="restart-btn" onclick="restartCalculator()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+        Start Over with Different Channel
+      </button>
     </div>
     </div>
     <!-- End calc-content -->
@@ -670,8 +851,8 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
         <!-- How It Works -->
         <div class="sh-acc" id="sha1">
           <button class="sh-acc-t" onclick="shTgl('sha1')">
-            <span><span class="ico">▶️</span>How It Works</span>
-            <span class="sh-acc-arr">▼</span>
+            <span><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg></span>How It Works</span>
+            <span class="sh-acc-arr"></span>
           </button>
           <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
             <div class="step"><div class="step-l"><div class="step-d bl">1</div><div class="step-c"></div></div><div class="step-x"><h4>Submit</h4><p>Upload your video. A live dashboard tracks every language in real time.</p></div></div>
@@ -686,45 +867,58 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
         <!-- Multi-Language Audio -->
         <div class="sh-acc" id="sha2">
           <button class="sh-acc-t" onclick="shTgl('sha2')">
-            <span><span class="ico">🌐</span>Multi-Language Audio (MLA)</span>
-            <span class="sh-acc-arr">▼</span>
+            <span><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span>Multi-Language Audio (MLA)</span>
+            <span class="sh-acc-arr"></span>
           </button>
           <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
-            <p style="font-size:14px;color:var(--txt2);margin-bottom:16px">HVO exclusively works with creators using YouTube's Multi-Language Audio feature instead of separate language channels.</p>
-            <h4 style="font-weight:600;margin-bottom:12px">Why MLA Only?</h4>
-            <div style="font-size:14px;color:var(--txt2);line-height:2">✓ All languages consolidated on your main channel<br>✓ International views boost your primary channel's growth<br>✓ Single upload workflow — publish all languages at once<br>✓ Existing subscribers unaffected by new audio tracks<br>✓ No channel management overhead for you or us<br>✓ YouTube's algorithm favors MLA-enabled content</div>
-            <div class="fn" style="margin-top:16px">Requires 40-50 uploads with audio tracks to unlock the MLA feature on YouTube.</div>
+            <p style="font-size:15px;color:var(--txt2);margin-bottom:20px">HVO exclusively works with creators using YouTube's Multi-Language Audio feature instead of separate language channels.</p>
+            <h4 style="font-weight:600;margin-bottom:14px;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3)">Why MLA Only?</h4>
+            <div style="font-size:15px;color:var(--txt2);line-height:2">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>All languages consolidated on your main channel</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>International views boost your primary channel's growth</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Single upload workflow — publish all languages at once</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Existing subscribers unaffected by new audio tracks</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>No channel management overhead for you or us</div>
+              <div style="display:flex;align-items:center;gap:8px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>YouTube's algorithm favors MLA-enabled content</div>
+            </div>
+            <p style="font-size:15px;color:var(--txt2);margin-top:20px;padding-top:16px;border-top:1px solid var(--bdr)">Requires 40-50 uploads with audio tracks to unlock the MLA feature on YouTube.</p>
           </div></div></div>
         </div>
 
         <!-- Turnaround Speeds -->
         <div class="sh-acc" id="sha3">
           <button class="sh-acc-t" onclick="shTgl('sha3')">
-            <span><span class="ico">⏱️</span>Turnaround Speeds</span>
-            <span class="sh-acc-arr">▼</span>
+            <span><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></span>Turnaround Speeds</span>
+            <span class="sh-acc-arr"></span>
           </button>
           <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
-            <p style="color:#22c55e;font-size:14px;margin-bottom:16px">✓ Flexible and can be adjusted to fit your upload schedule.</p>
-            <h4 style="font-weight:600;margin-bottom:12px">Ongoing Videos</h4>
-            <div class="sh-card" style="margin-bottom:16px">
-              <p style="font-size:12px;color:var(--txt3);margin-bottom:12px">Video Length</p>
-              <div class="sh-tabs"><button class="sh-tab on" onclick="shTab(event,'sht1')">≤30 Min</button><button class="sh-tab" onclick="shTab(event,'sht2')">≤60 Min</button><button class="sh-tab" onclick="shTab(event,'sht3')">≤90 Min</button></div>
+            <p style="color:#22c55e;font-size:15px;margin-bottom:24px;display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>Flexible and can be adjusted to fit your upload schedule.</p>
+            
+            <div style="margin-bottom:28px">
+              <h4 style="font-weight:600;margin-bottom:16px;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3)">Ongoing Videos</h4>
+              <div class="sh-tabs"><button class="sh-tab on" onclick="shTab(event,'sht1')">Up to 30 Min</button><button class="sh-tab" onclick="shTab(event,'sht2')">60 Min</button><button class="sh-tab" onclick="shTab(event,'sht3')">90 Min</button></div>
               <div id="sht1" class="sh-tp on"><div class="sh-tr"><span class="bl">Standard</span><span>~7 Days</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>~5 Days</span></div></div>
               <div id="sht2" class="sh-tp"><div class="sh-tr"><span class="bl">Standard</span><span>~10 Days</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>~7 Days</span></div></div>
               <div id="sht3" class="sh-tp"><div class="sh-tr"><span class="bl">Standard</span><span>~14 Days</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>~10 Days</span></div></div>
             </div>
-            <h4 style="font-weight:600;margin-bottom:12px">Back Catalog</h4>
-            <div class="sh-card" style="margin-bottom:16px"><p style="font-size:12px;color:var(--txt3);margin-bottom:10px">200-400 Minutes</p><div class="sh-tr"><span class="bl">Standard</span><span>Monthly Delivery</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>Weekly Delivery</span></div></div>
-            <h4 style="font-weight:600;margin-bottom:12px">YouTube Shorts</h4>
-            <div class="sh-card"><p style="font-size:14px;color:var(--txt2)">Our studios require a 10-15 minute minimum. Send 10-15 shorts together.</p></div>
+            
+            <div style="margin-bottom:28px">
+              <h4 style="font-weight:600;margin-bottom:16px;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3)">Back Catalog <span style="font-weight:400;text-transform:none;letter-spacing:0">(200-400 min)</span></h4>
+              <div class="sh-tr"><span class="bl">Standard</span><span>Monthly Delivery</span></div><div class="sh-tr"><span class="rd">Expedited</span><span>Weekly Delivery</span></div>
+            </div>
+            
+            <div>
+              <h4 style="font-weight:600;margin-bottom:12px;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3)">YouTube Shorts</h4>
+              <p style="font-size:15px;color:var(--txt2)">Our studios require a 10-15 minute minimum. Send 10-15 shorts together.</p>
+            </div>
           </div></div></div>
         </div>
 
         <!-- Pricing Structure -->
         <div class="sh-acc" id="sha4">
           <button class="sh-acc-t" onclick="shTgl('sha4')">
-            <span><span class="ico">💰</span>Pricing Structure</span>
-            <span class="sh-acc-arr">▼</span>
+            <span><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></span>Pricing Structure</span>
+            <span class="sh-acc-arr"></span>
           </button>
           <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
             <table class="sh-table"><thead><tr><th>Recurring Speakers</th><th class="ctr">Per Minute</th></tr></thead>
@@ -732,20 +926,20 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
             <tr><td>3-4 voices</td><td class="ctr" style="font-weight:600">$50/min</td></tr>
             <tr><td>5-6 voices</td><td class="ctr" style="font-weight:600">$55/min</td></tr>
             <tr><td>7+ voices</td><td class="ctr" style="color:var(--txt3)">Custom</td></tr></tbody></table>
-            <p style="font-size:13px;color:var(--txt3);margin-top:14px">Per minute, per language. Expedited +$5/min.</p>
+            <p style="font-size:15px;color:var(--txt2);margin-top:16px">Per minute, per language. Expedited +$5/min.</p>
           </div></div></div>
         </div>
 
         <!-- Submitting & Receiving -->
         <div class="sh-acc" id="sha5">
           <button class="sh-acc-t" onclick="shTgl('sha5')">
-            <span><span class="ico">📤</span>Submitting & Receiving Dubs</span>
-            <span class="sh-acc-arr">▼</span>
+            <span><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg></span>Submitting & Receiving Dubs</span>
+            <span class="sh-acc-arr"></span>
           </button>
           <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content">
             <div class="sh-gr2">
-              <div><h4 style="font-weight:600;margin-bottom:12px">What's Needed:</h4><div class="sh-card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2);line-height:1.8"><li>Video Length</li><li>Release Date</li><li>Titles</li><li>Description</li><li>Video URL</li><li>Background Audio URL</li><li>Notes</li></ol></div></div>
-              <div><h4 style="font-weight:600;margin-bottom:12px">What's Delivered:</h4><div class="sh-card"><ol style="list-style:decimal;padding-left:18px;font-size:14px;color:var(--txt2);line-height:1.8"><li>Translated Titles (SEO)</li><li>Translated Description</li><li>Translated Thumbnail Text</li><li>Dubbed Mixed Audio (.WAV)</li><li>Dubbed Raw Audio (.WAV)</li><li>Translated Subtitles (.SRT)</li><li>English Transcript (.SRT)</li></ol></div></div>
+              <div><h4 style="font-weight:600;margin-bottom:14px;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3)">What We Need</h4><ol style="list-style:decimal;padding-left:18px;font-size:15px;color:var(--txt2);line-height:2"><li>Video Length</li><li>Release Date</li><li>Titles</li><li>Description</li><li>Video URL</li><li>Background Audio URL</li><li>Notes</li></ol></div>
+              <div><h4 style="font-weight:600;margin-bottom:14px;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;color:var(--txt3)">What You Get</h4><ol style="list-style:decimal;padding-left:18px;font-size:15px;color:var(--txt2);line-height:2"><li>Translated Titles (SEO)</li><li>Translated Description</li><li>Translated Thumbnail Text</li><li>Dubbed Mixed Audio (.WAV)</li><li>Dubbed Raw Audio (.WAV)</li><li>Translated Subtitles (.SRT)</li><li>English Transcript (.SRT)</li></ol></div>
             </div>
           </div></div></div>
         </div>
@@ -753,16 +947,16 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
         <!-- FAQ -->
         <div class="sh-acc" id="sha6">
           <button class="sh-acc-t" onclick="shTgl('sha6')">
-            <span><span class="ico">❓</span>F.A.Q</span>
-            <span class="sh-acc-arr">▼</span>
+            <span><span class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></span>F.A.Q</span>
+            <span class="sh-acc-arr"></span>
           </button>
-          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content" id="shfaq"></div></div></div>
+          <div class="sh-acc-b"><div class="sh-acc-inner"><div class="sh-acc-content"><div class="faq-list" id="shfaq"></div></div></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="lngs"><h3>Top 20 Languages</h3><p style="font-size:13px;color:var(--txt3);margin-bottom:18px">(Highest Ticket to Lowest)</p><div class="lngs-g" id="lngsg"></div><p style="font-size:13px;color:var(--txt3);margin-top:16px;text-align:left">and 30+ more languages — just ask!</p></section>
+  <section class="lngs"><h3>Top 20 Languages</h3><p style="font-size:15px;color:var(--txt2);margin-bottom:18px">(Highest Ticket to Lowest)</p><div class="lngs-g" id="lngsg"></div><p style="font-size:15px;color:var(--txt2);margin-top:16px;text-align:left">and 30+ more languages — just ask!</p></section>
 </div>
 
 <!-- VIDEO MODAL HOST -->
@@ -814,13 +1008,107 @@ body{min-height:100vh;font-family:'Inter',system-ui,sans-serif;background-color:
   </div>
 </div>
 
-<div class="load" id="load"><div class="load-b"><div class="spin"></div><p>Fetching channel videos...</p><p class="sub">This may take 10-30 seconds</p></div></div>
+<div class="load" id="load">
+  <div class="load-logo">
+    <img class="load-outer" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER.svg?alt=media&token=394d9498-5f0e-4e25-8ee3-9e2a3b627520" alt="">
+    <img class="load-outer logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER%20WHITE.svg?alt=media&token=9900ca7a-36ae-4e67-88e7-d7d776f12513" alt="">
+    <img class="load-inner" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER.svg?alt=media&token=fe5271b9-275b-4e10-aad8-6888b197abc9" alt="">
+    <img class="load-inner logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER%20WHITE.svg?alt=media&token=a7f525a7-034e-4477-90c4-5e0c71cf6044" alt="">
+  </div>
+  <div class="load-b">
+    <p>Fetching channel videos...</p>
+    <p class="sub">This may take 10-30 seconds</p>
+  </div>
+  <div class="load-progress"><div class="load-progress-bar" id="loadProgress"></div></div>
+</div>
 
 <script>
 const PRC={'1-2':45,'3-4':50,'5-6':55},TIERS=['1-2','3-4','5-6','7+'],
 LNGS=[['🇩🇪','German'],['🇮🇹','Italian'],['🇫🇷','French'],['🇯🇵','Japanese'],['🇰🇷','Korean'],['🇲🇽','Spanish'],['🇷🇺','Russian'],['🇹🇷','Turkish'],['🇧🇷','Portuguese'],['🇸🇦','Arabic'],['🇹🇭','Thai'],['🇻🇳','Vietnamese'],['🇮🇳','Hindi'],['🇮🇩','Indonesian'],['🇧🇩','Bangla'],['🇮🇳','Punjabi'],['🇵🇰','Urdu'],['🇵🇱','Polish'],['🇮🇳','Tamil'],['🇳🇱','Dutch']],
 FAQS=[["What's a casting?","Before moving forward we will prepare a few voice options for you to confirm in a short clip of your material."],["What languages do you offer?","Albanian, Arabic, Bengali, Chinese, Dutch, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Vietnamese + more"],["How does ongoing billing work?","We bill you at the end of each month based on your total minute usage per language."],["Will my voice actor stay the same?","Yes, we use the same voice actor(s) for all main recurring speakers."],["Does HVO collect a rev-share?","No"],["Who owns the rights to delivered dubs?","You do. We guarantee the transfer of all ownership rights indefinitely."],["How many studios?","60 locations"],["How many actors?","Around 200 per studio and 500 remote actors"],["How many translators?","600 on hand + 400 extra if needed"],["How many audio engineers?","30 in-house engineers"]];
 let S={tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],filteredBack:[],recent:[],sel:new Set(),langs:1,calc:{},timeFilter:'all'};
+
+// =====================
+// TEXT ROTATOR ANIMATION
+// =====================
+const NUM_CREATORS = 9;
+const MAIN_DURATION = 5000; // "Human Voice Over" shows for 5 seconds
+const CREATOR_DURATION = 2500; // Each creator shows for 2.5 seconds
+
+let currentCreatorIndex = 0;
+let isShowingMain = true;
+let rotatorTimeout;
+
+function initTextRotator() {
+  isShowingMain = true;
+  currentCreatorIndex = 0;
+  
+  // Reset creator position
+  const inner = document.getElementById('creatorInner');
+  inner.style.transition = 'none';
+  inner.style.transform = 'translateY(0)';
+  
+  // Start the cycle
+  rotatorTimeout = setTimeout(() => {
+    switchToCreators();
+  }, MAIN_DURATION);
+}
+
+function switchToCreators() {
+  isShowingMain = false;
+  currentCreatorIndex = 0;
+  
+  // Fade out HVO, fade in Trusted by
+  document.getElementById('textMain').classList.add('hidden');
+  document.getElementById('textTrusted').classList.add('active');
+  
+  // Reset creator carousel position
+  const inner = document.getElementById('creatorInner');
+  inner.style.transition = 'none';
+  inner.style.transform = 'translateY(0)';
+  
+  // Re-enable transition after a frame
+  requestAnimationFrame(() => {
+    inner.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+  });
+  
+  // Schedule next creator
+  scheduleNextCreator();
+}
+
+function switchToMain() {
+  isShowingMain = true;
+  
+  // Fade out Trusted by, fade in HVO
+  document.getElementById('textMain').classList.remove('hidden');
+  document.getElementById('textTrusted').classList.remove('active');
+  
+  // After main duration, switch back to creators
+  rotatorTimeout = setTimeout(() => {
+    switchToCreators();
+  }, MAIN_DURATION);
+}
+
+function scheduleNextCreator() {
+  rotatorTimeout = setTimeout(() => {
+    currentCreatorIndex++;
+    
+    // If we've shown all creators, go back to main
+    if (currentCreatorIndex >= NUM_CREATORS) {
+      switchToMain();
+    } else {
+      updateCreatorPosition();
+      scheduleNextCreator();
+    }
+  }, CREATOR_DURATION);
+}
+
+function updateCreatorPosition() {
+  const inner = document.getElementById('creatorInner');
+  const itemHeight = 48;
+  const translateY = -currentCreatorIndex * itemHeight;
+  inner.style.transform = `translateY(${translateY}px)`;
+}
 
 // Tab switching - Calculator vs Info
 function showCalc() {
@@ -977,7 +1265,7 @@ function createShadowModal() {
         align-items: center;
         justify-content: center;
         padding: 20px;
-        font-family: 'Inter', system-ui, sans-serif;
+        font-family: 'Switzer', system-ui, sans-serif;
       }
       
       .modal-overlay.open { display: flex; }
@@ -1016,7 +1304,7 @@ function createShadowModal() {
         color: var(--txt);
       }
       
-      .modal-stats .num { color: #dc2626; }
+      .modal-stats .num { color: #dc2626; font-size: 20px; font-weight: 700; }
       
       .header-actions {
         display: flex;
@@ -1030,7 +1318,7 @@ function createShadowModal() {
         border: 0;
         border-radius: 6px;
         color: var(--txt);
-        font: 500 13px 'Inter', sans-serif;
+        font: 500 13px 'Switzer', sans-serif;
         cursor: pointer;
         transition: background .2s;
       }
@@ -1071,7 +1359,7 @@ function createShadowModal() {
         border: 1px solid var(--bdr);
         border-radius: 6px;
         color: var(--txt);
-        font: 14px 'Inter', sans-serif;
+        font: 14px 'Switzer', sans-serif;
         transition: all .2s;
       }
       
@@ -1086,7 +1374,7 @@ function createShadowModal() {
         border: 1px solid var(--bdr);
         border-radius: 6px;
         color: var(--txt);
-        font: 500 13px 'Inter', sans-serif;
+        font: 500 13px 'Switzer', sans-serif;
         cursor: pointer;
       }
       
@@ -1096,7 +1384,7 @@ function createShadowModal() {
         border: 1px solid var(--bdr);
         border-radius: 6px;
         color: var(--txt2);
-        font: 500 13px 'Inter', sans-serif;
+        font: 500 13px 'Switzer', sans-serif;
         cursor: pointer;
         margin-left: auto;
         transition: all .2s;
@@ -1125,7 +1413,7 @@ function createShadowModal() {
         border: 0;
         border-radius: 10px;
         color: #fff;
-        font: 700 15px 'Inter', sans-serif;
+        font: 700 15px 'Switzer', sans-serif;
         cursor: pointer;
         transition: background .2s;
       }
@@ -1151,7 +1439,7 @@ function createShadowModal() {
       }
       
       .video-card:hover { background: var(--bg3); border-color: var(--bdr); }
-      .video-card.selected { border-color: #dc2626; background: rgba(220,38,38,0.1); }
+      .video-card.selected { border-color: #dc2626; }
       
       .video-thumb {
         position: relative;
@@ -1270,6 +1558,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   createShadowModal();
   initSoundwave();
+  initTextRotator(); // Initialize the text rotator
+  
   const sg = document.getElementById('spkg');
   TIERS.forEach(t => {
     const b = document.createElement('button');
@@ -1278,7 +1568,7 @@ document.addEventListener('DOMContentLoaded', () => {
     b.onclick = () => sTier(t);
     sg.appendChild(b);
   });
-  // FAQ in sheet
+  // FAQ in sheet - new design
   const fq = document.getElementById('shfaq');
   FAQS.forEach(f => {
     const d = document.createElement('div');
@@ -1293,6 +1583,15 @@ document.addEventListener('DOMContentLoaded', () => {
     d.innerHTML = `<span>${l[0]}</span><span>${l[1]}</span>`;
     lg.appendChild(d);
   });
+  
+  // Fade out page loader
+  setTimeout(() => {
+    const pl = document.getElementById('pageLoader');
+    if (pl) {
+      pl.classList.add('fade-out');
+      setTimeout(() => pl.remove(), 400);
+    }
+  }, 1300);
 });
 
 // Keyboard shortcut for switching tabs
@@ -1325,7 +1624,6 @@ function sTier(t) {
   
   if (t === '7+') {
     document.getElementById('cust').classList.remove('hid');
-    document.getElementById('svc').classList.add('hid');
     document.getElementById('s3').classList.add('hid');
     document.getElementById('res').classList.add('hid');
     // Disable fetch for 7+ but keep section visible with custom hint
@@ -1336,7 +1634,6 @@ function sTier(t) {
   }
   
   document.getElementById('cust').classList.add('hid');
-  document.getElementById('svc').classList.remove('hid');
   
   // Enable fetch for valid speaker counts
   if (!fbtn.classList.contains('done')) {
@@ -1345,7 +1642,6 @@ function sTier(t) {
   hint.classList.add('hid');
   
   S.rate = PRC[t];
-  document.getElementById('rdisp').textContent = S.rate;
   
   if (S.back.length > 0) {
     document.getElementById('s3').classList.remove('hid');
@@ -1353,6 +1649,15 @@ function sTier(t) {
   }
   
   uRes();
+}
+
+function handlePaste(e) {
+  const pasted = (e.clipboardData || window.clipboardData).getData('text');
+  if (pasted.includes('youtube.com') || pasted.includes('youtu.be')) {
+    e.preventDefault();
+    document.getElementById('urli').value = pasted;
+    resetFetch();
+  }
 }
 
 function resetFetch() {
@@ -1375,10 +1680,33 @@ function resetFetch() {
 
 async function doFetch() {
   const url = document.getElementById('urli').value.trim();
-  if (!url) return;
+  if (!url || url === 'https://youtube.com/@') {
+    document.getElementById('errmsg').textContent = 'Please enter a YouTube channel link';
+    document.getElementById('errmsg').classList.remove('hid');
+    return;
+  }
   document.getElementById('load').classList.add('open');
   document.getElementById('errmsg').classList.add('hid');
-  document.getElementById('fbtn').disabled = true;
+  const fbtn = document.getElementById('fbtn');
+  fbtn.disabled = true;
+  fbtn.classList.add('fetching');
+  
+  // Reset and animate progress bar
+  const progressBar = document.getElementById('loadProgress');
+  progressBar.style.width = '0%';
+  let progress = 0;
+  const progressInterval = setInterval(() => {
+    if (progress < 20) {
+      progress += 4;
+    } else if (progress < 50) {
+      progress += 2;
+    } else if (progress < 80) {
+      progress += 0.5;
+    } else if (progress < 90) {
+      progress += 0.2;
+    }
+    progressBar.style.width = progress + '%';
+  }, 200);
   
   try {
     const r = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-youtube-fetch', {
@@ -1389,6 +1717,10 @@ async function doFetch() {
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const d = await r.json();
     if (!d.backlogVideos || d.backlogVideos.length === 0) throw new Error('No videos found');
+    
+    // Complete progress
+    clearInterval(progressInterval);
+    progressBar.style.width = '100%';
     
     S.url = url;
     S.name = d.channelName || 'Channel';
@@ -1405,15 +1737,23 @@ async function doFetch() {
     document.getElementById('chlink').href = S.url;
     document.getElementById('chlink2').href = S.url;
     document.getElementById('chsubs').textContent = S.subs + ' subscribers';
-    document.getElementById('fbtn').className = 'fetch done';
-    document.getElementById('fbtn').innerHTML = '✓';
-    document.getElementById('fbtn').disabled = true;
+    const fbtn = document.getElementById('fbtn');
+    fbtn.className = 'fetch done';
+    fbtn.innerHTML = '✓';
+    fbtn.disabled = true;
     document.getElementById('fetchHint').classList.add('hid');
     
     const s3 = document.getElementById('s3');
     s3.classList.remove('hid');
     s3.classList.add('highlight');
     setTimeout(() => s3.classList.remove('highlight'), 600);
+    
+    // Hide the input sections
+    document.getElementById('s1').classList.add('hid');
+    document.getElementById('s2').classList.add('hid');
+    
+    // Show restart button
+    document.getElementById('restartSection').classList.add('show');
     
     document.getElementById('res').classList.remove('hid');
     
@@ -1430,11 +1770,18 @@ async function doFetch() {
     });
     
   } catch (e) {
+    clearInterval(progressInterval);
+    progressBar.style.width = '0%';
     document.getElementById('errmsg').textContent = e.message;
     document.getElementById('errmsg').classList.remove('hid');
+    const fbtn = document.getElementById('fbtn');
+    fbtn.classList.remove('fetching');
+    fbtn.disabled = false;
   } finally {
-    document.getElementById('load').classList.remove('open');
-    document.getElementById('fbtn').disabled = false;
+    setTimeout(() => {
+      document.getElementById('load').classList.remove('open');
+      document.getElementById('loadProgress').style.width = '0%';
+    }, 300);
   }
 }
 
@@ -1443,19 +1790,9 @@ function uLang(v) {
   document.getElementById('ldisp').textContent = v; 
   document.getElementById('llbl').textContent = S.langs === 1 ? 'Language' : 'Languages';
   
-  // Update soundwave bars
-  const bars = document.querySelectorAll('.soundwave-bar');
-  bars.forEach((bar, i) => {
-    const isActive = i < v;
-    const wasActive = bar.classList.contains('active');
-    bar.classList.toggle('active', isActive);
-    
-    // Add pulse animation on newly activated bars
-    if (isActive && !wasActive) {
-      bar.classList.add('animating');
-      setTimeout(() => bar.classList.remove('animating'), 400);
-    }
-  });
+  // Sync slider
+  const slider = document.getElementById('lngSlider');
+  if (slider) slider.value = v;
   
   // Bump animation on number
   const disp = document.getElementById('ldisp');
@@ -1465,68 +1802,8 @@ function uLang(v) {
   uRes(); 
 }
 
-// Soundwave slider setup
-function initSoundwave() {
-  const track = document.getElementById('swtrack');
-  const container = document.getElementById('soundwave');
-  if (!track || !container) return;
-  
-  // Create 30 bars
-  for (let i = 0; i < 30; i++) {
-    const bar = document.createElement('div');
-    bar.className = 'soundwave-bar' + (i === 0 ? ' active' : '');
-    bar.style.setProperty('--i', i);
-    track.appendChild(bar);
-  }
-  
-  let isDragging = false;
-  
-  function updateFromPosition(clientX) {
-    const rect = container.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percent = Math.max(0, Math.min(1, x / rect.width));
-    const value = Math.max(1, Math.min(30, Math.round(percent * 30) || 1));
-    uLang(value);
-  }
-  
-  // Mouse events
-  container.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    updateFromPosition(e.clientX);
-  });
-  
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) updateFromPosition(e.clientX);
-  });
-  
-  document.addEventListener('mouseup', () => isDragging = false);
-  
-  // Touch events - improved for mobile
-  container.addEventListener('touchstart', (e) => {
-    isDragging = true;
-    e.preventDefault(); // Prevent scrolling when touching slider
-    updateFromPosition(e.touches[0].clientX);
-  }, { passive: false });
-  
-  container.addEventListener('touchmove', (e) => {
-    if (isDragging) {
-      e.preventDefault(); // Prevent scrolling while dragging
-      updateFromPosition(e.touches[0].clientX);
-    }
-  }, { passive: false });
-  
-  container.addEventListener('touchend', () => isDragging = false);
-  container.addEventListener('touchcancel', () => isDragging = false);
-  
-  // Click on individual bars
-  track.addEventListener('click', (e) => {
-    if (e.target.classList.contains('soundwave-bar')) {
-      const bars = [...track.children];
-      const index = bars.indexOf(e.target) + 1;
-      uLang(index);
-    }
-  });
-}
+// Slider is now a native range input, no custom init needed
+function initSoundwave() {}
 
 function uRes() {
   if (S.back.length === 0 || S.rate === 0) return;
@@ -1829,6 +2106,43 @@ function exportCSV() {
   a.download = `${S.name.replace(/[^a-z0-9]/gi, '_')}_backlog.csv`;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+function restartCalculator() {
+  // Reset state
+  S = {tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],filteredBack:[],recent:[],sel:new Set(),langs:1,calc:{},timeFilter:'all'};
+  
+  // Reset UI
+  document.getElementById('urli').value = 'https://youtube.com/@';
+  document.getElementById('fbtn').className = 'fetch';
+  document.getElementById('fbtn').innerHTML = 'Fetch Videos';
+  document.getElementById('fbtn').disabled = true;
+  document.getElementById('fetchHint').classList.remove('hid');
+  document.getElementById('fetchHint').textContent = 'Select speaker count below to enable';
+  document.getElementById('errmsg').classList.add('hid');
+  
+  // Reset speaker selection
+  document.querySelectorAll('.spk').forEach(b => b.classList.remove('on'));
+  document.getElementById('cust').classList.add('hid');
+  
+  // Show input sections
+  document.getElementById('s1').classList.remove('hid');
+  document.getElementById('s2').classList.remove('hid');
+  
+  // Hide results and channel card
+  document.getElementById('s3').classList.add('hid');
+  document.getElementById('res').classList.add('hid');
+  
+  // Hide restart button
+  document.getElementById('restartSection').classList.remove('show');
+  
+  // Reset language slider
+  document.getElementById('lngSlider').value = 1;
+  document.getElementById('ldisp').textContent = '1';
+  document.getElementById('llbl').textContent = 'Language';
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
 </body>
