@@ -173,6 +173,12 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
   object-fit: cover;
   flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background: var(--bg3);
+}
+
+.creator-photo[src=""],
+.creator-photo:not([src]) {
+  visibility: hidden;
 }
 
 [data-theme="dark"] .creator-photo {
@@ -499,7 +505,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:15px;color:#ef4444}
 
 /* Channel Display */
-.cs.ch-card{background:var(--card-bg);border:1px solid var(--bdr);padding:20px}
+.cs.ch-card{background:var(--card-bg);border:1px solid var(--bdr);padding:20px;position:relative;overflow:visible}
 .cs.ch-card:hover{border-color:var(--bdr2)}
 .ch-r{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
 .ch-i{display:flex;align-items:center;gap:14px}
@@ -567,43 +573,37 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .schedule-cta{flex:1;padding:18px;background:var(--btn-bg);border:0;border-radius:var(--radius);color:var(--txt);font:700 16px 'Switzer',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
 .schedule-cta:hover{background:var(--btn-hover)}
 
-/* Restart Button */
-.restart-section {
-  display: none;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid var(--bdr);
-}
-
-.restart-section.show {
-  display: block;
-}
-
-.restart-btn {
-  width: 100%;
-  padding: 16px;
-  background: transparent;
+/* Channel Close Button */
+.ch-close {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  width: 24px;
+  height: 24px;
+  background: var(--card-bg);
   border: 1px solid var(--bdr);
-  border-radius: var(--radius);
-  color: var(--txt2);
-  font: 600 15px 'Switzer', sans-serif;
+  border-radius: 50%;
+  color: var(--txt3);
+  font-size: 16px;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   transition: all 0.2s;
+  z-index: 1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.restart-btn:hover {
+.ch-close:hover {
   background: var(--bg3);
   border-color: var(--bdr2);
   color: var(--txt);
+  transform: scale(1.1);
 }
 
-.restart-btn svg {
-  width: 16px;
-  height: 16px;
+[data-theme="dark"] .ch-close {
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 /* Languages Section */
@@ -734,39 +734,39 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
           <div class="creator-rotator">
             <div class="creator-rotator-inner" id="creatorInner">
               <div class="creator-row">
-                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67a9e562fe1fc193869f924b_Dude%20Perfect.jpg" alt="Dude Perfect">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67a9e562fe1fc193869f924b_Dude%20Perfect.jpg" alt="Dude Perfect" loading="lazy">
                 <span class="creator-name">Dude Perfect</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67d43ffca9488a013264e984_Preston_-_Icon_-_Profile.webp" alt="Preston">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67d43ffca9488a013264e984_Preston_-_Icon_-_Profile.webp" alt="Preston" loading="lazy">
                 <span class="creator-name">Preston</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67c5c8d909ad3c2abe261949_Jesser.webp" alt="Jesser">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67c5c8d909ad3c2abe261949_Jesser.webp" alt="Jesser" loading="lazy">
                 <span class="creator-name">Jesser</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/691e1bc29b29d61546bb6169_channels4_profile%20(2).jpg" alt="Nick DiGiovanni">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/691e1bc29b29d61546bb6169_channels4_profile%20(2).jpg" alt="Nick DiGiovanni" loading="lazy">
                 <span class="creator-name">Nick DiGiovanni</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/d7beddc4-d977-450f-bc62-2fcd4f2d28f4_86d13fc0-8261-4cd9-bb8b-9fb6fbb4ccf0.png?alt=media&token=1e59250e-e3d3-4ba5-ba85-4d085d85cb59" alt="Brianna">
+                <img class="creator-photo" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/d7beddc4-d977-450f-bc62-2fcd4f2d28f4_86d13fc0-8261-4cd9-bb8b-9fb6fbb4ccf0.png?alt=media&token=1e59250e-e3d3-4ba5-ba85-4d085d85cb59" alt="Brianna" loading="lazy">
                 <span class="creator-name">Brianna</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67c048949dc9061cc7b92b92_RyTr.webp" alt="Ryan Trahan">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67c048949dc9061cc7b92b92_RyTr.webp" alt="Ryan Trahan" loading="lazy">
                 <span class="creator-name">Ryan Trahan</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67d04128ae9dc46c81201d7e_Airrack.jpg" alt="Airrack">
+                <img class="creator-photo" src="https://cdn.prod.website-files.com/67a4f537f968bfd7fc55777f/67d04128ae9dc46c81201d7e_Airrack.jpg" alt="Airrack" loading="lazy">
                 <span class="creator-name">Airrack</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://yt3.googleusercontent.com/HFfZisaVh7x0A_ZxfEObPrpAyDPqsuIJD0P4zE23jNL65Pdn58ixh7GsDaJcGw5797VChzybXQ=s160-c-k-c0x00ffffff-no-rj" alt="First We Feast">
+                <img class="creator-photo" src="https://yt3.googleusercontent.com/HFfZisaVh7x0A_ZxfEObPrpAyDPqsuIJD0P4zE23jNL65Pdn58ixh7GsDaJcGw5797VChzybXQ=s160-c-k-c0x00ffffff-no-rj" alt="First We Feast" loading="lazy">
                 <span class="creator-name">First We Feast</span>
               </div>
               <div class="creator-row">
-                <img class="creator-photo" src="https://yt3.googleusercontent.com/RdjombbmvvGQGTokXHgVRF7qijHDLcnXs7h4S6N0oOua-veEap9RO7htFE30v7xnWDM1GUlCmI4=s160-c-k-c0x00ffffff-no-rj" alt="Cleo Abram">
+                <img class="creator-photo" src="https://yt3.googleusercontent.com/RdjombbmvvGQGTokXHgVRF7qijHDLcnXs7h4S6N0oOua-veEap9RO7htFE30v7xnWDM1GUlCmI4=s160-c-k-c0x00ffffff-no-rj" alt="Cleo Abram" loading="lazy">
                 <span class="creator-name">Cleo Abram</span>
               </div>
             </div>
@@ -775,7 +775,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
       </div>
     </a>
     <div class="hdr-r">
-      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme" aria-label="Toggle dark/light theme">🌙</button>
     </div>
   </header>
 </div>
@@ -797,7 +797,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
     <div class="calc-content" id="calcContent">
     <div class="cs" id="s2">
       <div class="cs-h"><div class="cs-n dn" id="n2"><a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="yt-logo-link"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></a></div><h3>Paste YouTube Channel Link</h3></div>
-      <div class="url-r"><input type="text" class="url-i" id="urli" value="https://youtube.com/@" placeholder="YourChannel" oninput="resetFetch()" onpaste="handlePaste(event)"><button class="fetch" id="fbtn" onclick="doFetch()" disabled>Fetch Videos</button></div>
+      <div class="url-r"><input type="text" class="url-i" id="urli" value="https://youtube.com/@" placeholder="YourChannel" oninput="resetFetch()" onpaste="handlePaste(event)" aria-label="YouTube channel URL"><button class="fetch" id="fbtn" onclick="doFetch()" disabled aria-label="Fetch channel videos">Fetch Videos</button></div>
       <p class="fetch-hint" id="fetchHint">Select speaker count below to enable</p>
       <div class="err hid" id="errmsg"></div>
     </div>
@@ -810,6 +810,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
     </div>
 
     <div class="cs ch-card hid" id="s3">
+      <button class="ch-close" onclick="restartCalculator()" aria-label="Start over with a different channel" title="Start over">×</button>
       <div class="ch-r">
         <div class="ch-i"><a id="chlink" href="#" target="_blank" style="flex-shrink:0"><img id="chpfp" class="ch-pfp" src="" alt=""></a><div><a id="chlink2" href="#" target="_blank" style="text-decoration:none;color:inherit"><h3 id="chname">Channel</h3></a><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0 videos selected</span> · <span id="selmins">0</span> min</p></div></div>
         <button class="edit" onclick="openVM()">Select Videos</button>
@@ -821,7 +822,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
       <div class="lng-section">
         <div class="lng-h"><div class="lng-v" id="ldisp">1</div><div class="lng-lbl" id="llbl">Language</div></div>
         <div class="slider-container" id="soundwave">
-          <input type="range" class="slider" id="lngSlider" min="1" max="20" value="1" oninput="uLang(this.value)">
+          <input type="range" class="slider" id="lngSlider" min="1" max="20" value="1" oninput="uLang(this.value)" aria-label="Number of languages">
         </div>
         <div class="lng-lb"><span>1</span><span>20</span></div>
       </div>
@@ -835,13 +836,6 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
       </div>
     </div>
     
-    <!-- Restart Section -->
-    <div class="restart-section" id="restartSection">
-      <button class="restart-btn" onclick="restartCalculator()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-        Start Over with Different Channel
-      </button>
-    </div>
     </div>
     <!-- End calc-content -->
 
@@ -1017,7 +1011,6 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
   </div>
   <div class="load-b">
     <p>Fetching channel videos...</p>
-    <p class="sub">This may take 10-30 seconds</p>
   </div>
   <div class="load-progress"><div class="load-progress-bar" id="loadProgress"></div></div>
 </div>
@@ -1037,14 +1030,23 @@ const CREATOR_DURATION = 2500; // Each creator shows for 2.5 seconds
 
 let currentCreatorIndex = 0;
 let isShowingMain = true;
-let rotatorTimeout;
+let rotatorTimeout = null;
+
+function clearRotatorTimeout() {
+  if (rotatorTimeout) {
+    clearTimeout(rotatorTimeout);
+    rotatorTimeout = null;
+  }
+}
 
 function initTextRotator() {
+  clearRotatorTimeout();
   isShowingMain = true;
   currentCreatorIndex = 0;
   
   // Reset creator position
   const inner = document.getElementById('creatorInner');
+  if (!inner) return;
   inner.style.transition = 'none';
   inner.style.transform = 'translateY(0)';
   
@@ -1055,15 +1057,19 @@ function initTextRotator() {
 }
 
 function switchToCreators() {
+  clearRotatorTimeout();
   isShowingMain = false;
   currentCreatorIndex = 0;
   
   // Fade out HVO, fade in Trusted by
-  document.getElementById('textMain').classList.add('hidden');
-  document.getElementById('textTrusted').classList.add('active');
+  const textMain = document.getElementById('textMain');
+  const textTrusted = document.getElementById('textTrusted');
+  if (textMain) textMain.classList.add('hidden');
+  if (textTrusted) textTrusted.classList.add('active');
   
   // Reset creator carousel position
   const inner = document.getElementById('creatorInner');
+  if (!inner) return;
   inner.style.transition = 'none';
   inner.style.transform = 'translateY(0)';
   
@@ -1077,11 +1083,14 @@ function switchToCreators() {
 }
 
 function switchToMain() {
+  clearRotatorTimeout();
   isShowingMain = true;
   
   // Fade out Trusted by, fade in HVO
-  document.getElementById('textMain').classList.remove('hidden');
-  document.getElementById('textTrusted').classList.remove('active');
+  const textMain = document.getElementById('textMain');
+  const textTrusted = document.getElementById('textTrusted');
+  if (textMain) textMain.classList.remove('hidden');
+  if (textTrusted) textTrusted.classList.remove('active');
   
   // After main duration, switch back to creators
   rotatorTimeout = setTimeout(() => {
@@ -1105,6 +1114,7 @@ function scheduleNextCreator() {
 
 function updateCreatorPosition() {
   const inner = document.getElementById('creatorInner');
+  if (!inner) return;
   const itemHeight = 48;
   const translateY = -currentCreatorIndex * itemHeight;
   inner.style.transform = `translateY(${translateY}px)`;
@@ -1547,7 +1557,7 @@ function createShadowModal() {
   shadowRoot.getElementById('shadow-selall').addEventListener('click', selAll);
   shadowRoot.getElementById('shadow-clear').addEventListener('click', clrAll);
   shadowRoot.getElementById('shadow-confirm').addEventListener('click', confV);
-  shadowRoot.getElementById('shadow-search').addEventListener('input', e => filterVideos(e.target.value));
+  shadowRoot.getElementById('shadow-search').addEventListener('input', debounce(e => filterVideos(e.target.value), 150));
   shadowRoot.getElementById('shadow-sort').addEventListener('change', e => sortVideos(e.target.value));
   shadowRoot.getElementById('shadow-time').addEventListener('change', e => filterByTime(e.target.value));
   shadowRoot.getElementById('shadow-export').addEventListener('click', exportCSV);
@@ -1557,7 +1567,6 @@ function createShadowModal() {
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   createShadowModal();
-  initSoundwave();
   initTextRotator(); // Initialize the text rotator
   
   const sg = document.getElementById('spkg');
@@ -1752,9 +1761,6 @@ async function doFetch() {
     document.getElementById('s1').classList.add('hid');
     document.getElementById('s2').classList.add('hid');
     
-    // Show restart button
-    document.getElementById('restartSection').classList.add('show');
-    
     document.getElementById('res').classList.remove('hid');
     
     rVG();
@@ -1802,8 +1808,14 @@ function uLang(v) {
   uRes(); 
 }
 
-// Slider is now a native range input, no custom init needed
-function initSoundwave() {}
+// Utility: Debounce function
+function debounce(fn, delay) {
+  let timer = null;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
 
 function uRes() {
   if (S.back.length === 0 || S.rate === 0) return;
@@ -1868,7 +1880,9 @@ function filterByTime(days) {
     S.filteredBack = S.back.filter(v => new Date(v.publishedAt) >= cutoff);
   }
   // Re-apply current sort
-  const sortVal = shadowRoot.getElementById('shadow-sort').value;
+  if (!shadowRoot) return;
+  const sortEl = shadowRoot.getElementById('shadow-sort');
+  const sortVal = sortEl ? sortEl.value : 'views';
   if (sortVal === 'views') S.filteredBack.sort((a, b) => b.viewCount - a.viewCount);
   else if (sortVal === 'duration') S.filteredBack.sort((a, b) => b.duration - a.duration);
   else if (sortVal === 'newest') S.filteredBack.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
@@ -1877,6 +1891,7 @@ function filterByTime(days) {
 }
 
 function rVG() {
+  if (!shadowVgrid) return;
   shadowVgrid.innerHTML = '';
   const videos = S.filteredBack.length ? S.filteredBack : S.back;
   videos.forEach(v => {
@@ -1884,7 +1899,7 @@ function rVG() {
     c.className = 'video-card' + (S.sel.has(v.id) ? ' selected' : '');
     c.dataset.id = v.id;
     c.addEventListener('click', () => togV(v.id));
-    c.innerHTML = `<div class="video-thumb">${v.thumbnail ? `<img src="${v.thumbnail}" loading="lazy">` : ''}<div class="duration">${fDur(v.duration)}</div><div class="checkmark">✓</div></div><div class="video-info"><h4>${esc(v.title)}</h4><p>${v.views} · ${v.publishedAgo}</p></div>`;
+    c.innerHTML = `<div class="video-thumb">${v.thumbnail ? `<img src="${v.thumbnail}" loading="lazy" alt="">` : ''}<div class="duration">${fDur(v.duration)}</div><div class="checkmark">✓</div></div><div class="video-info"><h4>${esc(v.title)}</h4><p>${v.views} · ${v.publishedAgo}</p></div>`;
     shadowVgrid.appendChild(c);
   });
   uMC();
@@ -1892,35 +1907,47 @@ function rVG() {
 
 function togV(id) {
   S.sel.has(id) ? S.sel.delete(id) : S.sel.add(id);
-  const c = shadowVgrid.querySelector(`.video-card[data-id="${id}"]`);
-  if (c) c.classList.toggle('selected', S.sel.has(id));
+  if (shadowVgrid) {
+    const c = shadowVgrid.querySelector(`.video-card[data-id="${id}"]`);
+    if (c) c.classList.toggle('selected', S.sel.has(id));
+  }
   uMC();
 }
 
 function selAll() {
   const videos = S.filteredBack.length ? S.filteredBack : S.back;
   videos.forEach(v => S.sel.add(v.id));
-  shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.add('selected'));
+  if (shadowVgrid) {
+    shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.add('selected'));
+  }
   uMC();
 }
 
 function clrAll() {
   S.sel.clear();
-  shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
+  if (shadowVgrid) {
+    shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
+  }
   uMC();
 }
 
 function uMC() {
+  if (!shadowRoot) return;
   const sv = S.back.filter(v => S.sel.has(v.id));
   const m = Math.round(sv.reduce((s, v) => s + v.duration, 0) / 60);
-  shadowRoot.getElementById('shadow-mcnt').textContent = S.sel.size;
-  shadowRoot.getElementById('shadow-mmins').textContent = m.toLocaleString();
+  const mcnt = shadowRoot.getElementById('shadow-mcnt');
+  const mmins = shadowRoot.getElementById('shadow-mmins');
+  if (mcnt) mcnt.textContent = S.sel.size;
+  if (mmins) mmins.textContent = m.toLocaleString();
 }
 
 function openVM() {
+  if (!shadowModal || !shadowRoot || !shadowMbody) return;
   shadowModal.classList.add('open');
-  shadowRoot.getElementById('shadow-search').value = '';
-  shadowRoot.getElementById('shadow-time').value = 'all';
+  const searchEl = shadowRoot.getElementById('shadow-search');
+  const timeEl = shadowRoot.getElementById('shadow-time');
+  if (searchEl) searchEl.value = '';
+  if (timeEl) timeEl.value = 'all';
   S.timeFilter = 'all';
   S.filteredBack = [...S.back];
   document.body.style.overflow = 'hidden';
@@ -1931,14 +1958,16 @@ function openVM() {
 }
 
 function closeVM() {
-  shadowModal.classList.remove('open');
+  if (shadowModal) shadowModal.classList.remove('open');
   document.body.style.overflow = '';
 }
 
 function filterVideos(q) {
+  if (!shadowVgrid) return;
   const lq = q.toLowerCase();
   shadowVgrid.querySelectorAll('.video-card').forEach(c => {
-    const t = c.querySelector('h4').textContent.toLowerCase();
+    const h4 = c.querySelector('h4');
+    const t = h4 ? h4.textContent.toLowerCase() : '';
     c.style.display = t.includes(lq) ? '' : 'none';
   });
 }
@@ -1983,6 +2012,11 @@ async function sendQ() {
   const em = document.getElementById('emi').value.trim();
   if (!em) return;
   
+  const sendBtn = document.querySelector('#eform .send');
+  const originalText = sendBtn.innerHTML;
+  sendBtn.innerHTML = 'Sending...';
+  sendBtn.disabled = true;
+  
   // Get selected videos data for CSV
   const selectedVideos = S.back.filter(v => S.sel.has(v.id)).map(v => ({
     title: v.title,
@@ -1996,7 +2030,7 @@ async function sendQ() {
   }));
   
   try {
-    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
+    const response = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -2022,10 +2056,16 @@ async function sendQ() {
         action: 'email'
       })
     });
-  } catch (e) { console.error(e); }
-  document.getElementById('eform').classList.add('hid');
-  document.getElementById('esucc').classList.remove('hid');
-  setTimeout(closeEM, 3000);
+    if (!response.ok) throw new Error('Failed to send');
+    document.getElementById('eform').classList.add('hid');
+    document.getElementById('esucc').classList.remove('hid');
+    setTimeout(closeEM, 3000);
+  } catch (e) {
+    console.error(e);
+    sendBtn.innerHTML = originalText;
+    sendBtn.disabled = false;
+    alert('Failed to send quote. Please try again.');
+  }
 }
 
 function scheduleCall() {
@@ -2045,6 +2085,11 @@ async function sendSchedule() {
   const em = document.getElementById('semi').value.trim();
   if (!em) return;
   
+  const sendBtn = document.querySelector('#sform .send');
+  const originalText = sendBtn.innerHTML;
+  sendBtn.innerHTML = 'Sending...';
+  sendBtn.disabled = true;
+  
   // Get selected videos data for CSV
   const selectedVideos = S.back.filter(v => S.sel.has(v.id)).map(v => ({
     title: v.title,
@@ -2058,7 +2103,7 @@ async function sendSchedule() {
   }));
   
   try {
-    await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
+    const response = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -2084,10 +2129,16 @@ async function sendSchedule() {
         action: 'schedule'
       })
     });
-  } catch (e) { console.error(e); }
-  document.getElementById('sform').classList.add('hid');
-  document.getElementById('ssucc').classList.remove('hid');
-  setTimeout(() => { closeSM(); window.open('https://humanvoiceover.com/meetwithus', '_blank'); }, 1500);
+    if (!response.ok) throw new Error('Failed to send');
+    document.getElementById('sform').classList.add('hid');
+    document.getElementById('ssucc').classList.remove('hid');
+    setTimeout(() => { closeSM(); window.open('https://humanvoiceover.com/meetwithus', '_blank'); }, 1500);
+  } catch (e) {
+    console.error(e);
+    sendBtn.innerHTML = originalText;
+    sendBtn.disabled = false;
+    alert('Failed to save quote. Please try again.');
+  }
 }
 
 function exportCSV() {
@@ -2132,9 +2183,6 @@ function restartCalculator() {
   // Hide results and channel card
   document.getElementById('s3').classList.add('hid');
   document.getElementById('res').classList.add('hid');
-  
-  // Hide restart button
-  document.getElementById('restartSection').classList.remove('show');
   
   // Reset language slider
   document.getElementById('lngSlider').value = 1;
