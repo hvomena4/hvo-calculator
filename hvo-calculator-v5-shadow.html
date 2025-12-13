@@ -75,7 +75,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 /* Layout */
 .wrap{max-width:900px;margin:0 auto;padding:32px 24px 120px}
 
-/* Header - Redesigned */
+/* Header */
 .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--bdr)}
 .hdr-l{display:flex;align-items:center;gap:14px;transition:opacity .2s;text-decoration:none;color:inherit}
 .hdr-l:hover{opacity:0.8}
@@ -85,232 +85,56 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .logo-outer{animation:logoSpin 21s linear infinite}
 @keyframes logoSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 
-/* ====================== */
-/* ANIMATED TEXT ROTATOR */
-/* ====================== */
-.text-rotator {
-  position: relative;
-  height: 48px;
-  min-width: 200px;
-}
-
-/* Main title - fades in/out */
-.text-main {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
-  color: var(--txt);
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
-
-.text-main.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Trusted by section - fades in/out */
-.text-trusted {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.text-trusted.active {
-  opacity: 1;
-}
-
-.trusted-prefix {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--txt2);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* Creator rotator - scrolls infinitely */
-.creator-rotator {
-  position: relative;
-  height: 48px;
-  overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-}
-
-.creator-rotator-inner {
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.creator-row {
-  height: 48px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
-/* Creator profile photo - same size as HVO logo */
-.creator-photo {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  background: var(--bg3);
-}
-
-.creator-photo[src=""],
-.creator-photo:not([src]) {
-  visibility: hidden;
-}
-
-[data-theme="dark"] .creator-photo {
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-}
-
-/* Creator name - matches Dubbing Calculator size */
-.creator-name {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
-  color: var(--txt);
-  line-height: 1;
-}
-
+/* Text Rotator */
+.text-rotator{position:relative;height:48px;min-width:200px}
+.text-main{position:absolute;top:0;left:0;height:48px;display:flex;align-items:center;font-size:28px;font-weight:800;line-height:1.2;letter-spacing:-0.03em;white-space:nowrap;color:var(--txt);opacity:1;transition:opacity 0.5s ease}
+.text-main.hidden{opacity:0;pointer-events:none}
+.text-trusted{position:absolute;top:0;left:0;height:48px;display:flex;align-items:center;gap:12px;opacity:0;transition:opacity 0.5s ease}
+.text-trusted.active{opacity:1}
+.trusted-prefix{font-size:15px;font-weight:500;color:var(--txt2);white-space:nowrap;flex-shrink:0}
+.creator-rotator{position:relative;height:48px;overflow:hidden;-webkit-mask-image:linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);mask-image:linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)}
+.creator-rotator-inner{display:flex;flex-direction:column;transition:transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)}
+.creator-row{height:48px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.creator-photo{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.08);background:var(--bg3)}
+.creator-photo[src=""],.creator-photo:not([src]){visibility:hidden}
+[data-theme="dark"] .creator-photo{box-shadow:0 2px 12px rgba(0,0,0,0.25)}
+.creator-name{font-size:28px;font-weight:800;letter-spacing:-0.03em;white-space:nowrap;color:var(--txt);line-height:1}
 .hdr-r{display:flex;align-items:center;gap:10px}
 
-/* Page Tabs - full width 2 column */
-.page-tabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:0;
-  margin-bottom:12px;
-  border-bottom:3px solid var(--bdr);
-}
-.page-tab{
-  padding:8px 0;
-  background:transparent;
-  border:0;
-  border-bottom:3px solid transparent;
-  margin-bottom:-3px;
-  color:var(--txt3);
-  font:800 28px 'Switzer',sans-serif;
-  letter-spacing:-0.03em;
-  cursor:pointer;
-  transition:all .2s;
-  text-align:left;
-}
+/* Page Tabs */
+.page-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:12px;border-bottom:3px solid var(--bdr)}
+.page-tab{padding:8px 0;background:transparent;border:0;border-bottom:3px solid transparent;margin-bottom:-3px;color:var(--txt3);font:800 28px 'Switzer',sans-serif;letter-spacing:-0.03em;cursor:pointer;transition:all .2s;text-align:left}
 .page-tab:hover{color:var(--txt)}
-.page-tab.on{
-  color:var(--txt);
-  border-bottom-color:var(--red);
-}
-.page-tab:last-child.on{
-  border-bottom-color:#3b82f6;
-}
+.page-tab.on{color:var(--txt);border-bottom-color:var(--red)}
+.page-tab:last-child.on{border-bottom-color:#3b82f6}
 
 /* Theme Toggle */
 .theme-toggle{width:42px;height:42px;border-radius:10px;background:transparent;border:1px solid transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s}
 .theme-toggle:hover{background:var(--bg3);border-color:var(--bdr)}
 
-/* ==================== */
-/* INFO PANEL - Inline swap */
-/* ==================== */
-.info-panel{
-  display:none;
-}
+/* Info Panel */
+.info-panel{display:none}
 .info-panel.open{display:block}
-
-/* Content hiding when info is open */
 .calc-content{}
 .calc-content.hidden{display:none}
+.info-grid{display:flex;flex-direction:column;gap:12px}
 
-/* Info grid layout - single column */
-.info-grid{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-/* Info Panel Accordions - Clean, minimal */
-.sh-acc{
-  background:var(--card-bg);
-  border:1px solid var(--bdr);
-  border-radius:var(--radius);
-  overflow:hidden;
-  transition:all .2s;
-}
+/* Accordions */
+.sh-acc{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);overflow:hidden;transition:all .2s}
 .sh-acc:hover{border-color:var(--bdr2)}
-.sh-acc-t{
-  width:100%;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:20px 24px;
-  background:0;border:0;
-  color:var(--txt);
-  font:800 23px/1.4 'Switzer',sans-serif;
-  letter-spacing:-0.02em;
-  cursor:pointer;
-  transition:background .15s;
-  text-align:left;
-}
+.sh-acc-t{width:100%;display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:0;border:0;color:var(--txt);font:800 23px/1.4 'Switzer',sans-serif;letter-spacing:-0.02em;cursor:pointer;transition:background .15s;text-align:left}
 .sh-acc-t:hover{background:transparent}
-.sh-acc-t > span:first-child{
-  display:flex;
-  align-items:center;
-}
-.sh-acc-t .ico{
-  width:22px;
-  height:22px;
-  margin-right:14px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  flex-shrink:0;
-  color:var(--txt2);
-}
-.sh-acc-t .ico svg{
-  width:22px;
-  height:22px;
-  stroke-width:2.5;
-}
-.sh-acc-arr{
-  width:8px;
-  height:8px;
-  border-right:2px solid var(--txt3);
-  border-bottom:2px solid var(--txt3);
-  transform:rotate(-45deg);
-  transition:transform .25s ease;
-  flex-shrink:0;
-}
+.sh-acc-t > span:first-child{display:flex;align-items:center}
+.sh-acc-t .ico{width:22px;height:22px;margin-right:14px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--txt2)}
+.sh-acc-t .ico svg{width:22px;height:22px;stroke-width:2.5}
+.sh-acc-arr{width:8px;height:8px;border-right:2px solid var(--txt3);border-bottom:2px solid var(--txt3);transform:rotate(-45deg);transition:transform .25s ease;flex-shrink:0}
 .sh-acc.open .sh-acc-arr{transform:rotate(45deg)}
-.sh-acc-b{
-  display:grid;
-  grid-template-rows:0fr;
-  transition:grid-template-rows .3s ease;
-}
+.sh-acc-b{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
 .sh-acc.open .sh-acc-b{grid-template-rows:1fr}
 .sh-acc-inner{overflow:hidden}
 .sh-acc-content{padding:4px 24px 28px;font-size:15px;color:var(--txt2);line-height:1.7}
 
-/* Steps in sheet - Clean timeline */
+/* Steps */
 .step{display:flex;gap:14px;margin-bottom:0}
 .step-l{display:flex;flex-direction:column;align-items:center}
 .step-d{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600;color:#fff;flex-shrink:0}
@@ -321,18 +145,18 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .step-x p{font-size:15px;color:var(--txt2);line-height:1.5}
 .step-x .qc{font-size:15px;color:var(--txt2);margin-top:2px}
 
-/* Grid in sheet */
+/* Grid */
 .sh-gr2{display:grid;grid-template-columns:1fr 1fr;gap:32px}
 @media(max-width:500px){.sh-gr2{grid-template-columns:1fr;gap:24px}}
 
-/* Cards in sheet - Minimal */
+/* Cards */
 .sh-card{background:transparent;border-radius:0;padding:0;transition:background .3s}
 .sh-card h4{font-size:15px;font-weight:600;margin-bottom:12px}
 .sh-card ul{list-style:none;font-size:15px}
 .sh-card li{margin-bottom:6px;color:var(--txt2)}
 .sh-card .fn{font-size:15px;color:var(--txt2);margin-top:16px;padding-top:16px;border-top:1px solid var(--bdr)}
 
-/* Tabs - Clean segmented control */
+/* Tabs */
 .sh-tabs{display:inline-flex;background:var(--bdr);border-radius:8px;padding:3px;margin-bottom:20px;gap:2px}
 .sh-tab{padding:8px 16px;background:transparent;border:0;border-radius:6px;color:var(--txt3);font:500 13px 'Switzer',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
 .sh-tab:hover{color:var(--txt)}
@@ -343,60 +167,25 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .sh-tr span:first-child{font-weight:600}
 .sh-tr .bl{color:#3b82f6}.sh-tr .rd{color:#ef4444}
 
-/* Table in sheet - Clean */
+/* Table */
 .sh-table{width:100%;border-collapse:collapse;font-size:15px}
 .sh-table th,.sh-table td{padding:12px 0;text-align:left;border-bottom:1px solid var(--bdr)}
 .sh-table th{color:var(--txt3);font-weight:500;font-size:15px;text-transform:uppercase;letter-spacing:0.5px}
 .sh-table tbody tr:last-child td{border-bottom:none}
 .sh-table .ctr{text-align:right}
 
-/* FAQ - Clean list */
+/* FAQ */
 .faq-list{display:flex;flex-direction:column;gap:0}
-.sh-faq{
-  border-bottom:1px solid var(--bdr);
-}
+.sh-faq{border-bottom:1px solid var(--bdr)}
 .sh-faq:last-child{border-bottom:none}
-.sh-faq-q{
-  width:100%;
-  padding:14px 0;
-  background:0;
-  border:0;
-  color:var(--txt);
-  font:500 15px 'Switzer',sans-serif;
-  text-align:left;
-  cursor:pointer;
-  transition:color .15s;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-}
+.sh-faq-q{width:100%;padding:14px 0;background:0;border:0;color:var(--txt);font:500 15px 'Switzer',sans-serif;text-align:left;cursor:pointer;transition:color .15s;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .sh-faq-q:hover{color:#3b82f6}
-.sh-faq-q::after{
-  content:'';
-  width:8px;
-  height:8px;
-  border-right:1.5px solid var(--txt3);
-  border-bottom:1.5px solid var(--txt3);
-  transform:rotate(-45deg);
-  transition:transform .2s;
-  flex-shrink:0;
-}
-.sh-faq.open .sh-faq-q::after{
-  transform:rotate(45deg);
-}
-.sh-faq-a{
-  display:none;
-  padding:0 0 14px 0;
-  font-size:15px;
-  color:var(--txt2);
-  line-height:1.6;
-}
+.sh-faq-q::after{content:'';width:8px;height:8px;border-right:1.5px solid var(--txt3);border-bottom:1.5px solid var(--txt3);transform:rotate(-45deg);transition:transform .2s;flex-shrink:0}
+.sh-faq.open .sh-faq-q::after{transform:rotate(45deg)}
+.sh-faq-a{display:none;padding:0 0 14px 0;font-size:15px;color:var(--txt2);line-height:1.6}
 .sh-faq.open .sh-faq-a{display:block}
 
-/* ==================== */
-/* HERO CALCULATOR */
-/* ==================== */
+/* Hero */
 .hero{margin-bottom:24px}
 .hero-h{margin-bottom:24px;text-align:left}
 .hero-h h2{font-size:32px;font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;background:linear-gradient(135deg,var(--txt) 0%,var(--txt2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -413,70 +202,15 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .cs-n img{width:24px;height:24px;object-fit:contain}
 .cs-h h3{font-size:23px;font-weight:800;letter-spacing:-0.02em}
 
-/* YouTube Logo Link with Custom Tooltip */
-.yt-logo-link{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:opacity .2s, transform .2s;
-  position:relative;
-}
-.yt-logo-link:hover{
-  opacity:0.8;
-  transform:scale(1.05);
-}
-.yt-logo-link::after{
-  content:'Open YouTube';
-  position:absolute;
-  bottom:calc(100% + 8px);
-  left:50%;
-  transform:translateX(-50%) translateY(4px);
-  background:#ffffff !important;
-  color:#111111 !important;
-  padding:6px 10px;
-  border-radius:6px;
-  font-size:11px;
-  font-weight:500;
-  white-space:nowrap;
-  opacity:0;
-  visibility:hidden;
-  transition:all .2s ease;
-  pointer-events:none;
-  z-index:9999;
-  box-shadow:0 2px 8px rgba(0,0,0,.15);
-}
-.yt-logo-link::before{
-  content:'';
-  position:absolute;
-  bottom:calc(100% + 2px);
-  left:50%;
-  transform:translateX(-50%) translateY(4px);
-  border:5px solid transparent;
-  border-top-color:#ffffff !important;
-  opacity:0;
-  visibility:hidden;
-  transition:all .2s ease;
-  pointer-events:none;
-  z-index:9999;
-}
-.yt-logo-link:hover::after{
-  opacity:1;
-  visibility:visible;
-  transform:translateX(-50%) translateY(0);
-}
-.yt-logo-link:hover::before{
-  opacity:1;
-  visibility:visible;
-  transform:translateX(-50%) translateY(0);
-}
-[data-theme="dark"] .yt-logo-link::after{
-  background:#ffffff !important;
-  color:#111111 !important;
-  box-shadow:0 2px 12px rgba(0,0,0,.4);
-}
-[data-theme="dark"] .yt-logo-link::before{
-  border-top-color:#ffffff !important;
-}
+/* YouTube Logo Link */
+.yt-logo-link{display:flex;align-items:center;justify-content:center;transition:opacity .2s, transform .2s;position:relative}
+.yt-logo-link:hover{opacity:0.8;transform:scale(1.05)}
+.yt-logo-link::after{content:'Open YouTube';position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:#ffffff !important;color:#111111 !important;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:500;white-space:nowrap;opacity:0;visibility:hidden;transition:all .2s ease;pointer-events:none;z-index:9999;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.yt-logo-link::before{content:'';position:absolute;bottom:calc(100% + 2px);left:50%;transform:translateX(-50%) translateY(4px);border:5px solid transparent;border-top-color:#ffffff !important;opacity:0;visibility:hidden;transition:all .2s ease;pointer-events:none;z-index:9999}
+.yt-logo-link:hover::after{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+.yt-logo-link:hover::before{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+[data-theme="dark"] .yt-logo-link::after{background:#ffffff !important;color:#111111 !important;box-shadow:0 2px 12px rgba(0,0,0,.4)}
+[data-theme="dark"] .yt-logo-link::before{border-top-color:#ffffff !important}
 
 /* Speaker Grid */
 .spk-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:4px}
@@ -504,22 +238,52 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .fetch.done{background:var(--green);pointer-events:none;min-width:50px;padding:14px 16px}
 .err{margin-top:14px;padding:14px;background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:6px;font-size:15px;color:#ef4444}
 
-/* Channel Display */
-.cs.ch-card{background:var(--card-bg);border:1px solid var(--bdr);padding:20px;position:relative;overflow:visible}
-.cs.ch-card:hover{border-color:var(--bdr2)}
-.ch-r{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
-.ch-i{display:flex;align-items:center;gap:14px}
+/* Channel Cards Container */
+.channels-container{display:flex;flex-direction:column;gap:16px}
+
+/* Channel Card */
+.ch-card{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:20px;position:relative;overflow:visible;transition:all .2s}
+.ch-card:hover{border-color:var(--bdr2)}
+.ch-card.pending-speaker{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.ch-r{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ch-i{display:flex;align-items:center;gap:14px;flex:1;min-width:0}
 .ch-pfp{width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;transition:opacity .2s}
 .ch-pfp:hover{opacity:0.8}
-.ch-i h3{font-size:16px;font-weight:600;color:var(--txt)}
-.ch-i a:hover h3{text-decoration:underline}
-.ch-i p{font-size:15px;color:var(--txt2)}
-.ch-i .subs{color:var(--txt2);font-weight:500}
-.edit{padding:14px 24px;background:var(--red);border:0;border-radius:8px;color:#fff;font:600 15px 'Switzer',sans-serif;cursor:pointer;transition:background .2s}
+.ch-info{flex:1;min-width:0}
+.ch-info h3{font-size:16px;font-weight:600;color:var(--txt);margin:0 0 6px 0;line-height:1.3}
+.ch-info a:hover h3{text-decoration:underline}
+.ch-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.ch-badge{padding:4px 10px;background:var(--bg3);border-radius:6px;font-size:13px;font-weight:500;color:var(--txt2);white-space:nowrap}
+.ch-badge.rate{background:rgba(37,99,235,.1);color:#3b82f6;position:relative}
+.ch-badge.rate.clickable{cursor:pointer;transition:background .15s}
+.ch-badge.rate.clickable:hover{background:rgba(37,99,235,.2)}
+.spk-tooltip{position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--card-bg);border:1px solid var(--bdr);border-radius:8px;padding:6px;display:flex;gap:4px;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:100;white-space:nowrap}
+.spk-tooltip::before{content:'';position:absolute;top:-6px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top:none;border-bottom-color:var(--bdr)}
+.spk-tooltip::after{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top:none;border-bottom-color:var(--card-bg)}
+.spk-opt{padding:6px 12px;border:1px solid var(--bdr);border-radius:6px;background:var(--bg2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;color:var(--txt)}
+.spk-opt:hover{background:var(--bg3)}
+.spk-opt.on{background:#3b82f6;color:#fff;border-color:#3b82f6}
+[data-theme="dark"] .spk-tooltip{background:#1a1a1a;border-color:#333;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+[data-theme="dark"] .spk-tooltip::before{border-bottom-color:#333}
+[data-theme="dark"] .spk-tooltip::after{border-bottom-color:#1a1a1a}
+[data-theme="dark"] .spk-opt{background:#222;border-color:#444;color:#fff}
+[data-theme="dark"] .spk-opt:hover{background:#333}
+.ch-stats{font-size:14px;color:var(--txt2);margin:0}
+.edit{padding:12px 20px;background:var(--red);border:0;border-radius:8px;color:#fff;font:600 14px 'Switzer',sans-serif;cursor:pointer;transition:background .2s;flex-shrink:0}
 .edit:hover{background:#b91c1c}
 
+/* Speaker Selection Inline */
+.speaker-select{margin-top:16px;padding-top:16px;border-top:1px solid var(--bdr)}
+.speaker-select h4{font-size:15px;font-weight:600;margin-bottom:12px;color:var(--txt)}
+.speaker-select .spk-g{margin-bottom:0}
+
+/* Channel Close Button */
+.ch-close{position:absolute;top:-10px;left:-10px;width:24px;height:24px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:50%;color:var(--txt3);font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:1;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.ch-close:hover{background:var(--bg3);border-color:var(--bdr2);color:var(--txt);transform:scale(1.1)}
+[data-theme="dark"] .ch-close{box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+
 /* Selected videos list */
-.sel-list{margin-top:16px;max-height:280px;overflow-y:auto;border-top:1px solid var(--bdr);padding-top:12px}
+.sel-list{margin-top:16px;max-height:200px;overflow-y:auto;border-top:1px solid var(--bdr);padding-top:12px}
 .sel-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--bdr)}
 .sel-item:last-child{border-bottom:0}
 .sel-thumb{width:80px;height:45px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--bg3)}
@@ -529,34 +293,38 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .sel-dur{font-size:15px;font-weight:600;color:var(--txt2);flex-shrink:0}
 .sel-empty{padding:20px;text-align:center;color:var(--txt2);font-size:15px}
 
-/* Languages Slider - Soundwave Style */
-.lng-section{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:16px var(--pad);margin-bottom:16px;transition:all .2s}
-.lng-section:hover{border-color:var(--bdr2)}
-.lng-h{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.lng-v{font-size:32px;font-weight:900;color:var(--blue);line-height:1;transition:transform .15s}
-.lng-v.bump{transform:scale(1.1)}
-.lng-lbl{font-size:15px;color:var(--txt2);font-weight:500}
+/* Add Channel Button - subtle, appears inline with channels */
+.add-channel-btn{padding:8px 14px;background:transparent;border:none;border-radius:6px;color:var(--txt3);font:500 14px 'Switzer',sans-serif;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;align-self:flex-start}
+.add-channel-btn:hover{color:var(--txt);background:var(--bg3)}
+.add-channel-btn span{font-size:16px;font-weight:400}
 
-/* Simple Slider */
-.slider-container{position:relative;width:100%;padding:8px 0}
-.slider{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--bdr);border-radius:2px;outline:none;cursor:pointer}
-.slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;background:var(--blue);border-radius:50%;cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,0.2);transition:transform 0.15s}
-.slider::-webkit-slider-thumb:hover{transform:scale(1.1)}
-.slider::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.15)}
-.slider::-moz-range-thumb{width:18px;height:18px;background:var(--blue);border:none;border-radius:50%;cursor:grab;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
-[data-theme="dark"] .slider::-webkit-slider-thumb{background:#fff}
-[data-theme="dark"] .slider::-moz-range-thumb{background:#fff}
+/* Results Section */
+.res{margin-bottom:var(--gap)}
 
-.lng-lb{display:flex;justify-content:space-between;font-size:13px;color:var(--txt3);margin-top:4px;font-weight:500}
+/* Unified Quote Container */
+.quote-unified{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);overflow:hidden}
+.quote-cols{display:grid;grid-template-columns:1fr auto 1fr}
+@media(max-width:700px){.quote-cols{grid-template-columns:1fr}.quote-divider{height:1px;width:100%}}
+.quote-col{padding:var(--pad)}
+.quote-divider{width:1px;background:var(--bdr)}
+@media(max-width:700px){.quote-divider{width:100%;height:1px}}
 
-/* Results */
-.res{margin-top:var(--gap)}
-.res-g{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:600px){.res-g{grid-template-columns:1fr}}
-.res-c{background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:var(--pad);transition:all .2s}
-.res-c:hover{border-color:var(--bdr2)}
-.res-c h3{font-size:23px;font-weight:800;letter-spacing:-0.02em;margin-bottom:18px;display:flex;align-items:center;gap:10px}
-.res-c h3.bl{color:#3b82f6}.res-c h3.gr{color:#22c55e}
+/* Language Bar */
+.lang-bar{display:flex;align-items:center;gap:20px;padding:16px 24px;background:var(--bg2);border-top:1px solid var(--bdr)}
+.lang-info{display:flex;align-items:center;gap:6px}
+.lang-num{font-size:24px;font-weight:700;color:var(--txt);line-height:1}
+.lang-label{font-size:14px;color:var(--txt2);line-height:1}
+.lang-slider{flex:1;height:6px;-webkit-appearance:none;appearance:none;background:var(--bdr);border-radius:3px;cursor:pointer}
+.lang-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;background:var(--blue);border-radius:50%;cursor:pointer;box-shadow:0 2px 8px rgba(37,99,235,.3)}
+.lang-slider::-moz-range-thumb{width:20px;height:20px;background:var(--blue);border-radius:50%;cursor:pointer;border:none}
+@media(max-width:600px){.lang-bar{flex-wrap:wrap}.lang-slider{order:3;width:100%;flex:none;margin-top:8px}}
+
+[data-theme="dark"] .lang-slider{background:#333}
+[data-theme="dark"] .lang-slider::-webkit-slider-thumb{box-shadow:0 2px 8px rgba(59,130,246,.4)}
+
+/* Results Grid */
+.quote-col h3{font-size:23px;font-weight:800;letter-spacing:-0.02em;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.quote-col h3.bl{color:#3b82f6}.quote-col h3.gr{color:#22c55e}
 .res-r{margin-bottom:18px}
 .res-row{display:flex;justify-content:space-between;font-size:15px;margin-bottom:10px}
 .res-row .lb{color:var(--txt2)}
@@ -565,6 +333,12 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .res-t .sm{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.85;margin-bottom:4px;color:#fff}
 .res-t .bg{font-size:30px;font-weight:900;color:#fff}
 
+/* Channel Breakdown in Results */
+.channel-breakdown{margin-top:12px}
+.breakdown-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;color:var(--txt2)}
+.breakdown-row span:first-child{display:flex;align-items:center;gap:8px}
+.breakdown-row img{width:20px;height:20px;border-radius:50%;object-fit:cover}
+
 /* CTA Buttons */
 .cta-row{display:flex;gap:12px;margin-top:20px}
 @media(max-width:500px){.cta-row{flex-direction:column}}
@@ -572,39 +346,6 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .email-cta:hover{opacity:.9}
 .schedule-cta{flex:1;padding:18px;background:var(--btn-bg);border:0;border-radius:var(--radius);color:var(--txt);font:700 16px 'Switzer',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:all .2s}
 .schedule-cta:hover{background:var(--btn-hover)}
-
-/* Channel Close Button */
-.ch-close {
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 24px;
-  height: 24px;
-  background: var(--card-bg);
-  border: 1px solid var(--bdr);
-  border-radius: 50%;
-  color: var(--txt3);
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  z-index: 1;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-
-.ch-close:hover {
-  background: var(--bg3);
-  border-color: var(--bdr2);
-  color: var(--txt);
-  transform: scale(1.1);
-}
-
-[data-theme="dark"] .ch-close {
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-}
 
 /* Languages Section */
 .lngs{margin-top:24px;background:var(--card-bg);border:1px solid var(--bdr);border-radius:var(--radius);padding:24px;transition:all .2s}
@@ -615,7 +356,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 @media(max-width:700px){.lngs-g{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:450px){.lngs-g{grid-template-columns:repeat(2,1fr)}}
 
-/* Email/Schedule Modal */
+/* Modals */
 .emodal{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);z-index:999998;display:none;align-items:center;justify-content:center;padding:20px}
 .emodal.open{display:flex}
 .em-box{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:18px;width:100%;max-width:480px;max-height:90vh;overflow:auto;transition:all .3s}
@@ -658,7 +399,7 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .load-progress{width:200px;height:3px;background:var(--bdr);border-radius:2px;margin-top:20px;overflow:hidden}
 .load-progress-bar{height:100%;width:0;background:var(--red);border-radius:2px;transition:width 0.3s ease}
 
-/* Toast - Bottom Left */
+/* Toast */
 .toast-container{position:fixed;bottom:24px;left:24px;z-index:10000;display:flex;flex-direction:column-reverse;gap:10px}
 .toast{background:var(--card-bg);border:1px solid var(--card-bdr);border-radius:12px;padding:16px 20px;min-width:320px;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,.15);transform:translateX(-120%);opacity:0;transition:all .3s cubic-bezier(.22,.68,0,1.1);position:relative}
 [data-theme="dark"] .toast{box-shadow:0 10px 40px rgba(0,0,0,.5)}
@@ -672,8 +413,6 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 .toast-icon img{width:100%;height:100%;object-fit:cover}
 .toast-text h4{font-size:15px;font-weight:600;margin-bottom:2px}
 .toast-text p{font-size:15px;color:var(--txt2)}
-.toast-close{position:absolute;top:8px;right:8px;width:24px;height:24px;background:0;border:0;color:var(--txt3);font-size:16px;cursor:pointer;border-radius:4px;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.toast-close:hover{background:var(--bg3);color:var(--txt)}
 
 /* Highlight Animation */
 @keyframes highlightPulse{
@@ -681,14 +420,12 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
   70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}
   100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
 }
-.cs.highlight{animation:highlightPulse .6s ease-out;border-color:var(--green)}
+.ch-card.highlight{animation:highlightPulse .6s ease-out;border-color:var(--green)}
 
 .hid{display:none!important}
 
 /* Icon colors for dark mode */
-[data-theme="dark"] .sh-acc-t .ico svg{
-  stroke:var(--txt2);
-}
+[data-theme="dark"] .sh-acc-t .ico svg{stroke:var(--txt2)}
 
 /* Dark mode logo */
 [data-theme="dark"] .logo-i .logo-outer:not(.logo-dark),
@@ -726,7 +463,6 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
         <img class="logo-inner" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER.svg?alt=media&token=fe5271b9-275b-4e10-aad8-6888b197abc9" alt="">
         <img class="logo-inner logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/INNER%20WHITE.svg?alt=media&token=a7f525a7-034e-4477-90c4-5e0c71cf6044" alt="">
       </div>
-      <!-- Animated Text Rotator -->
       <div class="text-rotator" id="textRotator">
         <div class="text-main" id="textMain">Human Voice Over</div>
         <div class="text-trusted" id="textTrusted">
@@ -795,47 +531,77 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 
     <!-- Calculator Content -->
     <div class="calc-content" id="calcContent">
-    <div class="cs" id="s2">
-      <div class="cs-h"><div class="cs-n dn" id="n2"><a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="yt-logo-link"><img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube"></a></div><h3>Paste YouTube Channel Link</h3></div>
-      <div class="url-r"><input type="text" class="url-i" id="urli" value="https://youtube.com/@" placeholder="YourChannel" oninput="resetFetch()" onpaste="handlePaste(event)" aria-label="YouTube channel URL"><button class="fetch" id="fbtn" onclick="doFetch()" disabled aria-label="Fetch channel videos">Fetch Videos</button></div>
-      <p class="fetch-hint" id="fetchHint">Select speaker count below to enable</p>
-      <div class="err hid" id="errmsg"></div>
-    </div>
-
-    <div class="cs" id="s1">
-      <h3 style="font-size:17px;font-weight:700;margin-bottom:14px">How many main speakers appear in your videos?</h3>
-      <div class="spk-g" id="spkg"></div>
-      <p class="spk-hint">Just the regulars. Guests get matched on the fly.</p>
-      <div class="cust hid" id="cust"><p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p></div>
-    </div>
-
-    <div class="cs ch-card hid" id="s3">
-      <button class="ch-close" onclick="restartCalculator()" aria-label="Start over with a different channel" title="Start over">×</button>
-      <div class="ch-r">
-        <div class="ch-i"><a id="chlink" href="#" target="_blank" style="flex-shrink:0"><img id="chpfp" class="ch-pfp" src="" alt=""></a><div><a id="chlink2" href="#" target="_blank" style="text-decoration:none;color:inherit"><h3 id="chname">Channel</h3></a><p><span class="subs" id="chsubs"></span> · <span id="selcnt">0 videos selected</span> · <span id="selmins">0</span> min</p></div></div>
-        <button class="edit" onclick="openVM()">Select Videos</button>
-      </div>
-      <div class="sel-list" id="sellist"><div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div></div>
-    </div>
-
-    <div class="res hid" id="res">
-      <div class="lng-section">
-        <div class="lng-h"><div class="lng-v" id="ldisp">1</div><div class="lng-lbl" id="llbl">Language</div></div>
-        <div class="slider-container" id="soundwave">
-          <input type="range" class="slider" id="lngSlider" min="1" max="20" value="1" oninput="uLang(this.value)" aria-label="Number of languages">
+      
+      <!-- URL Input Section -->
+      <div class="cs" id="urlSection">
+        <div class="cs-h">
+          <div class="cs-n dn">
+            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="yt-logo-link">
+              <img src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/Youtube_logo.png?alt=media&token=dd249228-2934-4bf2-9353-952db98a3dd1" alt="YouTube">
+            </a>
+          </div>
+          <h3>Paste YouTube Channel Link</h3>
         </div>
-        <div class="lng-lb"><span>1</span><span>20</span></div>
+        <div class="url-r">
+          <input type="text" class="url-i" id="urlInput" value="https://youtube.com/@" placeholder="YourChannel" onpaste="handlePaste(event)" onkeydown="handleUrlKeydown(event)" aria-label="YouTube channel URL">
+          <button class="fetch" id="fetchBtn" onclick="fetchChannel()">Fetch Videos</button>
+        </div>
+        <div class="err hid" id="errMsg"></div>
       </div>
-      <div class="res-g">
-        <div class="res-c"><h3 class="bl">📦 Backlog Cost</h3><div class="res-r"><div class="res-row"><span class="lb">Videos Selected</span><span id="rv">0</span></div><div class="res-row"><span class="lb">Source Minutes</span><span id="rsm">0</span></div><div class="res-row"><span class="lb">× <span id="rl1">1</span> Languages</span><span><span id="rdm">0</span> min dubbed</span></div><div class="res-row"><span class="lb">Rate</span><span>$<span id="rrt">45</span>/min</span></div></div><div class="res-t bl"><div class="sm">Total Backlog</div><div class="bg" id="rbc">$0</div></div></div>
-        <div class="res-c"><h3 class="gr">📈 Estimated Monthly Output</h3><div class="res-r"><div class="res-row"><span class="lb">Total Videos</span><span id="rrc">0</span></div><div class="res-row"><span class="lb">Avg Video Length</span><span><span id="ral">0</span> min</span></div><div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="rmm">0</span> min</span></div><div class="res-row"><span class="lb">× <span id="rl2">1</span> Languages</span><span><span id="rmd">0</span> min/mo</span></div></div><div class="res-t gr"><div class="sm">Est. Monthly</div><div class="bg" id="rmc">$0/mo</div></div></div>
+
+      <!-- Results Section (appears above channels when visible) -->
+      <div class="res hid" id="resultsSection">
+        <div class="quote-unified hid" id="quoteSection">
+          <div class="quote-cols">
+            <div class="quote-col">
+              <h3 class="bl">📦 Backlog Cost</h3>
+              <div class="res-r">
+                <div class="res-row"><span class="lb">Videos Selected</span><span id="resVideos">0</span></div>
+                <div class="res-row"><span class="lb">Source Minutes</span><span id="resSourceMins">0</span></div>
+                <div class="res-row"><span class="lb">Blended Rate</span><span>$<span id="resRate">45</span>/min</span></div>
+                <div class="res-row"><span class="lb">× <span id="resLangBack">1</span> Languages</span><span><span id="resDubbedMins">0</span> min dubbed</span></div>
+              </div>
+              <div class="res-t bl">
+                <div class="sm">Total Backlog</div>
+                <div class="bg" id="resBacklogCost">$0</div>
+              </div>
+              <div class="channel-breakdown" id="backlogBreakdown"></div>
+            </div>
+            <div class="quote-divider"></div>
+            <div class="quote-col">
+              <h3 class="gr">📈 Estimated Monthly Output</h3>
+              <div class="res-r">
+                <div class="res-row"><span class="lb">Total Videos</span><span id="resTotalVideos">0</span></div>
+                <div class="res-row"><span class="lb">Avg Video Length</span><span><span id="resAvgLength">0</span> min</span></div>
+                <div class="res-row"><span class="lb">Avg Monthly Output</span><span><span id="resMonthlyMins">0</span> min</span></div>
+                <div class="res-row"><span class="lb">× <span id="resLangMonth">1</span> Languages</span><span><span id="resMonthlyDubbed">0</span> min/mo</span></div>
+              </div>
+              <div class="res-t gr">
+                <div class="sm">Est. Monthly</div>
+                <div class="bg" id="resMonthlyCost">$0/mo</div>
+              </div>
+              <div class="channel-breakdown" id="monthlyBreakdown"></div>
+            </div>
+          </div>
+          <div class="lang-bar">
+            <div class="lang-info">
+              <span class="lang-num" id="langNum">1</span>
+              <span class="lang-label">Language</span>
+            </div>
+            <input type="range" class="lang-slider" id="langSlider" min="1" max="20" value="1" oninput="updateLangFromSlider(this.value)">
+          </div>
+        </div>
+        
+        <div class="cta-row hid" id="ctaRow">
+          <button class="email-cta" onclick="openEmailModal()">📧 Email Me This Quote</button>
+          <button class="schedule-cta" onclick="openScheduleModal()">📅 Schedule a Call</button>
+        </div>
       </div>
-      <div class="cta-row">
-        <button class="email-cta" onclick="openEM()">📧 Email Me This Quote</button>
-        <button class="schedule-cta" onclick="scheduleCall()">📅 Schedule a Call</button>
+
+      <!-- Channels Container (includes add button) -->
+      <div class="channels-container" id="channelsContainer">
+        <!-- Add Channel Button rendered here when needed -->
       </div>
-    </div>
-    
     </div>
     <!-- End calc-content -->
 
@@ -950,59 +716,60 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
     </div>
   </section>
 
-  <section class="lngs"><h3>Top 20 Languages</h3><p style="font-size:15px;color:var(--txt2);margin-bottom:18px">(Highest Ticket to Lowest)</p><div class="lngs-g" id="lngsg"></div><p style="font-size:15px;color:var(--txt2);margin-top:16px;text-align:left">and 30+ more languages — just ask!</p></section>
+  <section class="lngs hid" id="lngsSection"><h3>Top 20 Languages</h3><p style="font-size:15px;color:var(--txt2);margin-bottom:18px">(Highest Ticket to Lowest)</p><div class="lngs-g" id="lngsg"></div><p style="font-size:15px;color:var(--txt2);margin-top:16px;text-align:left">and 30+ more languages — just ask!</p></section>
 </div>
 
 <!-- VIDEO MODAL HOST -->
 <div id="video-modal-host"></div>
 
 <!-- EMAIL MODAL -->
-<div class="emodal" id="emodal" onclick="closeEMOut(event)">
+<div class="emodal" id="emailModal" onclick="closeModalOut(event, 'emailModal')">
   <div class="em-box" onclick="event.stopPropagation()">
-    <div class="em-h"><h3>Email Your Quote</h3><button class="em-x" onclick="closeEM()">×</button></div>
-    <div class="em-body" id="eform">
+    <div class="em-h"><h3>Email Your Quote</h3><button class="em-x" onclick="closeModal('emailModal')">×</button></div>
+    <div class="em-body" id="emailForm">
       <div class="q-sum">
-        <h4 id="ech">Channel</h4>
+        <h4 id="emailChannels">Channel</h4>
         <div class="q-nums">
-          <div class="q-n"><div class="lb">Backlog</div><div class="vl bl" id="ebc">$0</div></div>
-          <div class="q-n"><div class="lb">Monthly Ongoing</div><div class="vl gr" id="emc">$0/mo</div></div>
+          <div class="q-n"><div class="lb">Backlog</div><div class="vl bl" id="emailBacklog">$0</div></div>
+          <div class="q-n"><div class="lb">Monthly Ongoing</div><div class="vl gr" id="emailMonthly">$0/mo</div></div>
         </div>
-        <div class="q-det" id="edet"></div>
+        <div class="q-det" id="emailDetails"></div>
       </div>
-      <input type="email" class="em-i" id="emi" placeholder="you@company.com">
-      <button class="send" onclick="sendQ()">📧 Send Quote</button>
+      <input type="email" class="em-i" id="emailInput" placeholder="you@company.com">
+      <button class="send" onclick="sendQuote()">📧 Send Quote</button>
       <p class="em-note">We'll email you a summary to share with your team</p>
     </div>
-    <div class="em-body hid" id="esucc">
+    <div class="em-body hid" id="emailSuccess">
       <div class="succ"><div class="succ-i">✓</div><h3>Quote Sent!</h3><p>Check your inbox for your personalized quote.</p></div>
     </div>
   </div>
 </div>
 
 <!-- SCHEDULE MODAL -->
-<div class="emodal" id="smodal" onclick="closeSMOut(event)">
+<div class="emodal" id="scheduleModal" onclick="closeModalOut(event, 'scheduleModal')">
   <div class="em-box" onclick="event.stopPropagation()">
-    <div class="em-h"><h3>Schedule a Call</h3><button class="em-x" onclick="closeSM()">×</button></div>
-    <div class="em-body" id="sform">
+    <div class="em-h"><h3>Schedule a Call</h3><button class="em-x" onclick="closeModal('scheduleModal')">×</button></div>
+    <div class="em-body" id="scheduleForm">
       <div class="q-sum">
-        <h4 id="sch">Channel</h4>
+        <h4 id="scheduleChannels">Channel</h4>
         <div class="q-nums">
-          <div class="q-n"><div class="lb">Backlog</div><div class="vl bl" id="sbc">$0</div></div>
-          <div class="q-n"><div class="lb">Monthly Ongoing</div><div class="vl gr" id="smc">$0/mo</div></div>
+          <div class="q-n"><div class="lb">Backlog</div><div class="vl bl" id="scheduleBacklog">$0</div></div>
+          <div class="q-n"><div class="lb">Monthly Ongoing</div><div class="vl gr" id="scheduleMonthly">$0/mo</div></div>
         </div>
-        <div class="q-det" id="sdet"></div>
+        <div class="q-det" id="scheduleDetails"></div>
       </div>
-      <input type="email" class="em-i" id="semi" placeholder="you@company.com">
-      <button class="send" onclick="sendSchedule()">📅 Continue to Scheduling</button>
+      <input type="email" class="em-i" id="scheduleEmailInput" placeholder="you@company.com">
+      <button class="send" onclick="submitSchedule()">📅 Continue to Scheduling</button>
       <p class="em-note">We'll save your quote and open our calendar</p>
     </div>
-    <div class="em-body hid" id="ssucc">
+    <div class="em-body hid" id="scheduleSuccess">
       <div class="succ"><div class="succ-i">✓</div><h3>Opening Calendar...</h3><p>Your quote has been saved.</p></div>
     </div>
   </div>
 </div>
 
-<div class="load" id="load">
+<!-- Loading Overlay -->
+<div class="load" id="loadingOverlay">
   <div class="load-logo">
     <img class="load-outer" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER.svg?alt=media&token=394d9498-5f0e-4e25-8ee3-9e2a3b627520" alt="">
     <img class="load-outer logo-dark" src="https://firebasestorage.googleapis.com/v0/b/human-voice-over-prod.firebasestorage.app/o/OUTER%20WHITE.svg?alt=media&token=9900ca7a-36ae-4e67-88e7-d7d776f12513" alt="">
@@ -1016,582 +783,54 @@ body{min-height:100vh;font-family:'Switzer',system-ui,sans-serif;background-colo
 </div>
 
 <script>
-const PRC={'1-2':45,'3-4':50,'5-6':55},TIERS=['1-2','3-4','5-6','7+'],
-LNGS=[['🇩🇪','German'],['🇮🇹','Italian'],['🇫🇷','French'],['🇯🇵','Japanese'],['🇰🇷','Korean'],['🇲🇽','Spanish'],['🇷🇺','Russian'],['🇹🇷','Turkish'],['🇧🇷','Portuguese'],['🇸🇦','Arabic'],['🇹🇭','Thai'],['🇻🇳','Vietnamese'],['🇮🇳','Hindi'],['🇮🇩','Indonesian'],['🇧🇩','Bangla'],['🇮🇳','Punjabi'],['🇵🇰','Urdu'],['🇵🇱','Polish'],['🇮🇳','Tamil'],['🇳🇱','Dutch']],
-FAQS=[["What's a casting?","Before moving forward we will prepare a few voice options for you to confirm in a short clip of your material."],["What languages do you offer?","Albanian, Arabic, Bengali, Chinese, Dutch, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Vietnamese + more"],["How does ongoing billing work?","We bill you at the end of each month based on your total minute usage per language."],["Will my voice actor stay the same?","Yes, we use the same voice actor(s) for all main recurring speakers."],["Does HVO collect a rev-share?","No"],["Who owns the rights to delivered dubs?","You do. We guarantee the transfer of all ownership rights indefinitely."],["How many studios?","60 locations"],["How many actors?","Around 200 per studio and 500 remote actors"],["How many translators?","600 on hand + 400 extra if needed"],["How many audio engineers?","30 in-house engineers"]];
-let S={tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],filteredBack:[],recent:[],sel:new Set(),langs:1,calc:{},timeFilter:'all'};
+// =====================
+// CONSTANTS
+// =====================
+const PRICING = { '1-2': 45, '3-4': 50, '5-6': 55 };
+const TIERS = ['1-2', '3-4', '5-6', '7+'];
+const LANGUAGES = [
+  ['🇩🇪','German'],['🇮🇹','Italian'],['🇫🇷','French'],['🇯🇵','Japanese'],['🇰🇷','Korean'],
+  ['🇲🇽','Spanish'],['🇷🇺','Russian'],['🇹🇷','Turkish'],['🇧🇷','Portuguese'],['🇸🇦','Arabic'],
+  ['🇹🇭','Thai'],['🇻🇳','Vietnamese'],['🇮🇳','Hindi'],['🇮🇩','Indonesian'],['🇧🇩','Bangla'],
+  ['🇮🇳','Punjabi'],['🇵🇰','Urdu'],['🇵🇱','Polish'],['🇮🇳','Tamil'],['🇳🇱','Dutch']
+];
+const FAQS = [
+  ["What's a casting?","Before moving forward we will prepare a few voice options for you to confirm in a short clip of your material."],
+  ["What languages do you offer?","Albanian, Arabic, Bengali, Chinese, Dutch, French, German, Hindi, Indonesian, Italian, Japanese, Korean, Polish, Portuguese, Russian, Spanish, Thai, Turkish, Vietnamese + more"],
+  ["How does ongoing billing work?","We bill you at the end of each month based on your total minute usage per language."],
+  ["Will my voice actor stay the same?","Yes, we use the same voice actor(s) for all main recurring speakers."],
+  ["Does HVO collect a rev-share?","No"],
+  ["Who owns the rights to delivered dubs?","You do. We guarantee the transfer of all ownership rights indefinitely."],
+  ["How many studios?","60 locations"],
+  ["How many actors?","Around 200 per studio and 500 remote actors"],
+  ["How many translators?","600 on hand + 400 extra if needed"],
+  ["How many audio engineers?","30 in-house engineers"]
+];
 
 // =====================
-// TEXT ROTATOR ANIMATION
+// STATE
 // =====================
-const NUM_CREATORS = 9;
-const MAIN_DURATION = 5000; // "Human Voice Over" shows for 5 seconds
-const CREATOR_DURATION = 2500; // Each creator shows for 2.5 seconds
+let state = {
+  channels: [],
+  languages: 1,
+  pendingUrl: '',
+  currentChannelId: null
+};
 
-let currentCreatorIndex = 0;
-let isShowingMain = true;
-let rotatorTimeout = null;
+let channelIdCounter = 0;
 
-function clearRotatorTimeout() {
-  if (rotatorTimeout) {
-    clearTimeout(rotatorTimeout);
-    rotatorTimeout = null;
-  }
-}
+// Shadow DOM references
+let shadowRoot, shadowModal, shadowVgrid;
 
-function initTextRotator() {
-  clearRotatorTimeout();
-  isShowingMain = true;
-  currentCreatorIndex = 0;
-  
-  // Reset creator position
-  const inner = document.getElementById('creatorInner');
-  if (!inner) return;
-  inner.style.transition = 'none';
-  inner.style.transform = 'translateY(0)';
-  
-  // Start the cycle
-  rotatorTimeout = setTimeout(() => {
-    switchToCreators();
-  }, MAIN_DURATION);
-}
-
-function switchToCreators() {
-  clearRotatorTimeout();
-  isShowingMain = false;
-  currentCreatorIndex = 0;
-  
-  // Fade out HVO, fade in Trusted by
-  const textMain = document.getElementById('textMain');
-  const textTrusted = document.getElementById('textTrusted');
-  if (textMain) textMain.classList.add('hidden');
-  if (textTrusted) textTrusted.classList.add('active');
-  
-  // Reset creator carousel position
-  const inner = document.getElementById('creatorInner');
-  if (!inner) return;
-  inner.style.transition = 'none';
-  inner.style.transform = 'translateY(0)';
-  
-  // Re-enable transition after a frame
-  requestAnimationFrame(() => {
-    inner.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-  });
-  
-  // Schedule next creator
-  scheduleNextCreator();
-}
-
-function switchToMain() {
-  clearRotatorTimeout();
-  isShowingMain = true;
-  
-  // Fade out Trusted by, fade in HVO
-  const textMain = document.getElementById('textMain');
-  const textTrusted = document.getElementById('textTrusted');
-  if (textMain) textMain.classList.remove('hidden');
-  if (textTrusted) textTrusted.classList.remove('active');
-  
-  // After main duration, switch back to creators
-  rotatorTimeout = setTimeout(() => {
-    switchToCreators();
-  }, MAIN_DURATION);
-}
-
-function scheduleNextCreator() {
-  rotatorTimeout = setTimeout(() => {
-    currentCreatorIndex++;
-    
-    // If we've shown all creators, go back to main
-    if (currentCreatorIndex >= NUM_CREATORS) {
-      switchToMain();
-    } else {
-      updateCreatorPosition();
-      scheduleNextCreator();
-    }
-  }, CREATOR_DURATION);
-}
-
-function updateCreatorPosition() {
-  const inner = document.getElementById('creatorInner');
-  if (!inner) return;
-  const itemHeight = 48;
-  const translateY = -currentCreatorIndex * itemHeight;
-  inner.style.transform = `translateY(${translateY}px)`;
-}
-
-// Tab switching - Calculator vs Info
-function showCalc() {
-  document.getElementById('infoPanel').classList.remove('open');
-  document.getElementById('calcContent').classList.remove('hidden');
-  document.getElementById('tabCalc').classList.add('on');
-  document.getElementById('tabInfo').classList.remove('on');
-  document.getElementById('heroSub').textContent = 'Get your channel\'s total length and average monthly output.';
-}
-
-function showInfo() {
-  document.getElementById('infoPanel').classList.add('open');
-  document.getElementById('calcContent').classList.add('hidden');
-  document.getElementById('tabCalc').classList.remove('on');
-  document.getElementById('tabInfo').classList.add('on');
-  document.getElementById('heroSub').textContent = 'Learn about our dubbing process and pricing';
-}
-
-// Accordion - one at a time
-function shTgl(id) {
-  const allAccs = document.querySelectorAll('.sh-acc');
-  const clickedAcc = document.getElementById(id);
-  const isOpen = clickedAcc.classList.contains('open');
-  
-  // Close all
-  allAccs.forEach(acc => acc.classList.remove('open'));
-  
-  // Open clicked one if it wasn't already open
-  if (!isOpen) {
-    clickedAcc.classList.add('open');
-  }
-}
-
-function shTab(e, id) {
-  e.target.parentElement.querySelectorAll('.sh-tab').forEach(t => t.classList.remove('on'));
-  e.target.classList.add('on');
-  e.target.parentElement.parentElement.querySelectorAll('.sh-tp').forEach(p => p.classList.remove('on'));
-  document.getElementById(id).classList.add('on');
-}
-
-// Theme toggle
-function toggleTheme() {
-  const html = document.documentElement;
-  const btn = document.getElementById('themeToggle');
-  const metaTheme = document.getElementById('metaThemeColor');
-  const isDark = html.getAttribute('data-theme') === 'dark';
-  
-  if (isDark) {
-    html.removeAttribute('data-theme');
-    html.style.backgroundColor = '';
-    btn.textContent = '🌙';
-    localStorage.setItem('theme', 'light');
-    updateShadowTheme('light');
-    if(metaTheme) metaTheme.content = '#ffffff';
-  } else {
-    html.setAttribute('data-theme', 'dark');
-    html.style.backgroundColor = '#000000';
-    btn.textContent = '☀️';
-    localStorage.setItem('theme', 'dark');
-    updateShadowTheme('dark');
-    if(metaTheme) metaTheme.content = '#000000';
-  }
-}
-
-function updateShadowTheme(theme) {
-  if (!shadowRoot) return;
-  const modal = shadowRoot.querySelector('.modal-overlay');
-  if (modal) {
-    modal.setAttribute('data-theme', theme);
-  }
-}
-
-// Initialize theme from localStorage
-function initTheme() {
-  const saved = localStorage.getItem('theme');
-  const btn = document.getElementById('themeToggle');
-  if (saved === 'dark') {
-    btn.textContent = '☀️';
-  }
-}
-
-// Toast system
-function showToast(opts) {
-  const c = document.getElementById('toasts');
-  const t = document.createElement('div');
-  t.className = 'toast';
-  t.style.position = 'relative';
-  t.innerHTML = `
-    <div class="toast-content">
-      <div class="toast-icon"><img src="${opts.image}" alt=""></div>
-      <div class="toast-text"><h4>${opts.title}</h4><p>${opts.description}</p></div>
-    </div>
-    <button class="toast-close" onclick="this.parentElement.remove()">×</button>
-  `;
-  c.appendChild(t);
-  requestAnimationFrame(() => t.classList.add('show'));
-  setTimeout(() => {
-    t.classList.remove('show');
-    t.classList.add('hide');
-    setTimeout(() => t.remove(), 300);
-  }, opts.duration || 4000);
-}
-
-// Shadow DOM
-let shadowRoot, shadowModal, shadowMbody, shadowVgrid;
-
-function createShadowModal() {
-  const host = document.getElementById('video-modal-host');
-  shadowRoot = host.attachShadow({ mode: 'open' });
-  
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  
-  shadowRoot.innerHTML = `
-    <style>
-      * { box-sizing: border-box; margin: 0; padding: 0; }
-      
-      /* Light Mode */
-      :host {
-        --bg: #ffffff;
-        --bg2: #f8f8f8;
-        --bg3: #f0f0f0;
-        --bg4: #e5e5e5;
-        --bdr: #e0e0e0;
-        --txt: #111;
-        --txt2: #555;
-        --txt3: #888;
-        --card-bg: #fff;
-        --input-bg: #f5f5f5;
-        --btn-bg: #e5e5e5;
-      }
-      
-      /* Dark Mode */
-      .modal-overlay[data-theme="dark"] {
-        --bg: #050505;
-        --bg2: #0c0c0c;
-        --bg3: #141414;
-        --bg4: #1c1c1c;
-        --bdr: #1a1a1a;
-        --txt: #fff;
-        --txt2: #a0a0a0;
-        --txt3: #666;
-        --card-bg: #0c0c0c;
-        --input-bg: #1a1a1a;
-        --btn-bg: #1a1a1a;
-      }
-      
-      .modal-overlay {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.5);
-        backdrop-filter: blur(8px);
-        z-index: 999999;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        font-family: 'Switzer', system-ui, sans-serif;
-      }
-      
-      .modal-overlay.open { display: flex; }
-      
-      .modal-box {
-        background: var(--card-bg);
-        border: 1px solid var(--bdr);
-        border-radius: 18px;
-        width: 100%;
-        max-width: 950px;
-        height: 85vh;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        transition: all .3s;
-      }
-      
-      .modal-header {
-        flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 20px 24px;
-        border-bottom: 1px solid var(--bdr);
-      }
-      
-      .modal-header h3 {
-        font-size: 16px;
-        font-weight: 600;
-        color: var(--txt);
-      }
-      
-      .modal-stats {
-        font-size: 16px;
-        font-weight: 600;
-        color: var(--txt);
-      }
-      
-      .modal-stats .num { color: #dc2626; font-size: 20px; font-weight: 700; }
-      
-      .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      
-      .action-btn {
-        padding: 8px 14px;
-        background: var(--btn-bg);
-        border: 0;
-        border-radius: 6px;
-        color: var(--txt);
-        font: 500 13px 'Switzer', sans-serif;
-        cursor: pointer;
-        transition: background .2s;
-      }
-      
-      .action-btn:hover { background: var(--bg4); }
-      
-      .close-btn {
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: 0;
-        border: 0;
-        color: var(--txt2);
-        font-size: 24px;
-        cursor: pointer;
-        border-radius: 6px;
-        transition: all .2s;
-      }
-      
-      .close-btn:hover { background: var(--bg3); color: var(--txt); }
-      
-      .modal-toolbar {
-        flex: 0 0 auto;
-        padding: 14px 24px;
-        border-bottom: 1px solid var(--bdr);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-      
-      .search-input {
-        flex: 1;
-        max-width: 280px;
-        padding: 8px 12px;
-        background: var(--input-bg);
-        border: 1px solid var(--bdr);
-        border-radius: 6px;
-        color: var(--txt);
-        font: 14px 'Switzer', sans-serif;
-        transition: all .2s;
-      }
-      
-      .search-input::placeholder { color: var(--txt3); }
-      .search-input:focus { outline: 0; border-color: #3b82f6; }
-      
-      .toolbar-label { font-size: 13px; color: var(--txt2); }
-      
-      .sort-select {
-        padding: 8px 12px;
-        background: var(--input-bg);
-        border: 1px solid var(--bdr);
-        border-radius: 6px;
-        color: var(--txt);
-        font: 500 13px 'Switzer', sans-serif;
-        cursor: pointer;
-      }
-      
-      .export-btn {
-        padding: 8px 14px;
-        background: var(--btn-bg);
-        border: 1px solid var(--bdr);
-        border-radius: 6px;
-        color: var(--txt2);
-        font: 500 13px 'Switzer', sans-serif;
-        cursor: pointer;
-        margin-left: auto;
-        transition: all .2s;
-      }
-      
-      .export-btn:hover { background: var(--bg4); color: var(--txt); }
-      
-      .modal-body {
-        flex: 1;
-        overflow-y: auto;
-        padding: 24px;
-        background: var(--bg2);
-      }
-      
-      .modal-footer {
-        flex: 0 0 auto;
-        padding: 16px 24px;
-        border-top: 1px solid var(--bdr);
-        background: var(--card-bg);
-      }
-      
-      .confirm-btn {
-        width: 100%;
-        padding: 14px;
-        background: #dc2626;
-        border: 0;
-        border-radius: 10px;
-        color: #fff;
-        font: 700 15px 'Switzer', sans-serif;
-        cursor: pointer;
-        transition: background .2s;
-      }
-      
-      .confirm-btn:hover { background: #b91c1c; }
-      
-      .video-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 14px;
-      }
-      
-      @media (max-width: 800px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
-      @media (max-width: 550px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
-      
-      .video-card {
-        border-radius: 10px;
-        overflow: hidden;
-        cursor: pointer;
-        border: 2px solid transparent;
-        background: var(--card-bg);
-        transition: all .2s;
-      }
-      
-      .video-card:hover { background: var(--bg3); border-color: var(--bdr); }
-      .video-card.selected { border-color: #dc2626; }
-      
-      .video-thumb {
-        position: relative;
-        aspect-ratio: 16/9;
-        background: var(--bg3);
-        overflow: hidden;
-      }
-      
-      .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
-      
-      .video-thumb .duration {
-        position: absolute;
-        bottom: 6px;
-        right: 6px;
-        padding: 3px 6px;
-        background: rgba(0,0,0,0.85);
-        border-radius: 4px;
-        font-size: 11px;
-        font-weight: 600;
-        color: #fff;
-      }
-      
-      .video-thumb .checkmark {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 24px;
-        height: 24px;
-        background: #dc2626;
-        border-radius: 50%;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        color: #fff;
-      }
-      
-      .video-card.selected .checkmark { display: flex; }
-      
-      .video-info { padding: 12px; }
-      
-      .video-info h4 {
-        font-size: 13px;
-        font-weight: 500;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        margin-bottom: 6px;
-        color: var(--txt);
-      }
-      
-      .video-info p { font-size: 12px; color: var(--txt3); }
-    </style>
-    
-    <div class="modal-overlay" id="shadow-modal" data-theme="${isDark ? 'dark' : ''}">
-      <div class="modal-box">
-        <div class="modal-header">
-          <h3>Select Backlog Videos</h3>
-          <div class="modal-stats"><span class="num" id="shadow-mcnt">0</span> selected · <span class="num" id="shadow-mmins">0</span> min</div>
-          <div class="header-actions">
-            <button class="action-btn" id="shadow-selall">Select All</button>
-            <button class="action-btn" id="shadow-clear">Clear</button>
-            <button class="close-btn" id="shadow-close">×</button>
-          </div>
-        </div>
-        <div class="modal-toolbar">
-          <input type="text" class="search-input" id="shadow-search" placeholder="Search videos...">
-          <span class="toolbar-label">Sort:</span>
-          <select class="sort-select" id="shadow-sort">
-            <option value="views">Most Views</option>
-            <option value="duration">Longest</option>
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
-          </select>
-          <span class="toolbar-label">Time:</span>
-          <select class="sort-select" id="shadow-time">
-            <option value="all">All Time</option>
-            <option value="30">30 Days</option>
-            <option value="90">90 Days</option>
-            <option value="180">6 Months</option>
-            <option value="365">1 Year</option>
-            <option value="1095">3 Years</option>
-            <option value="1825">5 Years</option>
-            <option value="3650">10+ Years</option>
-          </select>
-          <button class="export-btn" id="shadow-export">Export CSV</button>
-        </div>
-        <div class="modal-body" id="shadow-mbody">
-          <div class="video-grid" id="shadow-vgrid"></div>
-        </div>
-        <div class="modal-footer">
-          <button class="confirm-btn" id="shadow-confirm">Confirm Selection</button>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  shadowModal = shadowRoot.getElementById('shadow-modal');
-  shadowMbody = shadowRoot.getElementById('shadow-mbody');
-  shadowVgrid = shadowRoot.getElementById('shadow-vgrid');
-  
-  shadowRoot.getElementById('shadow-close').addEventListener('click', closeVM);
-  shadowRoot.getElementById('shadow-selall').addEventListener('click', selAll);
-  shadowRoot.getElementById('shadow-clear').addEventListener('click', clrAll);
-  shadowRoot.getElementById('shadow-confirm').addEventListener('click', confV);
-  shadowRoot.getElementById('shadow-search').addEventListener('input', debounce(e => filterVideos(e.target.value), 150));
-  shadowRoot.getElementById('shadow-sort').addEventListener('change', e => sortVideos(e.target.value));
-  shadowRoot.getElementById('shadow-time').addEventListener('change', e => filterByTime(e.target.value));
-  shadowRoot.getElementById('shadow-export').addEventListener('click', exportCSV);
-  shadowModal.addEventListener('click', e => { if (e.target === shadowModal) closeVM(); });
-}
-
+// =====================
+// INITIALIZATION
+// =====================
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   createShadowModal();
-  initTextRotator(); // Initialize the text rotator
-  
-  const sg = document.getElementById('spkg');
-  TIERS.forEach(t => {
-    const b = document.createElement('button');
-    b.className = 'spk';
-    b.textContent = t;
-    b.onclick = () => sTier(t);
-    sg.appendChild(b);
-  });
-  // FAQ in sheet - new design
-  const fq = document.getElementById('shfaq');
-  FAQS.forEach(f => {
-    const d = document.createElement('div');
-    d.className = 'sh-faq';
-    d.innerHTML = `<button class="sh-faq-q" onclick="this.parentElement.classList.toggle('open')">${f[0]}</button><div class="sh-faq-a">${f[1]}</div>`;
-    fq.appendChild(d);
-  });
-  const lg = document.getElementById('lngsg');
-  LNGS.forEach(l => {
-    const d = document.createElement('div');
-    d.className = 'lc';
-    d.innerHTML = `<span>${l[0]}</span><span>${l[1]}</span>`;
-    lg.appendChild(d);
-  });
+  initTextRotator();
+  renderFAQs();
+  renderLanguages();
   
   // Fade out page loader
   setTimeout(() => {
@@ -1603,212 +842,1259 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 1300);
 });
 
-// Keyboard shortcut for switching tabs
-document.addEventListener('keydown', e => {
-  if (e.key === 'i' || e.key === 'I') {
-    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
-      e.preventDefault();
-      const infoPanel = document.getElementById('infoPanel');
-      if (infoPanel.classList.contains('open')) {
-        showCalc();
-      } else {
-        showInfo();
-      }
-    }
+// =====================
+// THEME
+// =====================
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const btn = document.getElementById('themeToggle');
+  if (saved === 'dark') {
+    btn.textContent = '☀️';
   }
-  if (e.key === 'Escape') {
-    const infoPanel = document.getElementById('infoPanel');
-    if (infoPanel.classList.contains('open')) {
-      showCalc();
-    }
-  }
-});
-
-function sTier(t) {
-  S.tier = t;
-  document.querySelectorAll('.spk').forEach((b, i) => b.classList.toggle('on', TIERS[i] === t));
-  
-  const fbtn = document.getElementById('fbtn');
-  const hint = document.getElementById('fetchHint');
-  
-  if (t === '7+') {
-    document.getElementById('cust').classList.remove('hid');
-    document.getElementById('s3').classList.add('hid');
-    document.getElementById('res').classList.add('hid');
-    // Disable fetch for 7+ but keep section visible with custom hint
-    fbtn.disabled = true;
-    hint.classList.remove('hid');
-    hint.textContent = 'Custom pricing requires a call';
-    return;
-  }
-  
-  document.getElementById('cust').classList.add('hid');
-  
-  // Enable fetch for valid speaker counts
-  if (!fbtn.classList.contains('done')) {
-    fbtn.disabled = false;
-  }
-  hint.classList.add('hid');
-  
-  S.rate = PRC[t];
-  
-  if (S.back.length > 0) {
-    document.getElementById('s3').classList.remove('hid');
-    document.getElementById('res').classList.remove('hid');
-  }
-  
-  uRes();
 }
 
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const metaTheme = document.getElementById('metaThemeColor');
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  
+  if (isDark) {
+    html.removeAttribute('data-theme');
+    html.style.backgroundColor = '';
+    btn.textContent = '🌙';
+    localStorage.setItem('theme', 'light');
+    if (metaTheme) metaTheme.content = '#ffffff';
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    html.style.backgroundColor = '#000000';
+    btn.textContent = '☀️';
+    localStorage.setItem('theme', 'dark');
+    if (metaTheme) metaTheme.content = '#000000';
+  }
+  updateShadowTheme();
+}
+
+function updateShadowTheme() {
+  if (!shadowRoot) return;
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const modal = shadowRoot.querySelector('.modal-overlay');
+  if (modal) modal.setAttribute('data-theme', isDark ? 'dark' : '');
+}
+
+// =====================
+// TEXT ROTATOR
+// =====================
+const NUM_CREATORS = 9;
+const MAIN_DURATION = 5000;
+const CREATOR_DURATION = 2500;
+let currentCreatorIndex = 0;
+let isShowingMain = true;
+let rotatorTimeout = null;
+
+function initTextRotator() {
+  if (rotatorTimeout) clearTimeout(rotatorTimeout);
+  isShowingMain = true;
+  currentCreatorIndex = 0;
+  
+  const inner = document.getElementById('creatorInner');
+  if (!inner) return;
+  inner.style.transition = 'none';
+  inner.style.transform = 'translateY(0)';
+  
+  rotatorTimeout = setTimeout(() => switchToCreators(), MAIN_DURATION);
+}
+
+function switchToCreators() {
+  if (rotatorTimeout) clearTimeout(rotatorTimeout);
+  isShowingMain = false;
+  currentCreatorIndex = 0;
+  
+  const textMain = document.getElementById('textMain');
+  const textTrusted = document.getElementById('textTrusted');
+  if (textMain) textMain.classList.add('hidden');
+  if (textTrusted) textTrusted.classList.add('active');
+  
+  const inner = document.getElementById('creatorInner');
+  if (!inner) return;
+  inner.style.transition = 'none';
+  inner.style.transform = 'translateY(0)';
+  
+  requestAnimationFrame(() => {
+    inner.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+  });
+  
+  scheduleNextCreator();
+}
+
+function switchToMain() {
+  if (rotatorTimeout) clearTimeout(rotatorTimeout);
+  isShowingMain = true;
+  
+  const textMain = document.getElementById('textMain');
+  const textTrusted = document.getElementById('textTrusted');
+  if (textMain) textMain.classList.remove('hidden');
+  if (textTrusted) textTrusted.classList.remove('active');
+  
+  rotatorTimeout = setTimeout(() => switchToCreators(), MAIN_DURATION);
+}
+
+function scheduleNextCreator() {
+  rotatorTimeout = setTimeout(() => {
+    currentCreatorIndex++;
+    if (currentCreatorIndex >= NUM_CREATORS) {
+      switchToMain();
+    } else {
+      const inner = document.getElementById('creatorInner');
+      if (inner) inner.style.transform = `translateY(${-currentCreatorIndex * 48}px)`;
+      scheduleNextCreator();
+    }
+  }, CREATOR_DURATION);
+}
+
+// =====================
+// TAB SWITCHING
+// =====================
+function showCalc() {
+  document.getElementById('infoPanel').classList.remove('open');
+  document.getElementById('calcContent').classList.remove('hidden');
+  document.getElementById('tabCalc').classList.add('on');
+  document.getElementById('tabInfo').classList.remove('on');
+  document.getElementById('heroSub').textContent = 'Get your channel\'s total length and average monthly output.';
+  document.getElementById('lngsSection').classList.add('hid');
+}
+
+function showInfo() {
+  document.getElementById('infoPanel').classList.add('open');
+  document.getElementById('calcContent').classList.add('hidden');
+  document.getElementById('tabCalc').classList.remove('on');
+  document.getElementById('tabInfo').classList.add('on');
+  document.getElementById('heroSub').textContent = 'Learn about our dubbing process and pricing';
+  document.getElementById('lngsSection').classList.remove('hid');
+}
+
+// =====================
+// ACCORDIONS & TABS
+// =====================
+function shTgl(id) {
+  const allAccs = document.querySelectorAll('.sh-acc');
+  const clickedAcc = document.getElementById(id);
+  const isOpen = clickedAcc.classList.contains('open');
+  allAccs.forEach(acc => acc.classList.remove('open'));
+  if (!isOpen) clickedAcc.classList.add('open');
+}
+
+function shTab(e, id) {
+  e.target.parentElement.querySelectorAll('.sh-tab').forEach(t => t.classList.remove('on'));
+  e.target.classList.add('on');
+  e.target.parentElement.parentElement.querySelectorAll('.sh-tp').forEach(p => p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+// =====================
+// RENDER STATIC CONTENT
+// =====================
+function renderFAQs() {
+  const container = document.getElementById('shfaq');
+  FAQS.forEach(f => {
+    const d = document.createElement('div');
+    d.className = 'sh-faq';
+    d.innerHTML = `<button class="sh-faq-q" onclick="this.parentElement.classList.toggle('open')">${f[0]}</button><div class="sh-faq-a">${f[1]}</div>`;
+    container.appendChild(d);
+  });
+}
+
+function renderLanguages() {
+  const container = document.getElementById('lngsg');
+  LANGUAGES.forEach(l => {
+    const d = document.createElement('div');
+    d.className = 'lc';
+    d.innerHTML = `<span>${l[0]}</span><span>${l[1]}</span>`;
+    container.appendChild(d);
+  });
+}
+
+// =====================
+// TOAST SYSTEM
+// =====================
+function showToast(opts) {
+  const container = document.getElementById('toasts');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <div class="toast-content">
+      <div class="toast-icon"><img src="${opts.image}" alt=""></div>
+      <div class="toast-text"><h4>${opts.title}</h4><p>${opts.description}</p></div>
+    </div>
+  `;
+  container.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add('show'));
+  setTimeout(() => {
+    toast.classList.remove('show');
+    toast.classList.add('hide');
+    setTimeout(() => toast.remove(), 300);
+  }, opts.duration || 4000);
+}
+
+// =====================
+// URL INPUT & FETCH
+// =====================
 function handlePaste(e) {
   const pasted = (e.clipboardData || window.clipboardData).getData('text');
   if (pasted.includes('youtube.com') || pasted.includes('youtu.be')) {
     e.preventDefault();
-    document.getElementById('urli').value = pasted;
-    resetFetch();
+    document.getElementById('urlInput').value = pasted;
   }
 }
 
-function resetFetch() {
-  const btn = document.getElementById('fbtn');
-  const hint = document.getElementById('fetchHint');
-  if (btn.classList.contains('done')) {
-    btn.className = 'fetch';
-    btn.innerHTML = 'Fetch Videos';
-    // Only enable if a valid tier is selected
-    if (S.tier && S.tier !== '7+') {
-      btn.disabled = false;
-      hint.classList.add('hid');
-    } else {
-      btn.disabled = true;
-      hint.classList.remove('hid');
-      hint.textContent = S.tier === '7+' ? 'Custom pricing requires a call' : 'Select speaker count above to enable';
-    }
+function handleUrlKeydown(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    fetchChannel();
   }
 }
 
-async function doFetch() {
-  const url = document.getElementById('urli').value.trim();
+function showUrlInput() {
+  const urlSection = document.getElementById('urlSection');
+  const container = document.getElementById('channelsContainer');
+  const calcContent = document.getElementById('calcContent');
+  
+  // If there are existing channels, move URL section into container at bottom
+  // Otherwise, move it back to the top (first child of calcContent)
+  if (state.channels.length > 0) {
+    container.appendChild(urlSection);
+  } else {
+    calcContent.insertBefore(urlSection, calcContent.firstChild);
+  }
+  
+  urlSection.classList.remove('hid');
+  // Remove the dynamic add button if it exists
+  const existingBtn = document.querySelector('.add-channel-btn');
+  if (existingBtn) existingBtn.remove();
+  document.getElementById('urlInput').value = 'https://youtube.com/@';
+  document.getElementById('urlInput').focus();
+  document.getElementById('fetchBtn').className = 'fetch';
+  document.getElementById('fetchBtn').innerHTML = 'Fetch Videos';
+  document.getElementById('fetchBtn').disabled = false;
+}
+
+async function fetchChannel() {
+  let url = document.getElementById('urlInput').value.trim();
   if (!url || url === 'https://youtube.com/@') {
-    document.getElementById('errmsg').textContent = 'Please enter a YouTube channel link';
-    document.getElementById('errmsg').classList.remove('hid');
+    document.getElementById('errMsg').textContent = 'Please enter a YouTube channel link';
+    document.getElementById('errMsg').classList.remove('hid');
     return;
   }
-  document.getElementById('load').classList.add('open');
-  document.getElementById('errmsg').classList.add('hid');
-  const fbtn = document.getElementById('fbtn');
-  fbtn.disabled = true;
-  fbtn.classList.add('fetching');
   
-  // Reset and animate progress bar
+  // Normalize URL - add @ if missing for handle-style URLs
+  if (url.match(/youtube\.com\/[a-zA-Z0-9_-]+$/) && !url.includes('/@') && !url.includes('/channel/') && !url.includes('/c/') && !url.includes('/user/')) {
+    url = url.replace(/youtube\.com\//, 'youtube.com/@');
+    document.getElementById('urlInput').value = url;
+  }
+  
+  // Check for duplicate
+  if (state.channels.some(ch => ch.url === url)) {
+    document.getElementById('errMsg').textContent = 'This channel has already been added';
+    document.getElementById('errMsg').classList.remove('hid');
+    return;
+  }
+  
+  document.getElementById('loadingOverlay').classList.add('open');
+  document.getElementById('errMsg').classList.add('hid');
+  
   const progressBar = document.getElementById('loadProgress');
   progressBar.style.width = '0%';
   let progress = 0;
   const progressInterval = setInterval(() => {
-    if (progress < 20) {
-      progress += 4;
-    } else if (progress < 50) {
-      progress += 2;
-    } else if (progress < 80) {
-      progress += 0.5;
-    } else if (progress < 90) {
-      progress += 0.2;
-    }
+    if (progress < 20) progress += 4;
+    else if (progress < 50) progress += 2;
+    else if (progress < 80) progress += 0.5;
+    else if (progress < 90) progress += 0.2;
     progressBar.style.width = progress + '%';
   }, 200);
   
   try {
-    const r = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-youtube-fetch', {
+    const response = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-youtube-fetch', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ channelUrl: url })
     });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const d = await r.json();
-    if (!d.backlogVideos || d.backlogVideos.length === 0) throw new Error('No videos found');
     
-    // Complete progress
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    
+    const text = await response.text();
+    if (!text) throw new Error('Empty response from server');
+    
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      throw new Error('Invalid response: ' + text.substring(0, 100));
+    }
+    
+    if (!data.backlogVideos || data.backlogVideos.length === 0) throw new Error('No videos found for this channel');
+    
     clearInterval(progressInterval);
     progressBar.style.width = '100%';
     
-    S.url = url;
-    S.name = d.channelName || 'Channel';
-    S.thumb = d.channelThumb || '';
-    S.subs = d.subscriberCount || '';
-    S.back = d.backlogVideos || [];
-    S.filteredBack = [...S.back];
-    S.timeFilter = 'all';
-    S.recent = d.recentVideos || [];
-    S.sel = new Set();
+    // Create new channel
+    const channelId = ++channelIdCounter;
+    const channel = {
+      id: channelId,
+      url: url,
+      name: data.channelName || 'Channel',
+      thumb: data.channelThumb || '',
+      subs: data.subscriberCount || '',
+      videos: data.backlogVideos || [],
+      filteredVideos: [...(data.backlogVideos || [])],
+      selected: new Set(),
+      tier: null,
+      rate: 0,
+      calc: {}
+    };
     
-    document.getElementById('chname').textContent = S.name;
-    document.getElementById('chpfp').src = S.thumb;
-    document.getElementById('chlink').href = S.url;
-    document.getElementById('chlink2').href = S.url;
-    document.getElementById('chsubs').textContent = S.subs + ' subscribers';
-    const fbtn = document.getElementById('fbtn');
-    fbtn.className = 'fetch done';
-    fbtn.innerHTML = '✓';
-    fbtn.disabled = true;
-    document.getElementById('fetchHint').classList.add('hid');
+    state.channels.push(channel);
+    state.currentChannelId = channelId;
     
-    const s3 = document.getElementById('s3');
-    s3.classList.remove('hid');
-    s3.classList.add('highlight');
-    setTimeout(() => s3.classList.remove('highlight'), 600);
+    // Hide URL input
+    document.getElementById('urlSection').classList.add('hid');
     
-    // Hide the input sections
-    document.getElementById('s1').classList.add('hid');
-    document.getElementById('s2').classList.add('hid');
+    // Render channel card (with speaker selection pending)
+    renderChannelCard(channel, true);
     
-    document.getElementById('res').classList.remove('hid');
-    
-    rVG();
-    uRes();
-    uSelList();
-    
-    const totalMins = Math.round(S.back.reduce((s, v) => s + v.duration, 0) / 60);
+    const totalMins = Math.round(channel.videos.reduce((s, v) => s + v.duration, 0) / 60);
     showToast({
-      image: S.thumb,
-      title: S.name + ' loaded',
-      description: `${S.back.length} videos · ${totalMins.toLocaleString()} minutes`,
+      image: channel.thumb,
+      title: channel.name + ' loaded',
+      description: `${channel.videos.length} videos · ${totalMins.toLocaleString()} minutes`,
       duration: 4000
     });
     
   } catch (e) {
     clearInterval(progressInterval);
     progressBar.style.width = '0%';
-    document.getElementById('errmsg').textContent = e.message;
-    document.getElementById('errmsg').classList.remove('hid');
-    const fbtn = document.getElementById('fbtn');
-    fbtn.classList.remove('fetching');
-    fbtn.disabled = false;
+    document.getElementById('errMsg').textContent = e.message;
+    document.getElementById('errMsg').classList.remove('hid');
   } finally {
     setTimeout(() => {
-      document.getElementById('load').classList.remove('open');
+      document.getElementById('loadingOverlay').classList.remove('open');
       document.getElementById('loadProgress').style.width = '0%';
     }, 300);
   }
 }
 
-function uLang(v) { 
-  S.langs = parseInt(v); 
-  document.getElementById('ldisp').textContent = v; 
-  document.getElementById('llbl').textContent = S.langs === 1 ? 'Language' : 'Languages';
+// =====================
+// CHANNEL CARD RENDERING
+// =====================
+function renderChannelCard(channel, pendingSpeaker = false) {
+  const container = document.getElementById('channelsContainer');
   
-  // Sync slider
-  const slider = document.getElementById('lngSlider');
-  if (slider) slider.value = v;
+  // Check if card already exists
+  let card = document.getElementById(`channel-${channel.id}`);
+  if (card) {
+    card.remove();
+  }
   
-  // Bump animation on number
-  const disp = document.getElementById('ldisp');
-  disp.classList.add('bump');
-  setTimeout(() => disp.classList.remove('bump'), 150);
+  card = document.createElement('div');
+  card.id = `channel-${channel.id}`;
+  card.className = 'ch-card' + (pendingSpeaker ? ' pending-speaker' : '');
   
-  uRes(); 
+  const selectedCount = channel.selected.size;
+  const selectedMins = Math.round([...channel.selected].reduce((sum, id) => {
+    const video = channel.videos.find(v => v.id === id);
+    return sum + (video ? video.duration : 0);
+  }, 0) / 60);
+  
+  card.innerHTML = `
+    <button class="ch-close" onclick="removeChannel(${channel.id})" title="Remove channel">×</button>
+    <div class="ch-r">
+      <div class="ch-i">
+        <a href="${channel.url}" target="_blank" style="flex-shrink:0">
+          <img class="ch-pfp" src="${channel.thumb}" alt="">
+        </a>
+        <div class="ch-info">
+          <a href="${channel.url}" target="_blank" style="text-decoration:none;color:inherit">
+            <h3>${escapeHtml(channel.name)}</h3>
+          </a>
+          <div class="ch-meta">
+            <span class="ch-badge">${channel.subs} subscribers</span>
+            ${channel.tier ? `
+              <span class="ch-badge rate clickable" onclick="toggleSpeakerTooltip(event, ${channel.id})" title="Click to change">
+                ${channel.tier} speakers · $${channel.rate}/min
+                <span class="spk-tooltip hid" id="spk-tooltip-${channel.id}">
+                  ${TIERS.filter(t => t !== '7+').map(tier => `
+                    <button class="spk-opt${tier === channel.tier ? ' on' : ''}" onclick="updateSpeakerTier(event, ${channel.id}, '${tier}')">${tier}</button>
+                  `).join('')}
+                </span>
+              </span>
+            ` : ''}
+          </div>
+          <p class="ch-stats">${selectedCount} video${selectedCount !== 1 ? 's' : ''} selected · ${selectedMins.toLocaleString()} min</p>
+        </div>
+      </div>
+      ${channel.tier ? `<button class="edit" onclick="openVideoModal(${channel.id})">Select Videos</button>` : ''}
+    </div>
+    ${pendingSpeaker ? renderSpeakerSelection(channel.id) : ''}
+    ${channel.tier && selectedCount > 0 ? renderSelectedVideosList(channel) : ''}
+  `;
+  
+  // Insert before add button if it exists, otherwise append
+  const addBtn = container.querySelector('.add-channel-btn');
+  if (addBtn) {
+    container.insertBefore(card, addBtn);
+  } else {
+    container.appendChild(card);
+  }
+  
+  if (pendingSpeaker) {
+    card.classList.add('highlight');
+    setTimeout(() => card.classList.remove('highlight'), 600);
+  }
 }
 
-// Utility: Debounce function
+function renderSpeakerSelection(channelId) {
+  return `
+    <div class="speaker-select">
+      <h4>How many main speakers appear in this channel's videos?</h4>
+      <div class="spk-g">
+        ${TIERS.map(tier => `
+          <button class="spk" onclick="selectSpeakerTier(${channelId}, '${tier}')">${tier}</button>
+        `).join('')}
+      </div>
+      <p class="spk-hint">Just the regulars. Guests get matched on the fly.</p>
+      <div class="cust hid" id="cust-${channelId}">
+        <p>For 7+ recurring speakers, please <a href="https://humanvoiceover.com/meetwithus" target="_blank">schedule a call</a> for custom pricing.</p>
+      </div>
+    </div>
+  `;
+}
+
+function renderSelectedVideosList(channel) {
+  const selected = channel.videos.filter(v => channel.selected.has(v.id));
+  if (selected.length === 0) {
+    return `<div class="sel-list"><div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div></div>`;
+  }
+  
+  return `
+    <div class="sel-list">
+      ${selected.slice(0, 5).map(v => `
+        <div class="sel-item">
+          <img class="sel-thumb" src="${v.thumbnail || ''}" alt="">
+          <div class="sel-info">
+            <h4>${escapeHtml(v.title)}</h4>
+            <p>${v.views} views</p>
+          </div>
+          <span class="sel-dur">${formatDuration(v.duration)}</span>
+        </div>
+      `).join('')}
+      ${selected.length > 5 ? `<div class="sel-empty">+ ${selected.length - 5} more videos</div>` : ''}
+    </div>
+  `;
+}
+
+// =====================
+// SPEAKER SELECTION
+// =====================
+function selectSpeakerTier(channelId, tier) {
+  const channel = state.channels.find(ch => ch.id === channelId);
+  if (!channel) return;
+  
+  const card = document.getElementById(`channel-${channelId}`);
+  const buttons = card.querySelectorAll('.spk');
+  buttons.forEach(btn => btn.classList.toggle('on', btn.textContent === tier));
+  
+  const custNotice = document.getElementById(`cust-${channelId}`);
+  
+  if (tier === '7+') {
+    if (custNotice) custNotice.classList.remove('hid');
+    return;
+  }
+  
+  if (custNotice) custNotice.classList.add('hid');
+  
+  channel.tier = tier;
+  channel.rate = PRICING[tier];
+  
+  // Re-render the card without speaker selection
+  renderChannelCard(channel, false);
+  
+  // Show add channel button
+  updateAddChannelButton();
+  
+  // Update results
+  updateResults();
+}
+
+function renderSpeakerEditSelection(channelId, currentTier) {
+  return `
+    <h4>Change speaker count:</h4>
+    <div class="spk-g">
+      ${TIERS.filter(t => t !== '7+').map(tier => `
+        <button class="spk${tier === currentTier ? ' on' : ''}" onclick="updateSpeakerTier(${channelId}, '${tier}')">${tier}</button>
+      `).join('')}
+    </div>
+  `;
+}
+
+function toggleSpeakerTooltip(event, channelId) {
+  event.stopPropagation();
+  const tooltip = document.getElementById(`spk-tooltip-${channelId}`);
+  
+  // Close all other tooltips
+  document.querySelectorAll('.spk-tooltip').forEach(t => {
+    if (t.id !== `spk-tooltip-${channelId}`) t.classList.add('hid');
+  });
+  
+  tooltip.classList.toggle('hid');
+  
+  // Close on outside click
+  if (!tooltip.classList.contains('hid')) {
+    setTimeout(() => {
+      document.addEventListener('click', function closeTooltip(e) {
+        if (!tooltip.contains(e.target)) {
+          tooltip.classList.add('hid');
+          document.removeEventListener('click', closeTooltip);
+        }
+      });
+    }, 0);
+  }
+}
+
+function updateSpeakerTier(event, channelId, tier) {
+  event.stopPropagation();
+  const channel = state.channels.find(ch => ch.id === channelId);
+  if (!channel) return;
+  
+  channel.tier = tier;
+  channel.rate = PRICING[tier];
+  
+  // Re-render the card
+  renderChannelCard(channel, false);
+  
+  // Update results
+  updateResults();
+}
+
+// =====================
+// CHANNEL MANAGEMENT
+// =====================
+function removeChannel(channelId) {
+  state.channels = state.channels.filter(ch => ch.id !== channelId);
+  const card = document.getElementById(`channel-${channelId}`);
+  if (card) card.remove();
+  
+  updateAddChannelButton();
+  updateResults();
+  
+  // If no channels, show URL input
+  if (state.channels.length === 0) {
+    showUrlInput();
+    document.getElementById('resultsSection').classList.add('hid');
+  }
+}
+
+function updateAddChannelButton() {
+  const container = document.getElementById('channelsContainer');
+  const allComplete = state.channels.length > 0 && state.channels.every(ch => ch.tier && ch.tier !== '7+');
+  
+  // Remove existing add button if present
+  const existingBtn = container.querySelector('.add-channel-btn');
+  if (existingBtn) existingBtn.remove();
+  
+  if (allComplete) {
+    // Create and append the add button
+    const btn = document.createElement('button');
+    btn.className = 'add-channel-btn';
+    btn.onclick = showUrlInput;
+    btn.innerHTML = '<span>+</span> Add Another Channel';
+    container.appendChild(btn);
+  }
+}
+
+// =====================
+// LANGUAGE SELECTOR
+// =====================
+function updateLangFromSlider(value) {
+  const n = parseInt(value);
+  state.languages = n;
+  
+  // Update display
+  document.getElementById('langNum').textContent = n;
+  document.querySelector('.lang-label').textContent = n === 1 ? 'Language' : 'Languages';
+  
+  updateResults();
+}
+
+// =====================
+// RESULTS CALCULATION
+// =====================
+function updateResults() {
+  const completeChannels = state.channels.filter(ch => ch.tier && ch.tier !== '7+');
+  
+  // Check if all channels have videos selected
+  const allChannelsHaveSelections = completeChannels.length > 0 && 
+    completeChannels.every(ch => ch.selected.size > 0);
+  
+  // Show/hide quote section based on selections
+  const resultsSection = document.getElementById('resultsSection');
+  const quoteSection = document.getElementById('quoteSection');
+  const ctaRow = document.getElementById('ctaRow');
+  if (allChannelsHaveSelections) {
+    resultsSection.classList.remove('hid');
+    quoteSection.classList.remove('hid');
+    ctaRow.classList.remove('hid');
+  } else {
+    resultsSection.classList.add('hid');
+    quoteSection.classList.add('hid');
+    ctaRow.classList.add('hid');
+  }
+  
+  if (completeChannels.length === 0) return;
+  
+  let totalSelectedVideos = 0;
+  let totalSourceMins = 0;
+  let totalBacklogCost = 0;
+  let totalVideos = 0;
+  let totalDuration = 0;
+  let totalMonths = 0;
+  
+  const channelBreakdowns = [];
+  
+  completeChannels.forEach(channel => {
+    // Calculate channel-specific metrics
+    const selectedVideos = channel.videos.filter(v => channel.selected.has(v.id));
+    const sourceSecs = selectedVideos.reduce((s, v) => s + v.duration, 0);
+    const sourceMins = Math.round(sourceSecs / 60);
+    const dubbedMins = sourceMins * state.languages;
+    const backlogCost = dubbedMins * channel.rate;
+    
+    // Calculate monthly output
+    const allDates = channel.videos.map(v => new Date(v.publishedAt)).filter(d => !isNaN(d));
+    let monthsActive = 1;
+    if (allDates.length > 1) {
+      const oldest = new Date(Math.min(...allDates));
+      const newest = new Date(Math.max(...allDates));
+      monthsActive = Math.max(1, Math.round((newest - oldest) / (1000 * 60 * 60 * 24 * 30)));
+    }
+    
+    const channelTotalMins = Math.round(channel.videos.reduce((s, v) => s + v.duration, 0) / 60);
+    const avgMonthlyMins = Math.round(channelTotalMins / monthsActive);
+    const monthlyDubbed = avgMonthlyMins * state.languages;
+    const monthlyCost = monthlyDubbed * channel.rate;
+    
+    // Store in channel
+    channel.calc = {
+      selectedVideos: selectedVideos.length,
+      sourceMins,
+      dubbedMins,
+      backlogCost,
+      totalVideos: channel.videos.length,
+      avgLength: channel.videos.length > 0 ? Math.round(channelTotalMins / channel.videos.length) : 0,
+      avgMonthlyMins,
+      monthlyDubbed,
+      monthlyCost,
+      monthsActive
+    };
+    
+    // Accumulate totals
+    totalSelectedVideos += selectedVideos.length;
+    totalSourceMins += sourceMins;
+    totalBacklogCost += backlogCost;
+    totalVideos += channel.videos.length;
+    totalDuration += channelTotalMins;
+    totalMonths = Math.max(totalMonths, monthsActive);
+    
+    channelBreakdowns.push({
+      name: channel.name,
+      thumb: channel.thumb,
+      backlogCost,
+      monthlyCost
+    });
+  });
+  
+  const avgLength = totalVideos > 0 ? Math.round(totalDuration / totalVideos) : 0;
+  const avgMonthlyMins = totalMonths > 0 ? Math.round(totalDuration / totalMonths) : 0;
+  const totalMonthlyDubbed = avgMonthlyMins * state.languages;
+  
+  // Calculate blended rate
+  let totalMonthlyCost = 0;
+  completeChannels.forEach(ch => {
+    totalMonthlyCost += ch.calc.monthlyCost;
+  });
+  const blendedRate = totalMonthlyDubbed > 0 ? Math.round(totalMonthlyCost / totalMonthlyDubbed) : 45;
+  
+  // Update DOM
+  document.getElementById('resVideos').textContent = totalSelectedVideos;
+  document.getElementById('resSourceMins').textContent = totalSourceMins.toLocaleString();
+  document.getElementById('resDubbedMins').textContent = (totalSourceMins * state.languages).toLocaleString();
+  document.getElementById('resRate').textContent = blendedRate;
+  document.getElementById('resBacklogCost').textContent = formatCurrency(totalBacklogCost);
+  
+  document.getElementById('resTotalVideos').textContent = totalVideos + ' over ' + totalMonths + ' mo';
+  document.getElementById('resAvgLength').textContent = avgLength;
+  document.getElementById('resMonthlyMins').textContent = avgMonthlyMins;
+  document.getElementById('resMonthlyDubbed').textContent = totalMonthlyDubbed.toLocaleString();
+  document.getElementById('resMonthlyCost').textContent = formatCurrency(totalMonthlyCost) + '/mo';
+  
+  // Update language displays
+  document.getElementById('langNum').textContent = state.languages;
+  document.querySelector('.lang-label').textContent = state.languages === 1 ? 'Language' : 'Languages';
+  document.getElementById('resLangBack').textContent = state.languages;
+  document.getElementById('resLangMonth').textContent = state.languages;
+  
+  // Render breakdowns if multiple channels
+  const backlogBreakdown = document.getElementById('backlogBreakdown');
+  const monthlyBreakdown = document.getElementById('monthlyBreakdown');
+  
+  if (channelBreakdowns.length > 1) {
+    backlogBreakdown.innerHTML = channelBreakdowns.map(ch => `
+      <div class="breakdown-row">
+        <span><img src="${ch.thumb}" alt="">${escapeHtml(ch.name)}</span>
+        <span>${formatCurrency(ch.backlogCost)}</span>
+      </div>
+    `).join('');
+    
+    monthlyBreakdown.innerHTML = channelBreakdowns.map(ch => `
+      <div class="breakdown-row">
+        <span><img src="${ch.thumb}" alt="">${escapeHtml(ch.name)}</span>
+        <span>${formatCurrency(ch.monthlyCost)}/mo</span>
+      </div>
+    `).join('');
+  } else {
+    backlogBreakdown.innerHTML = '';
+    monthlyBreakdown.innerHTML = '';
+  }
+}
+
+// =====================
+// VIDEO MODAL (SHADOW DOM)
+// =====================
+function createShadowModal() {
+  const host = document.getElementById('video-modal-host');
+  shadowRoot = host.attachShadow({ mode: 'open' });
+  
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  
+  shadowRoot.innerHTML = `
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      
+      :host {
+        --bg: #ffffff; --bg2: #f8f8f8; --bg3: #f0f0f0; --bg4: #e5e5e5;
+        --bdr: #e0e0e0; --txt: #111; --txt2: #555; --txt3: #888;
+        --card-bg: #fff; --input-bg: #f5f5f5; --btn-bg: #e5e5e5;
+      }
+      
+      .modal-overlay[data-theme="dark"] {
+        --bg: #050505; --bg2: #0c0c0c; --bg3: #141414; --bg4: #1c1c1c;
+        --bdr: #1a1a1a; --txt: #fff; --txt2: #a0a0a0; --txt3: #666;
+        --card-bg: #0c0c0c; --input-bg: #1a1a1a; --btn-bg: #1a1a1a;
+      }
+      
+      .modal-overlay {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(8px); z-index: 999999;
+        display: none; align-items: center; justify-content: center;
+        padding: 20px; font-family: 'Switzer', system-ui, sans-serif;
+      }
+      .modal-overlay.open { display: flex; }
+      
+      .modal-box {
+        background: var(--card-bg); border: 1px solid var(--bdr);
+        border-radius: 18px; width: 100%; max-width: 950px;
+        height: 85vh; display: flex; flex-direction: column; overflow: hidden;
+      }
+      
+      .modal-header {
+        flex: 0 0 auto; display: flex; align-items: center;
+        justify-content: space-between; padding: 20px 24px;
+        border-bottom: 1px solid var(--bdr);
+      }
+      .modal-header h3 { font-size: 16px; font-weight: 600; color: var(--txt); }
+      .modal-stats { font-size: 16px; font-weight: 600; color: var(--txt); }
+      .modal-stats .num { color: #dc2626; font-size: 20px; font-weight: 700; }
+      
+      .header-actions { display: flex; align-items: center; gap: 10px; }
+      .action-btn {
+        padding: 8px 14px; background: var(--btn-bg); border: 0;
+        border-radius: 6px; color: var(--txt);
+        font: 500 13px 'Switzer', sans-serif; cursor: pointer;
+      }
+      .action-btn:hover { background: var(--bg4); }
+      
+      .close-btn {
+        width: 36px; height: 36px; display: flex; align-items: center;
+        justify-content: center; background: 0; border: 0;
+        color: var(--txt2); font-size: 24px; cursor: pointer; border-radius: 6px;
+      }
+      .close-btn:hover { background: var(--bg3); color: var(--txt); }
+      
+      .modal-toolbar {
+        flex: 0 0 auto; padding: 14px 24px; border-bottom: 1px solid var(--bdr);
+        display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      }
+      
+      .search-input {
+        flex: 1; min-width: 200px; max-width: 280px; padding: 8px 12px;
+        background: var(--input-bg); border: 1px solid var(--bdr);
+        border-radius: 6px; color: var(--txt); font: 14px 'Switzer', sans-serif;
+      }
+      .search-input::placeholder { color: var(--txt3); }
+      .search-input:focus { outline: 0; border-color: #3b82f6; }
+      
+      .toolbar-label { font-size: 13px; color: var(--txt2); }
+      
+      .sort-select {
+        padding: 8px 12px; background: var(--input-bg);
+        border: 1px solid var(--bdr); border-radius: 6px;
+        color: var(--txt); font: 500 13px 'Switzer', sans-serif; cursor: pointer;
+      }
+      
+      .export-btn {
+        padding: 8px 14px; background: var(--btn-bg);
+        border: 1px solid var(--bdr); border-radius: 6px;
+        color: var(--txt2); font: 500 13px 'Switzer', sans-serif;
+        cursor: pointer; margin-left: auto;
+      }
+      .export-btn:hover { background: var(--bg4); color: var(--txt); }
+      
+      .modal-body { flex: 1; overflow-y: auto; padding: 24px; background: var(--bg2); }
+      
+      .modal-footer {
+        flex: 0 0 auto; padding: 16px 24px;
+        border-top: 1px solid var(--bdr); background: var(--card-bg);
+      }
+      
+      .confirm-btn {
+        width: 100%; padding: 14px; background: #dc2626; border: 0;
+        border-radius: 10px; color: #fff; font: 700 15px 'Switzer', sans-serif;
+        cursor: pointer;
+      }
+      .confirm-btn:hover { background: #b91c1c; }
+      
+      .video-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+      @media (max-width: 800px) { .video-grid { grid-template-columns: repeat(3, 1fr); } }
+      @media (max-width: 550px) { .video-grid { grid-template-columns: repeat(2, 1fr); } }
+      
+      .video-card {
+        border-radius: 10px; overflow: hidden; cursor: pointer;
+        border: 2px solid transparent; background: var(--card-bg);
+      }
+      .video-card:hover { background: var(--bg3); border-color: var(--bdr); }
+      .video-card.selected { border-color: #dc2626; }
+      
+      .video-thumb { position: relative; aspect-ratio: 16/9; background: var(--bg3); overflow: hidden; }
+      .video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+      .video-thumb .duration {
+        position: absolute; bottom: 6px; right: 6px; padding: 3px 6px;
+        background: rgba(0,0,0,0.85); border-radius: 4px;
+        font-size: 11px; font-weight: 600; color: #fff;
+      }
+      .video-thumb .checkmark {
+        position: absolute; top: 8px; right: 8px; width: 24px; height: 24px;
+        background: #dc2626; border-radius: 50%; display: none;
+        align-items: center; justify-content: center; font-size: 14px; color: #fff;
+      }
+      .video-card.selected .checkmark { display: flex; }
+      
+      .video-info { padding: 12px; }
+      .video-info h4 {
+        font-size: 13px; font-weight: 500; line-height: 1.4;
+        display: -webkit-box; -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical; overflow: hidden;
+        margin-bottom: 6px; color: var(--txt);
+      }
+      .video-info p { font-size: 12px; color: var(--txt3); }
+    </style>
+    
+    <div class="modal-overlay" id="shadow-modal" data-theme="${isDark ? 'dark' : ''}">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 id="modal-title">Select Backlog Videos</h3>
+          <div class="modal-stats"><span class="num" id="modal-count">0</span> selected · <span class="num" id="modal-mins">0</span> min</div>
+          <div class="header-actions">
+            <button class="action-btn" id="select-all">Select All</button>
+            <button class="action-btn" id="clear-all">Clear</button>
+            <button class="close-btn" id="close-modal">×</button>
+          </div>
+        </div>
+        <div class="modal-toolbar">
+          <input type="text" class="search-input" id="search-input" placeholder="Search videos...">
+          <span class="toolbar-label">Sort:</span>
+          <select class="sort-select" id="sort-select">
+            <option value="views">Most Views</option>
+            <option value="duration">Longest</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
+          </select>
+          <span class="toolbar-label">Time:</span>
+          <select class="sort-select" id="time-select">
+            <option value="all">All Time</option>
+            <option value="30">30 Days</option>
+            <option value="90">90 Days</option>
+            <option value="180">6 Months</option>
+            <option value="365">1 Year</option>
+            <option value="1095">3 Years</option>
+          </select>
+          <button class="export-btn" id="export-btn">Export CSV</button>
+        </div>
+        <div class="modal-body">
+          <div class="video-grid" id="video-grid"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="confirm-btn" id="confirm-btn">Confirm Selection</button>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  shadowModal = shadowRoot.getElementById('shadow-modal');
+  shadowVgrid = shadowRoot.getElementById('video-grid');
+  
+  shadowRoot.getElementById('close-modal').addEventListener('click', closeVideoModal);
+  shadowRoot.getElementById('select-all').addEventListener('click', selectAllVideos);
+  shadowRoot.getElementById('clear-all').addEventListener('click', clearAllVideos);
+  shadowRoot.getElementById('confirm-btn').addEventListener('click', confirmVideoSelection);
+  shadowRoot.getElementById('search-input').addEventListener('input', debounce(e => filterVideos(e.target.value), 150));
+  shadowRoot.getElementById('sort-select').addEventListener('change', e => sortVideos(e.target.value));
+  shadowRoot.getElementById('time-select').addEventListener('change', e => filterByTime(e.target.value));
+  shadowRoot.getElementById('export-btn').addEventListener('click', exportCSV);
+  shadowModal.addEventListener('click', e => { if (e.target === shadowModal) closeVideoModal(); });
+}
+
+function openVideoModal(channelId) {
+  const channel = state.channels.find(ch => ch.id === channelId);
+  if (!channel || !shadowModal) return;
+  
+  state.currentChannelId = channelId;
+  channel.filteredVideos = [...channel.videos];
+  
+  shadowRoot.getElementById('modal-title').textContent = `Select Videos — ${channel.name}`;
+  shadowRoot.getElementById('search-input').value = '';
+  shadowRoot.getElementById('time-select').value = 'all';
+  
+  updateShadowTheme();
+  renderVideoGrid(channel);
+  updateModalStats(channel);
+  
+  shadowModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeVideoModal() {
+  if (shadowModal) shadowModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderVideoGrid(channel) {
+  if (!shadowVgrid) return;
+  shadowVgrid.innerHTML = '';
+  
+  channel.filteredVideos.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'video-card' + (channel.selected.has(v.id) ? ' selected' : '');
+    card.dataset.id = v.id;
+    card.addEventListener('click', () => toggleVideo(channel.id, v.id));
+    card.innerHTML = `
+      <div class="video-thumb">
+        ${v.thumbnail ? `<img src="${v.thumbnail}" loading="lazy" alt="">` : ''}
+        <div class="duration">${formatDuration(v.duration)}</div>
+        <div class="checkmark">✓</div>
+      </div>
+      <div class="video-info">
+        <h4>${escapeHtml(v.title)}</h4>
+        <p>${v.views} · ${v.publishedAgo}</p>
+      </div>
+    `;
+    shadowVgrid.appendChild(card);
+  });
+}
+
+function toggleVideo(channelId, videoId) {
+  const channel = state.channels.find(ch => ch.id === channelId);
+  if (!channel) return;
+  
+  if (channel.selected.has(videoId)) {
+    channel.selected.delete(videoId);
+  } else {
+    channel.selected.add(videoId);
+  }
+  
+  const card = shadowVgrid.querySelector(`.video-card[data-id="${videoId}"]`);
+  if (card) card.classList.toggle('selected', channel.selected.has(videoId));
+  
+  updateModalStats(channel);
+}
+
+function selectAllVideos() {
+  const channel = state.channels.find(ch => ch.id === state.currentChannelId);
+  if (!channel) return;
+  
+  channel.filteredVideos.forEach(v => channel.selected.add(v.id));
+  shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.add('selected'));
+  updateModalStats(channel);
+}
+
+function clearAllVideos() {
+  const channel = state.channels.find(ch => ch.id === state.currentChannelId);
+  if (!channel) return;
+  
+  channel.selected.clear();
+  shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
+  updateModalStats(channel);
+}
+
+function updateModalStats(channel) {
+  const count = channel.selected.size;
+  const mins = Math.round([...channel.selected].reduce((sum, id) => {
+    const video = channel.videos.find(v => v.id === id);
+    return sum + (video ? video.duration : 0);
+  }, 0) / 60);
+  
+  shadowRoot.getElementById('modal-count').textContent = count;
+  shadowRoot.getElementById('modal-mins').textContent = mins.toLocaleString();
+}
+
+function confirmVideoSelection() {
+  const channel = state.channels.find(ch => ch.id === state.currentChannelId);
+  if (channel) {
+    renderChannelCard(channel, false);
+    updateResults();
+  }
+  closeVideoModal();
+}
+
+function filterVideos(query) {
+  const channel = state.channels.find(ch => ch.id === state.currentChannelId);
+  if (!channel) return;
+  
+  const lq = query.toLowerCase();
+  shadowVgrid.querySelectorAll('.video-card').forEach(card => {
+    const title = card.querySelector('h4').textContent.toLowerCase();
+    card.style.display = title.includes(lq) ? '' : 'none';
+  });
+}
+
+function sortVideos(sortBy) {
+  const channel = state.channels.find(ch => ch.id === state.currentChannelId);
+  if (!channel) return;
+  
+  if (sortBy === 'views') channel.filteredVideos.sort((a, b) => b.viewCount - a.viewCount);
+  else if (sortBy === 'duration') channel.filteredVideos.sort((a, b) => b.duration - a.duration);
+  else if (sortBy === 'newest') channel.filteredVideos.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  else if (sortBy === 'oldest') channel.filteredVideos.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+  
+  renderVideoGrid(channel);
+}
+
+function filterByTime(days) {
+  const channel = state.channels.find(ch => ch.id === state.currentChannelId);
+  if (!channel) return;
+  
+  if (days === 'all') {
+    channel.filteredVideos = [...channel.videos];
+  } else {
+    const now = new Date();
+    const cutoff = new Date(now.getTime() - parseInt(days) * 24 * 60 * 60 * 1000);
+    channel.filteredVideos = channel.videos.filter(v => new Date(v.publishedAt) >= cutoff);
+  }
+  
+  renderVideoGrid(channel);
+}
+
+function exportCSV() {
+  const channel = state.channels.find(ch => ch.id === state.currentChannelId);
+  if (!channel || channel.selected.size === 0) {
+    alert('No videos selected');
+    return;
+  }
+  
+  const selected = channel.videos.filter(v => channel.selected.has(v.id));
+  const headers = ['Video Title', 'Link', 'Length (min)', 'Views', 'Published Date'];
+  const rows = selected.map(v => {
+    const pubDate = v.publishedAt ? new Date(v.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
+    return [`"${v.title.replace(/"/g, '""')}"`, `https://youtube.com/watch?v=${v.id}`, Math.round(v.duration / 60), v.viewCount, pubDate];
+  });
+  
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${channel.name.replace(/[^a-z0-9]/gi, '_')}_backlog.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// =====================
+// EMAIL & SCHEDULE MODALS
+// =====================
+function openEmailModal() {
+  const completeChannels = state.channels.filter(ch => ch.tier && ch.tier !== '7+');
+  if (completeChannels.length === 0) return;
+  
+  const names = completeChannels.map(ch => ch.name).join(' + ');
+  let totalBacklog = 0, totalMonthly = 0;
+  completeChannels.forEach(ch => {
+    totalBacklog += ch.calc.backlogCost || 0;
+    totalMonthly += ch.calc.monthlyCost || 0;
+  });
+  
+  document.getElementById('emailChannels').textContent = names;
+  document.getElementById('emailBacklog').textContent = formatCurrency(totalBacklog);
+  document.getElementById('emailMonthly').textContent = formatCurrency(totalMonthly) + '/mo';
+  document.getElementById('emailDetails').textContent = `${state.languages} languages · ${completeChannels.length} channel${completeChannels.length > 1 ? 's' : ''}`;
+  
+  document.getElementById('emailForm').classList.remove('hid');
+  document.getElementById('emailSuccess').classList.add('hid');
+  document.getElementById('emailModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openScheduleModal() {
+  const completeChannels = state.channels.filter(ch => ch.tier && ch.tier !== '7+');
+  if (completeChannels.length === 0) return;
+  
+  const names = completeChannels.map(ch => ch.name).join(' + ');
+  let totalBacklog = 0, totalMonthly = 0;
+  completeChannels.forEach(ch => {
+    totalBacklog += ch.calc.backlogCost || 0;
+    totalMonthly += ch.calc.monthlyCost || 0;
+  });
+  
+  document.getElementById('scheduleChannels').textContent = names;
+  document.getElementById('scheduleBacklog').textContent = formatCurrency(totalBacklog);
+  document.getElementById('scheduleMonthly').textContent = formatCurrency(totalMonthly) + '/mo';
+  document.getElementById('scheduleDetails').textContent = `${state.languages} languages · ${completeChannels.length} channel${completeChannels.length > 1 ? 's' : ''}`;
+  
+  document.getElementById('scheduleForm').classList.remove('hid');
+  document.getElementById('scheduleSuccess').classList.add('hid');
+  document.getElementById('scheduleModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalOut(event, modalId) {
+  if (event.target === document.getElementById(modalId)) closeModal(modalId);
+}
+
+async function sendQuote() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email) return;
+  
+  const sendBtn = document.querySelector('#emailForm .send');
+  sendBtn.innerHTML = 'Sending...';
+  sendBtn.disabled = true;
+  
+  try {
+    const payload = buildQuotePayload(email, 'email');
+    const response = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) throw new Error('Failed to send');
+    
+    document.getElementById('emailForm').classList.add('hid');
+    document.getElementById('emailSuccess').classList.remove('hid');
+    setTimeout(() => closeModal('emailModal'), 3000);
+  } catch (e) {
+    console.error(e);
+    sendBtn.innerHTML = '📧 Send Quote';
+    sendBtn.disabled = false;
+    alert('Failed to send quote. Please try again.');
+  }
+}
+
+async function submitSchedule() {
+  const email = document.getElementById('scheduleEmailInput').value.trim();
+  if (!email) return;
+  
+  const sendBtn = document.querySelector('#scheduleForm .send');
+  sendBtn.innerHTML = 'Sending...';
+  sendBtn.disabled = true;
+  
+  try {
+    const payload = buildQuotePayload(email, 'schedule');
+    const response = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    
+    if (!response.ok) throw new Error('Failed to send');
+    
+    document.getElementById('scheduleForm').classList.add('hid');
+    document.getElementById('scheduleSuccess').classList.remove('hid');
+    setTimeout(() => {
+      closeModal('scheduleModal');
+      window.open('https://humanvoiceover.com/meetwithus', '_blank');
+    }, 1500);
+  } catch (e) {
+    console.error(e);
+    sendBtn.innerHTML = '📅 Continue to Scheduling';
+    sendBtn.disabled = false;
+    alert('Failed to save quote. Please try again.');
+  }
+}
+
+function buildQuotePayload(email, action) {
+  const completeChannels = state.channels.filter(ch => ch.tier && ch.tier !== '7+');
+  
+  let totalBacklog = 0, totalMonthly = 0;
+  const channelsData = completeChannels.map(ch => {
+    totalBacklog += ch.calc.backlogCost || 0;
+    totalMonthly += ch.calc.monthlyCost || 0;
+    
+    const selectedVideos = ch.videos.filter(v => ch.selected.has(v.id)).map(v => ({
+      title: v.title,
+      id: v.id,
+      duration: v.duration,
+      durationMin: Math.round(v.duration / 60),
+      views: v.views,
+      viewCount: v.viewCount,
+      publishedAt: v.publishedAt,
+      thumbnail: v.thumbnail
+    }));
+    
+    return {
+      channelName: ch.name,
+      channelUrl: ch.url,
+      channelThumb: ch.thumb,
+      speakerTier: ch.tier,
+      rate: ch.rate,
+      backlogVideos: ch.selected.size,
+      backlogSourceMinutes: ch.calc.sourceMins,
+      backlogDubbedMinutes: ch.calc.dubbedMins,
+      backlogCost: ch.calc.backlogCost,
+      totalVideos: ch.calc.totalVideos,
+      avgVideoLength: ch.calc.avgLength,
+      avgMonthlyMinutes: ch.calc.avgMonthlyMins,
+      avgMonthlyDubbed: ch.calc.monthlyDubbed,
+      avgMonthlyRate: ch.calc.monthlyCost,
+      monthsActive: ch.calc.monthsActive,
+      selectedVideos
+    };
+  });
+  
+  return {
+    email,
+    action,
+    languages: state.languages,
+    totalBacklogCost: totalBacklog,
+    totalMonthlyCost: totalMonthly,
+    channels: channelsData
+  };
+}
+
+// =====================
+// UTILITIES
+// =====================
 function debounce(fn, delay) {
   let timer = null;
   return function(...args) {
@@ -1817,381 +2103,45 @@ function debounce(fn, delay) {
   };
 }
 
-function uRes() {
-  if (S.back.length === 0 || S.rate === 0) return;
-  const sv = S.back.filter(v => S.sel.has(v.id));
-  const bsec = sv.reduce((s, v) => s + v.duration, 0);
-  const bmin = Math.round(bsec / 60);
-  const bdub = bmin * S.langs;
-  const bcost = bdub * S.rate;
-  
-  const allDates = S.back.map(v => new Date(v.publishedAt)).filter(d => !isNaN(d));
-  let monthsActive = 1;
-  if (allDates.length > 1) {
-    const oldest = new Date(Math.min(...allDates));
-    const newest = new Date(Math.max(...allDates));
-    monthsActive = Math.max(1, Math.round((newest - oldest) / (1000 * 60 * 60 * 24 * 30)));
+function formatCurrency(n) {
+  if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return '$' + Math.round(n / 1e3).toLocaleString() + 'K';
+  return '$' + n.toLocaleString();
+}
+
+function formatDuration(s) {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}` : `${m}:${String(sec).padStart(2, '0')}`;
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// =====================
+// KEYBOARD SHORTCUTS
+// =====================
+document.addEventListener('keydown', e => {
+  if (e.key === 'i' || e.key === 'I') {
+    if (document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      const infoPanel = document.getElementById('infoPanel');
+      if (infoPanel.classList.contains('open')) showCalc();
+      else showInfo();
+    }
   }
-  const totalMins = Math.round(S.back.reduce((s, v) => s + v.duration, 0) / 60);
-  const avgMonthlyMins = Math.round(totalMins / monthsActive);
-  const avgLen = S.back.length > 0 ? Math.round(totalMins / S.back.length) : 0;
-  const mdub = avgMonthlyMins * S.langs;
-  const mcost = mdub * S.rate;
-  
-  S.calc = { bcost, mcost, bmin, bdub, avgMonthlyMins, mdub, avgLen, monthsActive };
-  
-  document.getElementById('selcnt').textContent = S.sel.size === 0 ? '0 videos selected' : S.sel.size === 1 ? '1 video' : S.sel.size + ' videos';
-  document.getElementById('selmins').textContent = bmin.toLocaleString();
-  document.getElementById('rv').textContent = S.sel.size;
-  document.getElementById('rsm').textContent = bmin.toLocaleString();
-  document.getElementById('rl1').textContent = S.langs;
-  document.getElementById('rdm').textContent = bdub.toLocaleString();
-  document.getElementById('rrt').textContent = S.rate;
-  document.getElementById('rbc').textContent = fCur(bcost);
-  document.getElementById('rrc').textContent = S.back.length + ' over ' + monthsActive + ' mo';
-  document.getElementById('ral').textContent = avgLen;
-  document.getElementById('rmm').textContent = avgMonthlyMins;
-  document.getElementById('rl2').textContent = S.langs;
-  document.getElementById('rmd').textContent = mdub.toLocaleString();
-  document.getElementById('rmc').textContent = fCur(mcost) + '/mo';
-}
-
-function fCur(n) { return n >= 1e6 ? '$' + (n / 1e6).toFixed(2) + 'M' : n >= 1e3 ? '$' + Math.round(n / 1e3).toLocaleString() + 'K' : '$' + n.toLocaleString(); }
-function fDur(s) { const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sec = s % 60; return h > 0 ? `${h}:${String(m).padStart(2, '0')}:${String(sec).padStart(2, '0')}` : `${m}:${String(sec).padStart(2, '0')}`; }
-function fDurMin(s) { return Math.round(s / 60); }
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-function sortVideos(sortBy) {
-  const arr = S.filteredBack.length ? S.filteredBack : S.back;
-  if (sortBy === 'views') arr.sort((a, b) => b.viewCount - a.viewCount);
-  else if (sortBy === 'duration') arr.sort((a, b) => b.duration - a.duration);
-  else if (sortBy === 'newest') arr.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  else if (sortBy === 'oldest') arr.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
-  rVG();
-}
-
-function filterByTime(days) {
-  S.timeFilter = days;
-  if (days === 'all') {
-    S.filteredBack = [...S.back];
-  } else {
-    const now = new Date();
-    const cutoff = new Date(now.getTime() - parseInt(days) * 24 * 60 * 60 * 1000);
-    S.filteredBack = S.back.filter(v => new Date(v.publishedAt) >= cutoff);
+  if (e.key === 'Escape') {
+    const infoPanel = document.getElementById('infoPanel');
+    if (infoPanel.classList.contains('open')) showCalc();
+    closeVideoModal();
+    closeModal('emailModal');
+    closeModal('scheduleModal');
   }
-  // Re-apply current sort
-  if (!shadowRoot) return;
-  const sortEl = shadowRoot.getElementById('shadow-sort');
-  const sortVal = sortEl ? sortEl.value : 'views';
-  if (sortVal === 'views') S.filteredBack.sort((a, b) => b.viewCount - a.viewCount);
-  else if (sortVal === 'duration') S.filteredBack.sort((a, b) => b.duration - a.duration);
-  else if (sortVal === 'newest') S.filteredBack.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  else if (sortVal === 'oldest') S.filteredBack.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
-  rVG();
-}
-
-function rVG() {
-  if (!shadowVgrid) return;
-  shadowVgrid.innerHTML = '';
-  const videos = S.filteredBack.length ? S.filteredBack : S.back;
-  videos.forEach(v => {
-    const c = document.createElement('div');
-    c.className = 'video-card' + (S.sel.has(v.id) ? ' selected' : '');
-    c.dataset.id = v.id;
-    c.addEventListener('click', () => togV(v.id));
-    c.innerHTML = `<div class="video-thumb">${v.thumbnail ? `<img src="${v.thumbnail}" loading="lazy" alt="">` : ''}<div class="duration">${fDur(v.duration)}</div><div class="checkmark">✓</div></div><div class="video-info"><h4>${esc(v.title)}</h4><p>${v.views} · ${v.publishedAgo}</p></div>`;
-    shadowVgrid.appendChild(c);
-  });
-  uMC();
-}
-
-function togV(id) {
-  S.sel.has(id) ? S.sel.delete(id) : S.sel.add(id);
-  if (shadowVgrid) {
-    const c = shadowVgrid.querySelector(`.video-card[data-id="${id}"]`);
-    if (c) c.classList.toggle('selected', S.sel.has(id));
-  }
-  uMC();
-}
-
-function selAll() {
-  const videos = S.filteredBack.length ? S.filteredBack : S.back;
-  videos.forEach(v => S.sel.add(v.id));
-  if (shadowVgrid) {
-    shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.add('selected'));
-  }
-  uMC();
-}
-
-function clrAll() {
-  S.sel.clear();
-  if (shadowVgrid) {
-    shadowVgrid.querySelectorAll('.video-card').forEach(c => c.classList.remove('selected'));
-  }
-  uMC();
-}
-
-function uMC() {
-  if (!shadowRoot) return;
-  const sv = S.back.filter(v => S.sel.has(v.id));
-  const m = Math.round(sv.reduce((s, v) => s + v.duration, 0) / 60);
-  const mcnt = shadowRoot.getElementById('shadow-mcnt');
-  const mmins = shadowRoot.getElementById('shadow-mmins');
-  if (mcnt) mcnt.textContent = S.sel.size;
-  if (mmins) mmins.textContent = m.toLocaleString();
-}
-
-function openVM() {
-  if (!shadowModal || !shadowRoot || !shadowMbody) return;
-  shadowModal.classList.add('open');
-  const searchEl = shadowRoot.getElementById('shadow-search');
-  const timeEl = shadowRoot.getElementById('shadow-time');
-  if (searchEl) searchEl.value = '';
-  if (timeEl) timeEl.value = 'all';
-  S.timeFilter = 'all';
-  S.filteredBack = [...S.back];
-  document.body.style.overflow = 'hidden';
-  shadowMbody.scrollTop = 0;
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  shadowModal.setAttribute('data-theme', isDark ? 'dark' : '');
-  rVG();
-}
-
-function closeVM() {
-  if (shadowModal) shadowModal.classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function filterVideos(q) {
-  if (!shadowVgrid) return;
-  const lq = q.toLowerCase();
-  shadowVgrid.querySelectorAll('.video-card').forEach(c => {
-    const h4 = c.querySelector('h4');
-    const t = h4 ? h4.textContent.toLowerCase() : '';
-    c.style.display = t.includes(lq) ? '' : 'none';
-  });
-}
-
-function confV() { closeVM(); uRes(); uSelList(); }
-
-function uSelList() {
-  const list = document.getElementById('sellist');
-  const selected = S.back.filter(v => S.sel.has(v.id));
-  
-  if (selected.length === 0) {
-    list.innerHTML = '<div class="sel-empty">No videos selected. Click "Select Videos" to choose from your backlog.</div>';
-    return;
-  }
-  
-  list.innerHTML = selected.map(v => `
-    <div class="sel-item">
-      <img class="sel-thumb" src="${v.thumbnail || ''}" alt="">
-      <div class="sel-info">
-        <h4>${esc(v.title)}</h4>
-        <p>${v.views} views</p>
-      </div>
-      <span class="sel-dur">${fDur(v.duration)}</span>
-    </div>
-  `).join('');
-}
-
-function openEM() {
-  document.getElementById('ech').textContent = S.name;
-  document.getElementById('ebc').textContent = fCur(S.calc.bcost);
-  document.getElementById('emc').textContent = fCur(S.calc.mcost) + '/mo';
-  document.getElementById('edet').textContent = `${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · $${S.rate}/min`;
-  document.getElementById('eform').classList.remove('hid');
-  document.getElementById('esucc').classList.add('hid');
-  document.getElementById('emodal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeEM() { document.getElementById('emodal').classList.remove('open'); document.body.style.overflow = ''; }
-function closeEMOut(e) { if (e.target === document.getElementById('emodal')) closeEM(); }
-
-async function sendQ() {
-  const em = document.getElementById('emi').value.trim();
-  if (!em) return;
-  
-  const sendBtn = document.querySelector('#eform .send');
-  const originalText = sendBtn.innerHTML;
-  sendBtn.innerHTML = 'Sending...';
-  sendBtn.disabled = true;
-  
-  // Get selected videos data for CSV
-  const selectedVideos = S.back.filter(v => S.sel.has(v.id)).map(v => ({
-    title: v.title,
-    id: v.id,
-    duration: v.duration,
-    durationMin: Math.round(v.duration / 60),
-    views: v.views,
-    viewCount: v.viewCount,
-    publishedAt: v.publishedAt,
-    thumbnail: v.thumbnail
-  }));
-  
-  try {
-    const response = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        channelName: S.name, 
-        channelUrl: S.url, 
-        channelThumb: S.thumb,
-        email: em, 
-        speakerTier: S.tier, 
-        serviceType: 'Standard',
-        languages: S.langs, 
-        rate: S.rate, 
-        backlogVideos: S.sel.size, 
-        backlogSourceMinutes: S.calc.bmin,
-        backlogDubbedMinutes: S.calc.bdub, 
-        backlogCost: S.calc.bcost, 
-        totalVideos: S.back.length,
-        avgVideoLength: S.calc.avgLen, 
-        avgMonthlyMinutes: S.calc.avgMonthlyMins, 
-        avgMonthlyDubbed: S.calc.mdub,
-        avgMonthlyRate: S.calc.mcost, 
-        monthsActive: S.calc.monthsActive, 
-        selectedVideos: selectedVideos,
-        action: 'email'
-      })
-    });
-    if (!response.ok) throw new Error('Failed to send');
-    document.getElementById('eform').classList.add('hid');
-    document.getElementById('esucc').classList.remove('hid');
-    setTimeout(closeEM, 3000);
-  } catch (e) {
-    console.error(e);
-    sendBtn.innerHTML = originalText;
-    sendBtn.disabled = false;
-    alert('Failed to send quote. Please try again.');
-  }
-}
-
-function scheduleCall() {
-  document.getElementById('sch').textContent = S.name;
-  document.getElementById('sbc').textContent = fCur(S.calc.bcost);
-  document.getElementById('smc').textContent = fCur(S.calc.mcost) + '/mo';
-  document.getElementById('sdet').textContent = `${S.sel.size} videos · ${S.langs} languages · ${S.tier} speakers · $${S.rate}/min`;
-  document.getElementById('sform').classList.remove('hid');
-  document.getElementById('ssucc').classList.add('hid');
-  document.getElementById('smodal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeSM() { document.getElementById('smodal').classList.remove('open'); document.body.style.overflow = ''; }
-function closeSMOut(e) { if (e.target === document.getElementById('smodal')) closeSM(); }
-
-async function sendSchedule() {
-  const em = document.getElementById('semi').value.trim();
-  if (!em) return;
-  
-  const sendBtn = document.querySelector('#sform .send');
-  const originalText = sendBtn.innerHTML;
-  sendBtn.innerHTML = 'Sending...';
-  sendBtn.disabled = true;
-  
-  // Get selected videos data for CSV
-  const selectedVideos = S.back.filter(v => S.sel.has(v.id)).map(v => ({
-    title: v.title,
-    id: v.id,
-    duration: v.duration,
-    durationMin: Math.round(v.duration / 60),
-    views: v.views,
-    viewCount: v.viewCount,
-    publishedAt: v.publishedAt,
-    thumbnail: v.thumbnail
-  }));
-  
-  try {
-    const response = await fetch('https://n8n.srv962989.hstgr.cloud/webhook/hvo-quote-submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        channelName: S.name, 
-        channelUrl: S.url, 
-        channelThumb: S.thumb,
-        email: em, 
-        speakerTier: S.tier, 
-        serviceType: 'Standard',
-        languages: S.langs, 
-        rate: S.rate, 
-        backlogVideos: S.sel.size, 
-        backlogSourceMinutes: S.calc.bmin,
-        backlogDubbedMinutes: S.calc.bdub, 
-        backlogCost: S.calc.bcost, 
-        totalVideos: S.back.length,
-        avgVideoLength: S.calc.avgLen, 
-        avgMonthlyMinutes: S.calc.avgMonthlyMins, 
-        avgMonthlyDubbed: S.calc.mdub,
-        avgMonthlyRate: S.calc.mcost, 
-        monthsActive: S.calc.monthsActive, 
-        selectedVideos: selectedVideos,
-        action: 'schedule'
-      })
-    });
-    if (!response.ok) throw new Error('Failed to send');
-    document.getElementById('sform').classList.add('hid');
-    document.getElementById('ssucc').classList.remove('hid');
-    setTimeout(() => { closeSM(); window.open('https://humanvoiceover.com/meetwithus', '_blank'); }, 1500);
-  } catch (e) {
-    console.error(e);
-    sendBtn.innerHTML = originalText;
-    sendBtn.disabled = false;
-    alert('Failed to save quote. Please try again.');
-  }
-}
-
-function exportCSV() {
-  if (S.sel.size === 0) { alert('No videos selected'); return; }
-  const selected = S.back.filter(v => S.sel.has(v.id));
-  const headers = ['Video Title', 'Link', 'Length (min)', 'Views', 'Published Date'];
-  const rows = selected.map(v => {
-    const pubDate = v.publishedAt ? new Date(v.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '';
-    return [`"${v.title.replace(/"/g, '""')}"`, `https://youtube.com/watch?v=${v.id}`, fDurMin(v.duration), v.viewCount, pubDate];
-  });
-  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-  const blob = new Blob([csv], { type: 'text/csv' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${S.name.replace(/[^a-z0-9]/gi, '_')}_backlog.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function restartCalculator() {
-  // Reset state
-  S = {tier:'',rate:0,url:'',name:'',thumb:'',subs:'',back:[],filteredBack:[],recent:[],sel:new Set(),langs:1,calc:{},timeFilter:'all'};
-  
-  // Reset UI
-  document.getElementById('urli').value = 'https://youtube.com/@';
-  document.getElementById('fbtn').className = 'fetch';
-  document.getElementById('fbtn').innerHTML = 'Fetch Videos';
-  document.getElementById('fbtn').disabled = true;
-  document.getElementById('fetchHint').classList.remove('hid');
-  document.getElementById('fetchHint').textContent = 'Select speaker count below to enable';
-  document.getElementById('errmsg').classList.add('hid');
-  
-  // Reset speaker selection
-  document.querySelectorAll('.spk').forEach(b => b.classList.remove('on'));
-  document.getElementById('cust').classList.add('hid');
-  
-  // Show input sections
-  document.getElementById('s1').classList.remove('hid');
-  document.getElementById('s2').classList.remove('hid');
-  
-  // Hide results and channel card
-  document.getElementById('s3').classList.add('hid');
-  document.getElementById('res').classList.add('hid');
-  
-  // Reset language slider
-  document.getElementById('lngSlider').value = 1;
-  document.getElementById('ldisp').textContent = '1';
-  document.getElementById('llbl').textContent = 'Language';
-  
-  // Scroll to top
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+});
 </script>
 </body>
 </html>
